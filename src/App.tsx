@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import heroBlob from "@assets/hero-blob.jpg";
 import work1 from "@assets/work-1.jpg";
 import work2 from "@assets/work-2.jpg";
@@ -374,6 +375,7 @@ export default function App() {
       <Billboard />
       <CTA />
       <Footer />
+      <Analytics />
     </div>
   );
 }
