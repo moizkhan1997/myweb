@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useCreateContact } from "@workspace/api-client-react";
-import heroBlob from "@assets/hero-blob_1781021356323.jpg";
-import work1 from "@assets/work-1_1781021356324.jpg";
-import work2 from "@assets/work-2_1781021356324.jpg";
-import work3 from "@assets/work-3_1781021356324.jpg";
-import work4 from "@assets/work-4_1781021356324.jpg";
-import logoBlack from "@assets/Trimmic_Black_1781021962708.svg";
-import logoWhite from "@assets/Trimmic_White_1781021962708.svg";
+import { useCreateContact } from "@/lib/api-client-react";
+import heroBlob from "@/assets/hero-blob.jpg";
+import work1 from "@/assets/work-1.jpg";
+import work2 from "@/assets/work-2.jpg";
+import work3 from "@/assets/work-3.jpg";
+import work4 from "@/assets/work-4.jpg";
+import logoBlack from "@/assets/trimmic-black.svg";
+import logoWhite from "@/assets/trimmic-white.svg";
 
 const services = [
   { n: "01", t: "SaaS Videos", d: "Product demos, feature walkthroughs, and onboarding videos that convert trials into customers." },
