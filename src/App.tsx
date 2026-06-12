@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { Link, Route, Switch } from "wouter";
 import { useCreateContact } from "@/lib/api-client-react";
+import NotFound from "@/pages/not-found";
+import SaasVideoPage from "@/pages/saas-video";
 import heroBlob from "@/assets/hero-blob.jpg";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
@@ -9,16 +12,136 @@ import logoBlack from "@/assets/trimmic-black.svg";
 import logoWhite from "@/assets/trimmic-white.svg";
 
 const services = [
-  { n: "01", t: "SaaS Videos", d: "Product demos, feature walkthroughs, and onboarding videos that convert trials into customers." },
-  { n: "02", t: "Shorts", d: "TikTok, Reels, and Shorts engineered for scroll-stopping hook — and algorithmic growth." },
-  { n: "03", t: "UGC", d: "Raw, authentic, user-generated content that feels organic and converts like paid media." },
-  { n: "04", t: "YouTube Videos", d: "Long-form content, thumbnails, and pacing that builds subscribers and watch time." },
-  { n: "05", t: "Digital Marketing", d: "Paid creative, ad variants, and funnel content that turns impressions into revenue." },
-  { n: "06", t: "Content Creation", d: "Everything from brand blogs to LinkedIn carousels to pitch decks — all on-brand." },
-  { n: "07", t: "Social Media Management", d: "Posting calendars, engagement strategy, and community building that keeps your brand alive." },
-  { n: "08", t: "Branding", d: "Identities that don't blend in. Logos, systems, and stories with a pulse." },
-  { n: "09", t: "Explainer Videos", d: "Complex ideas, simply told — animated, narrated, and impossible to ignore." },
-  { n: "10", t: "Motion Graphics", d: "Type that dances, shapes that swing. Motion that earns the rewind." },
+  {
+    n: "01",
+    slug: "saas-videos",
+    t: "SaaS Videos",
+    d: "Product demos, feature walkthroughs, and onboarding videos that convert trials into customers.",
+    heroImage: work1,
+    detail: "We help SaaS teams tell complex product stories with clarity, energy, and a relentless focus on conversion.",
+    highlights: [
+      "Product demo films that feel premium",
+      "Feature-led storytelling built for trial-to-paid motion",
+      "Script, storyboard, and motion direction in one package",
+    ],
+  },
+  {
+    n: "02",
+    slug: "shorts",
+    t: "Shorts",
+    d: "TikTok, Reels, and Shorts engineered for scroll-stopping hook — and algorithmic growth.",
+    heroImage: work2,
+    detail: "Short-form content designed to stop the scroll and build momentum across feeds, with a bold system and fast editing.",
+    highlights: [
+      "Attention-grabbing first 2 seconds",
+      "Platform-native pacing and text styling",
+      "Performance-first creative tailored to your brand",
+    ],
+  },
+  {
+    n: "03",
+    slug: "ugc",
+    t: "UGC",
+    d: "Raw, authentic, user-generated content that feels organic and converts like paid media.",
+    heroImage: work3,
+    detail: "We produce UGC that keeps the realness intact while making brands look sharp, consistent, and instantly clickable.",
+    highlights: [
+      "Handheld, authentic visual language",
+      "Creative direction for feel-good social ads",
+      "Conversion copy and storytelling built in",
+    ],
+  },
+  {
+    n: "04",
+    slug: "youtube-videos",
+    t: "YouTube Videos",
+    d: "Long-form content, thumbnails, and pacing that builds subscribers and watch time.",
+    heroImage: work4,
+    detail: "From channel trailers to narrative episodes, we make YouTube feel strategic, binge-worthy, and distinctly on-brand.",
+    highlights: [
+      "Audience-led video structures",
+      "Thumbnail and title direction",
+      "Hooked openings plus memorable endings",
+    ],
+  },
+  {
+    n: "05",
+    slug: "digital-marketing",
+    t: "Digital Marketing",
+    d: "Paid creative, ad variants, and funnel content that turns impressions into revenue.",
+    heroImage: work1,
+    detail: "We build marketing campaigns with creative that actually converts — from traffic to purchase, lead, and retention.",
+    highlights: [
+      "Ad creative tuned for ROAS",
+      "Variants for A/B testing and scaling",
+      "Creative tailored to audiences and platforms",
+    ],
+  },
+  {
+    n: "06",
+    slug: "content-creation",
+    t: "Content Creation",
+    d: "Everything from brand blogs to LinkedIn carousels to pitch decks — all on-brand.",
+    heroImage: work2,
+    detail: "A full-stack content approach that keeps your brand voice consistent across social, email, and product narratives.",
+    highlights: [
+      "Assets built for each channel",
+      "Narrative frameworks and campaign arcs",
+      "Creative systems that scale smoothly",
+    ],
+  },
+  {
+    n: "07",
+    slug: "social-media-management",
+    t: "Social Media Management",
+    d: "Posting calendars, engagement strategy, and community building that keeps your brand alive.",
+    heroImage: work3,
+    detail: "We help brands stay loud, consistent, and thoughtful in clubbed feeds with content systems and engagement playbooks.",
+    highlights: [
+      "Editorial calendars that actually get used",
+      "Platform-specific content strategies",
+      "Community-first engagement tactics",
+    ],
+  },
+  {
+    n: "08",
+    slug: "branding",
+    t: "Branding",
+    d: "Identities that don't blend in. Logos, systems, and stories with a pulse.",
+    heroImage: work4,
+    detail: "We create identities that feel alive, not safe — with visual systems built to work across digital, motion, and packaging.",
+    highlights: [
+      "Brand systems made for motion",
+      "Voice, visuals, and positioning in one package",
+      "Assets designed to scale across touchpoints",
+    ],
+  },
+  {
+    n: "09",
+    slug: "explainer-videos",
+    t: "Explainer Videos",
+    d: "Complex ideas, simply told — animated, narrated, and impossible to ignore.",
+    heroImage: work1,
+    detail: "Whether your product is niche or complex, we make the story feel simple, compelling, and impossible to skip.",
+    highlights: [
+      "Story-first animation direction",
+      "Clear user journeys and value props",
+      "Design systems with a strong visual hook",
+    ],
+  },
+  {
+    n: "10",
+    slug: "motion-graphics",
+    t: "Motion Graphics",
+    d: "Type that dances, shapes that swing. Motion that earns the rewind.",
+    heroImage: work2,
+    detail: "From kinetic type to 2D/3D systems, we create motion that feels purposeful, polished, and built for platforms.",
+    highlights: [
+      "Brand-safe motion design",
+      "Transitions that guide attention",
+      "Aesthetic systems for fast iteration",
+    ],
+  },
 ];
 
 const marqueeWords = ["SaaS Videos", "★", "Shorts", "★", "UGC", "★", "YouTube Videos", "★", "Digital Marketing", "★", "Content Creation", "★", "Social Media Management", "★", "Branding", "★", "Explainer Videos", "★", "Motion Graphics", "★"];
@@ -35,16 +158,16 @@ function Nav() {
   return (
     <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(1200px,calc(100%-2rem))]">
       <nav className="flex items-center justify-between gap-4 rounded-full border border-border/60 bg-background/70 px-3 py-2 pl-5 backdrop-blur-xl shadow-soft">
-        <a href="#top" className="flex items-center gap-2">
+        <a href="/#top" className="flex items-center gap-2">
           <LogoBlack />
         </a>
         <ul className="hidden md:flex items-center gap-7 text-sm font-medium">
-          <li><a href="#work" className="hover:text-foreground/60 transition">Work</a></li>
-          <li><a href="#services" className="hover:text-foreground/60 transition">Services</a></li>
-          <li><a href="#studio" className="hover:text-foreground/60 transition">Studio</a></li>
-          <li><a href="#contact" className="hover:text-foreground/60 transition">Contact</a></li>
+          <li><a href="/#work" className="hover:text-foreground/60 transition">Work</a></li>
+          <li><a href="/#services" className="hover:text-foreground/60 transition">Services</a></li>
+          <li><a href="/#studio" className="hover:text-foreground/60 transition">Studio</a></li>
+          <li><a href="/#contact" className="hover:text-foreground/60 transition">Contact</a></li>
         </ul>
-        <a href="#contact" className="group inline-flex items-center gap-2 rounded-full bg-ink text-cream px-5 py-2.5 text-sm font-medium hover:bg-ink/90 transition">
+        <a href="/#contact" className="group inline-flex items-center gap-2 rounded-full bg-ink text-cream px-5 py-2.5 text-sm font-medium hover:bg-ink/90 transition">
           Let's Talk
           <span className="inline-block transition group-hover:translate-x-0.5">→</span>
         </a>
@@ -155,8 +278,9 @@ function Services() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s, i) => (
-            <article
-              key={s.t}
+            <Link
+              key={s.slug}
+              href={`/service/${s.slug}`}
               className="group relative rounded-3xl border border-border bg-card p-7 overflow-hidden transition hover:-translate-y-1 hover:shadow-soft"
             >
               <div aria-hidden className="absolute -top-20 -right-20 h-44 w-44 rounded-full bg-gradient-brand opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-60" />
@@ -170,11 +294,103 @@ function Services() {
               <div className="relative mt-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">
                 0{i + 1} / 0{services.length}
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ServiceDetail({ params }: { params: { slug?: string } }) {
+  const service = services.find((item) => item.slug === params.slug);
+  if (!service) {
+    return <NotFound />;
+  }
+
+  const caseStudies = [
+    {
+      title: `${service.t} for Nova Studios`,
+      description: `A bold ${service.t.toLowerCase()} campaign with fast-moving edits, custom motion, and a launch-ready asset suite that lifted awareness and retention.`,
+    },
+    {
+      title: `${service.t} for Pulse Brand`,
+      description: `A high-impact project built to convert attention into action, using tone, pacing, and visuals designed for scrollable social and high-fidelity brand content.`,
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <Nav />
+      <section className="relative py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-foreground transition">
+            ← Back to services
+          </Link>
+
+          <div className="mt-10 relative overflow-hidden rounded-[2.5rem] bg-ink">
+            <img src={service.heroImage} alt={service.t} className="h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-10 text-cream">
+              <span className="text-xs uppercase tracking-[0.2em] text-cream/70">Service detail</span>
+              <h1 className="font-display mt-4 text-5xl md:text-6xl leading-[0.95]">{service.t}</h1>
+              <p className="mt-6 max-w-3xl text-lg text-cream/80 leading-relaxed">{service.detail}</p>
+            </div>
+          </div>
+
+          <div className="mt-16 grid gap-8 lg:grid-cols-[1.35fr,0.85fr]">
+            <div className="space-y-8">
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div className="rounded-3xl border border-border bg-card p-8">
+                  <h2 className="font-display text-2xl">What we do</h2>
+                  <p className="mt-4 text-muted-foreground leading-relaxed">{service.d}</p>
+                </div>
+                <div className="rounded-3xl border border-border bg-card p-8">
+                  <h2 className="font-display text-2xl">Why it works</h2>
+                  <ul className="mt-6 space-y-4">
+                    {service.highlights.map((item) => (
+                      <li key={item} className="flex gap-3 text-base leading-7 text-muted-foreground">
+                        <span className="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-gradient-brand" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-border bg-card p-8">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Case studies</span>
+                    <h2 className="font-display mt-3 text-3xl">How we bring {service.t} to life</h2>
+                  </div>
+                  <span className="text-sm text-muted-foreground">Selected examples</span>
+                </div>
+                <div className="mt-8 grid gap-6">
+                  {caseStudies.map((caseStudy) => (
+                    <div key={caseStudy.title} className="rounded-3xl border border-border bg-background p-6">
+                      <h3 className="font-display text-2xl">{caseStudy.title}</h3>
+                      <p className="mt-3 text-muted-foreground leading-relaxed">{caseStudy.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[3rem] bg-gradient-brand/10 p-10 text-ink">
+              <div className="text-xs uppercase tracking-[0.2em] text-ink/70">Start here</div>
+              <h2 className="font-display mt-4 text-4xl">Ready to move fast?</h2>
+              <p className="mt-5 text-base leading-relaxed text-ink/80">
+                Pick this service and tell us the brief. We’ll follow up with the best scope, pacing, and examples for your project.
+              </p>
+              <Link href="#contact" className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-semibold text-cream hover:bg-ink/90 transition">
+                Book a call →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 
@@ -518,9 +734,9 @@ function Footer() {
           <div className="md:col-span-2">
             <div className="text-xs uppercase tracking-widest text-cream/50 mb-4">Studio</div>
             <ul className="space-y-2.5">
-              <li><a href="#studio" className="hover:text-cream/70 transition">About</a></li>
-              <li><a href="#work" className="hover:text-cream/70 transition">Work</a></li>
-              <li><a href="#services" className="hover:text-cream/70 transition">Services</a></li>
+              <li><a href="/#studio" className="hover:text-cream/70 transition">About</a></li>
+              <li><a href="/#work" className="hover:text-cream/70 transition">Work</a></li>
+              <li><a href="/#services" className="hover:text-cream/70 transition">Services</a></li>
             </ul>
           </div>
           <div className="md:col-span-2">
@@ -546,7 +762,7 @@ function Footer() {
   );
 }
 
-export default function App() {
+function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
@@ -559,5 +775,18 @@ export default function App() {
       <CTA />
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Switch>
+      <Route path="/" component={Home} />
+      <Route path="/service/saas-videos" component={SaasVideoPage} />
+      <Route path="/service/saas-videos" component={SaasVideoPage} />
+      <Route path="/service/:slug" component={ServiceDetail} />
+      <Route path="/services/saas-video" component={SaasVideoPage} />
+      <Route path="*" component={NotFound} />
+    </Switch>
   );
 }
