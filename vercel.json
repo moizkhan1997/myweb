@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --no-frozen-lockfile",
   "buildCommand": "PORT=3000 BASE_PATH=/ pnpm build",
   "outputDirectory": "dist/public",
   "rewrites": [
