@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link, Route, Switch, useLocation } from "wouter";
@@ -17,11 +17,48 @@ import { Nav, LogoBlack, LogoWhite } from "@/components/nav";
 
 gsap.registerPlugin(ScrollTrigger);
 
+if (typeof window !== "undefined") {
+  history.scrollRestoration = "manual";
+
+  const origPush = history.pushState.bind(history);
+  history.pushState = (...args: Parameters<typeof history.pushState>) => {
+    origPush(...args);
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
+  window.addEventListener("popstate", () => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  });
+}
+
 function ScrollToTop() {
   const [location] = useLocation();
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [location]);
   useEffect(() => {
     window.scrollTo(0, 0);
-    ScrollTrigger.refresh();
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    // Double rAF: first frame resets after any pending paint work,
+    // second frame resets after GSAP ScrollTrigger setups settle.
+    const id = requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+    });
+    return () => cancelAnimationFrame(id);
   }, [location]);
   return null;
 }
@@ -808,7 +845,7 @@ export default function App() {
     <div className="min-h-screen bg-background text-foreground">
       <ScrollToTop />
       <Nav />
-      <Switch>
+      <Switch key={location}>
         <Route path="/portfolio" component={PortfolioPage} />
         <Route path="/service/saas-videos" component={SaasVideoPage} />
         <Route path="/service/:slug" component={ServicePage} />

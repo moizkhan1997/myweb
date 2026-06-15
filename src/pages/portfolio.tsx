@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -136,6 +136,12 @@ export default function PortfolioPage() {
   const closeModal = useCallback(() => setModalItem(null), []);
   const pageRef = useRef<HTMLDivElement>(null);
 
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
   useEffect(() => {
     fetch("/portfolio-data.json?" + Date.now())
       .then(r => r.json())
@@ -144,23 +150,43 @@ export default function PortfolioPage() {
   }, []);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".g-pf-hero-line", {
-        yPercent: 115, duration: 1, ease: "power4.out", stagger: 0.15, delay: 0.2,
-      });
-      gsap.from(".g-pf-hero-sub", {
-        opacity: 0, y: 24, duration: 0.8, ease: "power3.out", delay: 0.55,
-      });
-      gsap.from(".g-pf-grid-item", {
-        scrollTrigger: { trigger: ".g-pf-grid", start: "top 85%", once: true },
-        opacity: 0, y: 40, duration: 0.65, ease: "power3.out", stagger: 0.06,
-      });
-      gsap.from(".g-pf-testimonial", {
-        scrollTrigger: { trigger: ".g-pf-testimonials", start: "top 85%", once: true },
-        opacity: 0, y: 45, duration: 0.65, ease: "power3.out", stagger: 0.1,
-      });
-    }, pageRef);
-    return () => ctx.revert();
+    const root = pageRef.current;
+    if (!root) return;
+
+    const tweens: gsap.core.Tween[] = [];
+    const observers: IntersectionObserver[] = [];
+
+    tweens.push(gsap.from(root.querySelectorAll(".g-pf-hero-line"), {
+      yPercent: 115, duration: 1, ease: "power4.out", stagger: 0.15, delay: 0.2,
+    }));
+    tweens.push(gsap.from(root.querySelectorAll(".g-pf-hero-sub"), {
+      opacity: 0, y: 24, duration: 0.8, ease: "power3.out", delay: 0.55,
+    }));
+
+    const onScroll = (triggerSel: string, targetSel: string, vars: gsap.TweenVars) => {
+      const trigger = root.querySelector(triggerSel);
+      const targets = Array.from(root.querySelectorAll(targetSel));
+      if (!trigger || !targets.length) return;
+      const obs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          tweens.push(gsap.from(targets, vars));
+          obs.disconnect();
+        }
+      }, { threshold: 0.1 });
+      obs.observe(trigger);
+      observers.push(obs);
+    };
+
+    onScroll(".g-pf-grid",                ".g-pf-grid-item",        { y: 35, duration: 0.65, ease: "power3.out", stagger: 0.04 });
+    onScroll(".g-pf-stat-grid",           ".g-pf-stat-item",        { y: 30, duration: 0.6,  ease: "power3.out", stagger: 0.1 });
+    onScroll(".g-pf-testimonials-heading",".g-pf-testimonials-heading", { y: 40, duration: 0.8, ease: "power3.out" });
+    onScroll(".g-pf-testimonials",        ".g-pf-testimonial",      { y: 40, duration: 0.65, ease: "power3.out" });
+    onScroll(".g-pf-cta-inner",           ".g-pf-cta-inner",        { y: 50, scale: 0.98,  duration: 0.9, ease: "power3.out" });
+
+    return () => {
+      tweens.forEach(t => t.kill());
+      observers.forEach(o => o.disconnect());
+    };
   }, []);
 
   const staticAsCms: CmsItem[] = portfolioItems.map(i => ({
@@ -277,14 +303,14 @@ export default function PortfolioPage() {
       {/* Stats strip */}
       <div className="border-y border-cream/10 py-12">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="g-pf-stat-grid grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { k: "200+", v: "Projects shipped" },
               { k: "60+",  v: "Brands served" },
               { k: "10",   v: "Creative disciplines" },
               { k: "14",   v: "Awards on the shelf" },
             ].map((s) => (
-              <div key={s.v} className="text-center">
+              <div key={s.v} className="g-pf-stat-item text-center">
                 <div className="font-display text-5xl md:text-6xl text-cream">{s.k}</div>
                 <div className="text-xs uppercase tracking-[0.2em] text-cream/40 mt-2">{s.v}</div>
               </div>
@@ -296,7 +322,7 @@ export default function PortfolioPage() {
       {/* Testimonials */}
       <section className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-14">
+          <div className="g-pf-testimonials-heading mb-14">
             <span className="text-xs font-medium uppercase tracking-[0.25em] text-cream/50">What clients say</span>
             <h2 className="font-display mt-4 text-5xl md:text-6xl leading-[0.95]">
               Don't take our word{" "}
@@ -324,7 +350,7 @@ export default function PortfolioPage() {
       {/* CTA */}
       <section className="pb-20 px-6">
         <div className="mx-auto max-w-7xl">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-brand p-12 md:p-20 text-ink">
+          <div className="g-pf-cta-inner relative overflow-hidden rounded-[2.5rem] bg-gradient-brand p-12 md:p-20 text-ink">
             <div aria-hidden className="absolute -top-32 -right-32 h-[500px] w-[500px] rounded-full bg-white/20 blur-3xl" />
             <div className="relative">
               <span className="text-xs font-medium uppercase tracking-[0.25em] text-ink/50">

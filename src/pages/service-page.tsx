@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Nav } from "@/components/nav";
 import NotFound from "./not-found";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
@@ -696,33 +696,73 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   if (!data) return <NotFound />;
 
   const pageRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [params.slug]);
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".g-sp-hero-content > *", {
-        opacity: 0, y: 30, duration: 0.8, ease: "power3.out", stagger: 0.14, delay: 0.35,
-      });
-      gsap.from(".g-sp-why-item", {
-        scrollTrigger: { trigger: ".g-sp-why-grid", start: "top 82%", once: true },
-        opacity: 0, y: 45, duration: 0.65, ease: "power3.out", stagger: 0.08,
-      });
-      gsap.from(".g-sp-plan", {
-        scrollTrigger: { trigger: ".g-sp-plans-grid", start: "top 82%", once: true },
-        opacity: 0, y: 55, scale: 0.96, duration: 0.7, ease: "power3.out", stagger: 0.12,
-      });
-      gsap.from(".g-sp-work-card", {
-        scrollTrigger: { trigger: ".g-sp-work-grid", start: "top 83%", once: true },
-        opacity: 0, y: 45, duration: 0.65, ease: "power3.out", stagger: 0.1,
-      });
-      gsap.from(".g-sp-faq-item", {
-        scrollTrigger: { trigger: ".g-sp-faq-list", start: "top 85%", once: true },
-        opacity: 0, x: -25, duration: 0.6, ease: "power3.out", stagger: 0.07,
-      });
-      gsap.from(".g-sp-cta-content", {
-        scrollTrigger: { trigger: ".g-sp-cta-content", start: "top 85%", once: true },
-        opacity: 0, y: 40, duration: 0.8, ease: "power3.out",
-      });
-    }, pageRef);
-    return () => ctx.revert();
+    const root = pageRef.current;
+    if (!root) return;
+
+    const tweens: gsap.core.Tween[] = [];
+    const observers: IntersectionObserver[] = [];
+
+    // Hero — staggered entry with clip reveal on h1
+    tweens.push(gsap.from(root.querySelectorAll(".g-sp-hero-badge"), {
+      opacity: 0, scale: 0.85, duration: 0.6, ease: "back.out(1.7)", delay: 0.2,
+    }));
+    tweens.push(gsap.from(root.querySelectorAll(".g-sp-hero-h1"), {
+      yPercent: 110, duration: 1.1, ease: "power4.out", delay: 0.45,
+    }));
+    tweens.push(gsap.from(root.querySelectorAll(".g-sp-hero-sub"), {
+      opacity: 0, y: 24, duration: 0.8, ease: "power3.out", delay: 0.75,
+    }));
+    tweens.push(gsap.from(root.querySelectorAll(".g-sp-hero-btns > *"), {
+      opacity: 0, y: 16, duration: 0.65, ease: "power3.out", delay: 0.9, stagger: 0.1,
+    }));
+
+    const onScroll = (triggerSel: string, targetSel: string, vars: gsap.TweenVars) => {
+      const trigger = root.querySelector(triggerSel);
+      const targets = Array.from(root.querySelectorAll(targetSel));
+      if (!trigger || !targets.length) return;
+      const obs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          tweens.push(gsap.from(targets, vars));
+          obs.disconnect();
+        }
+      }, { threshold: 0.12 });
+      obs.observe(trigger);
+      observers.push(obs);
+    };
+
+    // Showreel — left/right slide
+    onScroll(".g-sp-showreel-left",  ".g-sp-showreel-left",  { x: -60, duration: 1, ease: "power3.out" });
+    onScroll(".g-sp-showreel-right", ".g-sp-showreel-right", { x: 60,  duration: 1, ease: "power3.out" });
+
+    // Section headings — badge fades, h2 clips up from below
+    onScroll(".g-sp-why-heading",     ".g-sp-why-badge",     { opacity: 0, y: 10, duration: 0.45, ease: "power2.out" });
+    onScroll(".g-sp-why-heading",     ".g-sp-why-h2",        { yPercent: 105, duration: 0.95, ease: "power4.out", delay: 0.08 });
+    onScroll(".g-sp-pricing-heading", ".g-sp-pricing-badge", { opacity: 0, y: 10, duration: 0.45, ease: "power2.out" });
+    onScroll(".g-sp-pricing-heading", ".g-sp-pricing-h2",    { yPercent: 105, duration: 0.95, ease: "power4.out", delay: 0.08 });
+    onScroll(".g-sp-work-heading",    ".g-sp-work-badge",    { opacity: 0, y: 10, duration: 0.45, ease: "power2.out" });
+    onScroll(".g-sp-work-heading",    ".g-sp-work-h2",       { yPercent: 105, duration: 0.95, ease: "power4.out", delay: 0.08 });
+    onScroll(".g-sp-test-heading",    ".g-sp-test-badge",    { opacity: 0, y: 10, duration: 0.45, ease: "power2.out" });
+    onScroll(".g-sp-test-heading",    ".g-sp-test-h2",       { yPercent: 105, duration: 0.95, ease: "power4.out", delay: 0.08 });
+    onScroll(".g-sp-faq-heading",     ".g-sp-faq-h2",        { yPercent: 105, duration: 0.95, ease: "power4.out" });
+
+    // Section content
+    onScroll(".g-sp-why-grid",   ".g-sp-why-item",   { opacity: 0, y: 50, duration: 0.7,  ease: "power3.out", stagger: 0.06 });
+    onScroll(".g-sp-plans-grid", ".g-sp-plan",       { opacity: 0, y: 55, duration: 0.8,  ease: "expo.out" });
+    onScroll(".g-sp-work-grid",  ".g-sp-work-card",  { opacity: 0, y: 45, scale: 0.96, duration: 0.7, ease: "power3.out", stagger: 0.08 });
+    onScroll(".g-sp-test-stats", ".g-sp-test-stat",  { opacity: 0, x: -18, duration: 0.5, ease: "power3.out", stagger: 0.07 });
+    onScroll(".g-sp-faq-list",   ".g-sp-faq-item",   { opacity: 0, x: -28, duration: 0.6, ease: "power3.out", stagger: 0.05 });
+    onScroll(".g-sp-cta-content",".g-sp-cta-content",{ opacity: 0, y: 55, scale: 0.97, duration: 0.9, ease: "expo.out" });
+
+    return () => {
+      tweens.forEach(t => t.kill());
+      observers.forEach(o => o.disconnect());
+    };
   }, [params.slug]);
 
   return (
@@ -761,12 +801,14 @@ function Hero({ data }: { data: ServiceData }) {
       </div>
       <div className="relative z-10 flex min-h-[100svh] flex-col justify-center px-8 md:px-14 lg:px-20 pt-32 pb-20">
         <div className="g-sp-hero-content max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.35em] text-white/50">{data.hero.badge}</p>
-          <h1 className="font-display mt-6 text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
-            <H text={data.hero.h1} color={data.accentColor} />
-          </h1>
-          <p className="mt-6 max-w-2xl text-base text-white/75 sm:text-lg">{data.hero.subtitle}</p>
-          <div className="mt-10 flex flex-wrap gap-4">
+          <p className="g-sp-hero-badge text-xs uppercase tracking-[0.35em] text-white/50">{data.hero.badge}</p>
+          <div className="mt-6 overflow-hidden pb-2">
+            <h1 className="g-sp-hero-h1 font-display text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
+              <H text={data.hero.h1} color={data.accentColor} />
+            </h1>
+          </div>
+          <p className="g-sp-hero-sub mt-6 max-w-2xl text-base text-white/75 sm:text-lg">{data.hero.subtitle}</p>
+          <div className="g-sp-hero-btns mt-10 flex flex-wrap gap-4">
             <a href="#pricing" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#090b10] transition hover:opacity-90">
               View Pricing →
             </a>
@@ -798,14 +840,14 @@ function Showreel({ data }: { data: ServiceData }) {
   return (
     <section id="our-process" className="px-8 md:px-14 lg:px-20 py-24 sm:py-32">
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
-        <div>
+        <div className="g-sp-showreel-left">
           <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">{data.showreel.badge}</span>
           <h2 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl md:text-7xl text-[color:var(--ink)]">
             <H text={data.showreel.h2} color={data.accentColor} />
           </h2>
           <p className="mt-6 max-w-lg text-lg text-[color:var(--ink)]/75">{data.showreel.desc}</p>
         </div>
-        <div>
+        <div className="g-sp-showreel-right">
           <div className="relative overflow-hidden rounded-[2rem] border border-[color:var(--border)] bg-white shadow-soft">
             <div className="aspect-[16/10] w-full overflow-hidden bg-[#0a0c11]">
               <video ref={videoRef} src={agencyPromoUrl} muted loop playsInline className="h-full w-full object-cover" onClick={toggle} />
@@ -830,10 +872,14 @@ function WhyUs({ data }: { data: ServiceData }) {
   return (
     <section className="px-8 md:px-14 lg:px-20 py-24">
       <div className="w-full">
-        <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Why Us?</span>
-        <h2 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
-          <H text={data.whyUs.h2} color={data.accentColor} />
-        </h2>
+        <div className="g-sp-why-heading">
+          <span className="g-sp-why-badge inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Why Us?</span>
+          <div className="mt-6 overflow-hidden pb-2">
+            <h2 className="g-sp-why-h2 font-display text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
+              <H text={data.whyUs.h2} color={data.accentColor} />
+            </h2>
+          </div>
+        </div>
         <div className="g-sp-why-grid mt-14 grid gap-x-12 gap-y-10 md:grid-cols-2">
           {data.whyUs.items.map((it) => (
             <div key={it.n} className="g-sp-why-item border-t border-black/15 pt-6">
@@ -854,12 +900,16 @@ function Pricing({ data }: { data: ServiceData }) {
   return (
     <section id="pricing" className="px-8 md:px-14 lg:px-20 py-24">
       <div className="w-full">
-        <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Pricing</span>
-        <h2 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
-          Flexible Plans for <br />Every{" "}
-          <span className="font-serif-italic font-normal" style={{ color: data.accentColor }}>Stage</span>{" "}
-          of Growth
-        </h2>
+        <div className="g-sp-pricing-heading">
+          <span className="g-sp-pricing-badge inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Pricing</span>
+          <div className="mt-6 overflow-hidden pb-2">
+            <h2 className="g-sp-pricing-h2 font-display text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
+              Flexible Plans for <br />Every{" "}
+              <span className="font-serif-italic font-normal" style={{ color: data.accentColor }}>Stage</span>{" "}
+              of Growth
+            </h2>
+          </div>
+        </div>
         <div className="g-sp-plans-grid mt-14 grid gap-6 md:grid-cols-3">
           {data.plans.map((p) => (
             <div key={p.title}
@@ -909,11 +959,15 @@ function PreviousWork({ data }: { data: ServiceData }) {
   return (
     <section id="previous-work" className="px-8 md:px-14 lg:px-20 py-24">
       <div className="w-full">
-        <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Previous Work</span>
-        <h2 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
-          How we do anything is <br />how we do{" "}
-          <span className="font-serif-italic font-normal text-[color:var(--brand-yellow)]">everything.</span>
-        </h2>
+        <div className="g-sp-work-heading">
+          <span className="g-sp-work-badge inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Previous Work</span>
+          <div className="mt-6 overflow-hidden pb-2">
+            <h2 className="g-sp-work-h2 font-display text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
+              How we do anything is <br />how we do{" "}
+              <span className="font-serif-italic font-normal text-[color:var(--brand-yellow)]">everything.</span>
+            </h2>
+          </div>
+        </div>
         <div className="g-sp-work-grid mt-14 grid gap-6 md:grid-cols-2">
           {cmsItems.length > 0
             ? cmsItems.map((item) => <CmsWorkCard key={item.id} item={item} />)
@@ -1023,14 +1077,18 @@ function TestimonialsSection() {
   return (
     <section id="testimonials" className="px-8 md:px-14 lg:px-20 py-24">
       <div className="w-full">
-        <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Testimonials</span>
-        <h2 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
-          Trusted by founders, <br />loved by{" "}
-          <span className="font-serif-italic font-normal text-[color:var(--brand-pink)]">results.</span>
-        </h2>
-        <div className="mt-10 flex flex-wrap gap-3">
+        <div className="g-sp-test-heading">
+          <span className="g-sp-test-badge inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Testimonials</span>
+          <div className="mt-6 overflow-hidden pb-2">
+            <h2 className="g-sp-test-h2 font-display text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
+              Trusted by founders, <br />loved by{" "}
+              <span className="font-serif-italic font-normal text-[color:var(--brand-pink)]">results.</span>
+            </h2>
+          </div>
+        </div>
+        <div className="g-sp-test-stats mt-10 flex flex-wrap gap-3">
           {stats.map((s) => (
-            <span key={s} className="rounded-full border border-black/15 bg-white px-5 py-2 text-sm font-semibold">{s}</span>
+            <span key={s} className="g-sp-test-stat rounded-full border border-black/15 bg-white px-5 py-2 text-sm font-semibold">{s}</span>
           ))}
         </div>
       </div>
@@ -1048,10 +1106,12 @@ function FAQSection({ data }: { data: ServiceData }) {
   return (
     <section id="faq" className="px-8 md:px-14 lg:px-20 py-24">
       <div className="mx-auto max-w-4xl">
-        <h2 className="font-display text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
-          Frequently Asked{" "}
-          <span className="font-serif-italic font-normal text-[color:var(--brand-green)]">Questions</span>
-        </h2>
+        <div className="g-sp-faq-heading overflow-hidden pb-2">
+          <h2 className="g-sp-faq-h2 font-display text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
+            Frequently Asked{" "}
+            <span className="font-serif-italic font-normal text-[color:var(--brand-green)]">Questions</span>
+          </h2>
+        </div>
         <div className="g-sp-faq-list mt-12 divide-y divide-black/15 border-y border-black/15">
           {data.faqs.map((f, i) => {
             const isOpen = open === i;
