@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 import { LogoWhite } from "@/components/nav";
 import work1 from "@assets/work-1_1781021356324.jpg";
 import work2 from "@assets/work-2_1781021356324.jpg";
@@ -131,12 +134,33 @@ export default function PortfolioPage() {
   const [cmsItems, setCmsItems] = useState<CmsItem[] | null>(null);
   const [modalItem, setModalItem] = useState<CmsItem | null>(null);
   const closeModal = useCallback(() => setModalItem(null), []);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch("/portfolio-data.json?" + Date.now())
       .then(r => r.json())
       .then(d => { if (Array.isArray(d.items) && d.items.length > 0) setCmsItems(d.items); })
       .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".g-pf-hero-line", {
+        yPercent: 115, duration: 1, ease: "power4.out", stagger: 0.15, delay: 0.2,
+      });
+      gsap.from(".g-pf-hero-sub", {
+        opacity: 0, y: 24, duration: 0.8, ease: "power3.out", delay: 0.55,
+      });
+      gsap.from(".g-pf-grid-item", {
+        scrollTrigger: { trigger: ".g-pf-grid", start: "top 85%", once: true },
+        opacity: 0, y: 40, duration: 0.65, ease: "power3.out", stagger: 0.06,
+      });
+      gsap.from(".g-pf-testimonial", {
+        scrollTrigger: { trigger: ".g-pf-testimonials", start: "top 85%", once: true },
+        opacity: 0, y: 45, duration: 0.65, ease: "power3.out", stagger: 0.1,
+      });
+    }, pageRef);
+    return () => ctx.revert();
   }, []);
 
   const staticAsCms: CmsItem[] = portfolioItems.map(i => ({
@@ -159,7 +183,7 @@ export default function PortfolioPage() {
       : allItems.filter((it) => it.category === activeCategory);
 
   return (
-    <div className="bg-ink text-cream">
+    <div ref={pageRef} className="bg-ink text-cream">
       {modalItem && <VideoModal item={modalItem} onClose={closeModal} />}
       {/* Hero */}
       <section className="relative pt-36 pb-16 overflow-hidden">
@@ -173,13 +197,18 @@ export default function PortfolioPage() {
             </span>
           </div>
           <h1 className="font-display text-[clamp(2.75rem,8vw,6.5rem)] leading-[0.9] tracking-tight">
-            A never-ending stream
-            <br />
-            of{" "}
-            <span className="font-serif-italic font-normal text-gradient-brand">damn-good</span>{" "}
-            work.
+            <span className="block overflow-hidden pb-1">
+              <span className="g-pf-hero-line block">A never-ending stream</span>
+            </span>
+            <span className="block overflow-hidden pb-1">
+              <span className="g-pf-hero-line block">
+                of{" "}
+                <span className="font-serif-italic font-normal text-gradient-brand">damn-good</span>{" "}
+                work.
+              </span>
+            </span>
           </h1>
-          <p className="mt-6 max-w-lg text-lg text-cream/60 leading-relaxed">
+          <p className="g-pf-hero-sub mt-6 max-w-lg text-lg text-cream/60 leading-relaxed">
             Every project here was built to stop the scroll, move the needle, and leave a mark. Dig in.
           </p>
         </div>
@@ -210,11 +239,11 @@ export default function PortfolioPage() {
       <section className="py-12">
         <div className="mx-auto max-w-7xl px-6">
           {filtered.length > 0 ? (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-5">
+            <div className="g-pf-grid columns-1 sm:columns-2 lg:columns-3 gap-5">
               {filtered.map((item) => (
                 <div
                   key={item.id}
-                  className="group relative mb-5 block break-inside-avoid overflow-hidden rounded-[1.5rem] cursor-pointer"
+                  className="g-pf-grid-item group relative mb-5 block break-inside-avoid overflow-hidden rounded-[1.5rem] cursor-pointer"
                   style={{ height: item.tall ? "440px" : "280px" }}
                   onClick={() => setModalItem(item)}
                 >
@@ -274,11 +303,11 @@ export default function PortfolioPage() {
               <span className="font-serif-italic font-normal text-gradient-brand">for it.</span>
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="g-pf-testimonials grid md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
               <div
                 key={t.name}
-                className="rounded-3xl border border-cream/10 bg-cream/[0.04] p-8 hover:bg-cream/[0.07] transition"
+                className="g-pf-testimonial rounded-3xl border border-cream/10 bg-cream/[0.04] p-8 hover:bg-cream/[0.07] transition"
               >
                 <span className="font-serif-italic text-4xl text-brand-yellow leading-none">"</span>
                 <p className="mt-3 text-cream/80 leading-relaxed">{t.quote}</p>

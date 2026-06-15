@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { Nav } from "@/components/nav";
 import NotFound from "./not-found";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 /* ─── CMS types ──────────────────────────────────────────── */
 
@@ -692,8 +695,38 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   const data = SERVICES[params.slug];
   if (!data) return <NotFound />;
 
+  const pageRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".g-sp-hero-content > *", {
+        opacity: 0, y: 30, duration: 0.8, ease: "power3.out", stagger: 0.14, delay: 0.35,
+      });
+      gsap.from(".g-sp-why-item", {
+        scrollTrigger: { trigger: ".g-sp-why-grid", start: "top 82%", once: true },
+        opacity: 0, y: 45, duration: 0.65, ease: "power3.out", stagger: 0.08,
+      });
+      gsap.from(".g-sp-plan", {
+        scrollTrigger: { trigger: ".g-sp-plans-grid", start: "top 82%", once: true },
+        opacity: 0, y: 55, scale: 0.96, duration: 0.7, ease: "power3.out", stagger: 0.12,
+      });
+      gsap.from(".g-sp-work-card", {
+        scrollTrigger: { trigger: ".g-sp-work-grid", start: "top 83%", once: true },
+        opacity: 0, y: 45, duration: 0.65, ease: "power3.out", stagger: 0.1,
+      });
+      gsap.from(".g-sp-faq-item", {
+        scrollTrigger: { trigger: ".g-sp-faq-list", start: "top 85%", once: true },
+        opacity: 0, x: -25, duration: 0.6, ease: "power3.out", stagger: 0.07,
+      });
+      gsap.from(".g-sp-cta-content", {
+        scrollTrigger: { trigger: ".g-sp-cta-content", start: "top 85%", once: true },
+        opacity: 0, y: 40, duration: 0.8, ease: "power3.out",
+      });
+    }, pageRef);
+    return () => ctx.revert();
+  }, [params.slug]);
+
   return (
-    <div className="bg-[color:var(--cream)] text-[color:var(--ink)]">
+    <div ref={pageRef} className="bg-[color:var(--cream)] text-[color:var(--ink)]">
       <Nav />
       <SubNav />
       <main>
@@ -727,7 +760,7 @@ function Hero({ data }: { data: ServiceData }) {
         <div className="absolute left-1/2 top-56 h-1 w-64 -translate-x-1/2 rounded-full bg-[#4bbfae]/30 blur-2xl" aria-hidden />
       </div>
       <div className="relative z-10 flex min-h-[100svh] flex-col justify-center px-8 md:px-14 lg:px-20 pt-32 pb-20">
-        <div className="max-w-3xl">
+        <div className="g-sp-hero-content max-w-3xl">
           <p className="text-xs uppercase tracking-[0.35em] text-white/50">{data.hero.badge}</p>
           <h1 className="font-display mt-6 text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
             <H text={data.hero.h1} color={data.accentColor} />
@@ -801,9 +834,9 @@ function WhyUs({ data }: { data: ServiceData }) {
         <h2 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
           <H text={data.whyUs.h2} color={data.accentColor} />
         </h2>
-        <div className="mt-14 grid gap-x-12 gap-y-10 md:grid-cols-2">
+        <div className="g-sp-why-grid mt-14 grid gap-x-12 gap-y-10 md:grid-cols-2">
           {data.whyUs.items.map((it) => (
-            <div key={it.n} className="border-t border-black/15 pt-6">
+            <div key={it.n} className="g-sp-why-item border-t border-black/15 pt-6">
               <div className="flex items-baseline gap-4">
                 <span className="font-display text-3xl text-[color:var(--ink)]/40">{it.n}</span>
                 <h3 className="font-display text-2xl">{it.title}</h3>
@@ -827,10 +860,10 @@ function Pricing({ data }: { data: ServiceData }) {
           <span className="font-serif-italic font-normal" style={{ color: data.accentColor }}>Stage</span>{" "}
           of Growth
         </h2>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="g-sp-plans-grid mt-14 grid gap-6 md:grid-cols-3">
           {data.plans.map((p) => (
             <div key={p.title}
-              className={`relative flex flex-col rounded-3xl border bg-white p-8 transition hover:-translate-y-1 hover:shadow-2xl ${p.popular ? "border-[color:var(--ink)] shadow-xl ring-2 ring-[color:var(--ink)]" : "border-black/10"}`}>
+              className={`g-sp-plan relative flex flex-col rounded-3xl border bg-white p-8 transition hover:-translate-y-1 hover:shadow-2xl ${p.popular ? "border-[color:var(--ink)] shadow-xl ring-2 ring-[color:var(--ink)]" : "border-black/10"}`}>
               {p.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[color:var(--ink)] px-4 py-1 text-xs font-bold uppercase tracking-widest text-white">
                   Most Popular
@@ -881,7 +914,7 @@ function PreviousWork({ data }: { data: ServiceData }) {
           How we do anything is <br />how we do{" "}
           <span className="font-serif-italic font-normal text-[color:var(--brand-yellow)]">everything.</span>
         </h2>
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <div className="g-sp-work-grid mt-14 grid gap-6 md:grid-cols-2">
           {cmsItems.length > 0
             ? cmsItems.map((item) => <CmsWorkCard key={item.id} item={item} />)
             : data.work.map((w) => <WorkCard key={w.title} {...w} />)
@@ -932,7 +965,7 @@ function CmsWorkCard({ item }: { item: CmsItem }) {
     <>
       {open && <VideoModal item={item} onClose={() => setOpen(false)} />}
       <div
-        className="group relative aspect-video overflow-hidden rounded-3xl cursor-pointer"
+        className="g-sp-work-card group relative aspect-video overflow-hidden rounded-3xl cursor-pointer"
         style={!thumb ? { backgroundImage: "linear-gradient(135deg,var(--brand-yellow) 0%,#1a1a1a 100%)" } : undefined}
         onClick={() => setOpen(true)}
       >
@@ -959,7 +992,7 @@ function WorkCard({ title, cat, tint }: { title: string; cat: string; tint: stri
   const ref = useRef<HTMLVideoElement>(null);
   return (
     <div
-      className="group relative aspect-video overflow-hidden rounded-3xl"
+      className="g-sp-work-card group relative aspect-video overflow-hidden rounded-3xl"
       style={{ backgroundImage: `linear-gradient(135deg, ${tint} 0%, #1a1a1a 100%)` }}
       onMouseEnter={() => ref.current?.play().catch(() => {})}
       onMouseLeave={() => { const v = ref.current; if (v) { v.pause(); v.currentTime = 0; } }}
@@ -1019,11 +1052,11 @@ function FAQSection({ data }: { data: ServiceData }) {
           Frequently Asked{" "}
           <span className="font-serif-italic font-normal text-[color:var(--brand-green)]">Questions</span>
         </h2>
-        <div className="mt-12 divide-y divide-black/15 border-y border-black/15">
+        <div className="g-sp-faq-list mt-12 divide-y divide-black/15 border-y border-black/15">
           {data.faqs.map((f, i) => {
             const isOpen = open === i;
             return (
-              <div key={f.q}>
+              <div key={f.q} className="g-sp-faq-item">
                 <button type="button" onClick={() => setOpen(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-6 py-6 text-left" aria-expanded={isOpen}>
                   <span className="font-display text-xl sm:text-2xl">{f.q}</span>
@@ -1048,7 +1081,7 @@ function FAQSection({ data }: { data: ServiceData }) {
 function ClosingCTA({ data }: { data: ServiceData }) {
   return (
     <section id="contact" className="px-4 py-28 sm:px-10 sm:py-36">
-      <div className="mx-auto max-w-5xl text-center">
+      <div className="g-sp-cta-content mx-auto max-w-5xl text-center">
         <h2 className="font-display text-5xl leading-[0.95] sm:text-7xl md:text-8xl">
           <H text={data.cta.h2} color={data.accentColor} />
         </h2>

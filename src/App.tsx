@@ -17,6 +17,15 @@ import { Nav, LogoBlack, LogoWhite } from "@/components/nav";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    ScrollTrigger.refresh();
+  }, [location]);
+  return null;
+}
+
 const services = [
   { n: "01", t: "SaaS Videos",            slug: "saas-videos",            d: "Product demos, feature walkthroughs, and onboarding videos that convert trials into customers." },
   { n: "02", t: "Shorts",                  slug: "shorts",                  d: "TikTok, Reels, and Shorts engineered for scroll-stopping hook — and algorithmic growth." },
@@ -797,6 +806,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ScrollToTop />
       <Nav />
       <Switch>
         <Route path="/portfolio" component={PortfolioPage} />
