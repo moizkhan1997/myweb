@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link, Route, Switch, useLocation } from "wouter";
 
 import SaasVideoPage from "./pages/saas-video";
@@ -13,6 +14,8 @@ import work2 from "@assets/work-2_1781021356324.jpg";
 import work3 from "@assets/work-3_1781021356324.jpg";
 import work4 from "@assets/work-4_1781021356324.jpg";
 import { Nav, LogoBlack, LogoWhite } from "@/components/nav";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   { n: "01", t: "SaaS Videos",            slug: "saas-videos",            d: "Product demos, feature walkthroughs, and onboarding videos that convert trials into customers." },
@@ -29,49 +32,76 @@ const services = [
 
 const marqueeWords = ["SaaS Videos", "★", "Shorts", "★", "UGC", "★", "YouTube Videos", "★", "Digital Marketing", "★", "Content Creation", "★", "Social Media Management", "★", "Branding", "★", "Explainer Videos", "★", "Motion Graphics", "★"];
 
-const ease = [0.22, 1, 0.36, 1] as const;
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.65, ease, delay: i * 0.1 } }),
-};
-const staggerContainer = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
-};
-
 
 function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // — Masked line reveal for h1
+      gsap.from(".g-hero-line", {
+        yPercent: 115,
+        duration: 1,
+        ease: "power4.out",
+        stagger: 0.15,
+      });
+
+      // — Fade-up for paragraph, buttons, avatar row
+      gsap.from(".g-hero-sub", {
+        opacity: 0,
+        y: 28,
+        duration: 0.85,
+        ease: "power3.out",
+        stagger: 0.1,
+        delay: 0.45,
+      });
+
+      // — Right image tiles: scale + fade stagger
+      gsap.from(".g-hero-tile", {
+        opacity: 0,
+        scale: 0.88,
+        y: 24,
+        duration: 0.9,
+        ease: "expo.out",
+        stagger: 0.07,
+        delay: 0.3,
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="top" className="relative overflow-hidden flex flex-col lg:flex-row min-h-screen">
+    <section ref={sectionRef} id="top" className="relative overflow-hidden flex flex-col lg:flex-row min-h-screen">
       <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-70 pointer-events-none" />
       <div aria-hidden className="absolute -top-32 left-0 h-[700px] w-[700px] rounded-full bg-gradient-brand opacity-20 blur-3xl pointer-events-none" />
 
-      {/* Left — text, flush to left edge */}
-      <motion.div
-        className="relative z-10 flex flex-col w-full lg:w-[52%] px-8 md:px-14 lg:px-20 pt-32 pb-16 lg:pt-36 lg:pb-20"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="show"
-      >
-        <motion.h1 variants={fadeUp} className="font-display text-[clamp(2.75rem,5.5vw,5.5rem)] leading-[0.95]">
-          We don't just make videos.
-          <br />
-          We make{" "}
-          <span className="font-serif-italic font-normal text-gradient-brand">'damn'</span>{" "}
-          good ones.
-        </motion.h1>
-        <motion.p variants={fadeUp} className="mt-7 max-w-lg text-lg text-muted-foreground leading-relaxed">
+      {/* Left — text */}
+      <div className="relative z-10 flex flex-col w-full lg:w-[52%] px-8 md:px-14 lg:px-20 pt-32 pb-16 lg:pt-36 lg:pb-20">
+        <h1 className="font-display text-[clamp(2.75rem,5.5vw,5.5rem)] leading-[0.95]">
+          <span className="block overflow-hidden pb-1">
+            <span className="g-hero-line block">We don't just make videos.</span>
+          </span>
+          <span className="block overflow-hidden pb-1">
+            <span className="g-hero-line block">
+              We make{" "}
+              <span className="font-serif-italic font-normal text-gradient-brand">'damn'</span>{" "}
+              good ones.
+            </span>
+          </span>
+        </h1>
+        <p className="g-hero-sub mt-7 max-w-lg text-lg text-muted-foreground leading-relaxed">
           We don't just edit videos — we breathe life into them. Motion graphics, SaaS videos, and 2D animation that stops the scroll and starts the sale.
-        </motion.p>
-        <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-3">
+        </p>
+        <div className="g-hero-sub mt-9 flex flex-wrap items-center gap-3">
           <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-cream px-7 py-4 text-base font-medium hover:bg-ink/90 transition">
             Start a Project <span>→</span>
           </a>
           <a href="#work" className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-background/60 backdrop-blur px-7 py-4 text-base font-medium hover:bg-ink/5 transition">
             See the Work
           </a>
-        </motion.div>
-        <motion.div variants={fadeUp} className="mt-10 flex items-center gap-5">
+        </div>
+        <div className="g-hero-sub mt-10 flex items-center gap-5">
           <div className="flex -space-x-2">
             {[work1, work3, work4].map((s, i) => (
               <img key={i} src={s} alt="" className="h-10 w-10 rounded-full object-cover border-2 border-background" />
@@ -81,45 +111,32 @@ function Hero() {
             <div className="font-display text-lg">200+ damn-good projects</div>
             <div className="text-muted-foreground">shipped for brands worldwide</div>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
-      {/* Right — image mosaic flush to right edge */}
+      {/* Right — image mosaic */}
       <div className="relative flex-1 min-h-[520px] lg:min-h-screen">
         <div
           className="absolute inset-0 pl-3 pr-8 md:pr-14 lg:pr-20 pt-32 pb-16 lg:pt-36 lg:pb-20 grid gap-3"
           style={{ gridTemplateColumns: "3fr 2fr", gridTemplateRows: "repeat(3, 1fr)" }}
         >
-          {/* heroBlob — dominant, spans top 2 rows on the left */}
-          <div className="row-span-2 relative rounded-2xl overflow-hidden bg-ink">
-            <img
-              src={heroBlob}
-              alt="Liquid gradient blob"
-              className="absolute inset-0 h-full w-full object-cover animate-float-y"
-            />
+          <div className="g-hero-tile row-span-2 relative rounded-2xl overflow-hidden bg-ink">
+            <img src={heroBlob} alt="Liquid gradient blob" className="absolute inset-0 h-full w-full object-cover animate-float-y" />
             <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-cream">
               <span className="font-display text-base leading-tight">Magic that feels<br />like tomorrow.</span>
               <span className="text-xs opacity-60">↗</span>
             </div>
           </div>
-
-          {/* work2 — top right */}
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="g-hero-tile relative rounded-2xl overflow-hidden">
             <img src={work2} alt="" className="h-full w-full object-cover" loading="lazy" />
           </div>
-
-          {/* work1 — middle right */}
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="g-hero-tile relative rounded-2xl overflow-hidden">
             <img src={work1} alt="" className="h-full w-full object-cover" loading="lazy" />
           </div>
-
-          {/* work3 — bottom left */}
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="g-hero-tile relative rounded-2xl overflow-hidden">
             <img src={work3} alt="" className="h-full w-full object-cover" loading="lazy" />
           </div>
-
-          {/* Brand card — bottom right */}
-          <div className="relative rounded-2xl bg-gradient-brand p-5 flex flex-col justify-between text-ink">
+          <div className="g-hero-tile relative rounded-2xl bg-gradient-brand p-5 flex flex-col justify-between text-ink">
             <span className="font-display text-2xl leading-none">Loud.<br />Playful.<br />Bold.</span>
             <span className="text-xs font-medium uppercase tracking-widest">Est. Trimmic</span>
           </div>
@@ -143,14 +160,49 @@ function MarqueeBand() {
 }
 
 function Services() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Heading word reveal
+      gsap.from(".g-services-heading .g-word", {
+        scrollTrigger: { trigger: ".g-services-heading", start: "top 85%", once: true },
+        yPercent: 110,
+        duration: 0.8,
+        ease: "power4.out",
+        stagger: 0.06,
+      });
+
+      // Cards scroll-stagger reveal
+      gsap.from(".g-service-card", {
+        scrollTrigger: { trigger: ".g-services-grid", start: "top 80%", once: true },
+        opacity: 0,
+        y: 55,
+        duration: 0.7,
+        ease: "power3.out",
+        stagger: 0.07,
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="services" className="relative py-24 md:py-32">
+    <section ref={sectionRef} id="services" className="relative py-24 md:py-32">
       <div className="px-8 md:px-14 lg:px-20">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
+        <div className="g-services-heading flex flex-wrap items-end justify-between gap-6 mb-14">
           <div>
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">What we do</span>
             <h2 className="font-display mt-3 text-5xl md:text-7xl leading-[0.95]">
-              Services that <span className="font-serif-italic font-normal text-gradient-brand">slap.</span>
+              <span className="inline-block overflow-hidden align-bottom mr-3">
+                <span className="g-word inline-block">Services</span>
+              </span>
+              <span className="inline-block overflow-hidden align-bottom mr-3">
+                <span className="g-word inline-block">that</span>
+              </span>
+              <span className="inline-block overflow-hidden align-bottom">
+                <span className="g-word font-serif-italic font-normal text-gradient-brand inline-block">slap.</span>
+              </span>
             </h2>
           </div>
           <p className="max-w-md text-muted-foreground text-lg">
@@ -158,16 +210,9 @@ function Services() {
           </p>
         </div>
 
-        <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-        >
+        <div className="g-services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s, i) => (
-            <motion.div key={s.t} variants={fadeUp}>
-            <Link href={`/service/${s.slug}`} className="block">
+            <Link key={s.t} href={`/service/${s.slug}`} className="block g-service-card">
               <article className="group relative rounded-3xl border border-border bg-card p-7 overflow-hidden transition hover:-translate-y-1 hover:shadow-soft h-full">
                 <div aria-hidden className="absolute -top-20 -right-20 h-44 w-44 rounded-full bg-gradient-brand opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-60" />
                 <div className="relative flex items-start justify-between">
@@ -182,26 +227,70 @@ function Services() {
                 </div>
               </article>
             </Link>
-            </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
 function Showcase() {
+  const sectionRef = useRef<HTMLElement>(null);
   const items = [
-    { src: work1, title: "Nova Studios", tag: "Branding · Motion", span: "md:col-span-2 md:row-span-2" },
-    { src: work2, title: "Pop Beverage Co.", tag: "Campaign", span: "md:col-span-2" },
-    { src: work4, title: "Folio Atelier", tag: "Identity System", span: "" },
-    { src: work3, title: "Boomerang FM", tag: "UI / UX", span: "" },
+    { src: work1, title: "Nova Studios",     tag: "Branding · Motion", span: "md:col-span-2 md:row-span-2" },
+    { src: work2, title: "Pop Beverage Co.", tag: "Campaign",           span: "md:col-span-2" },
+    { src: work4, title: "Folio Atelier",    tag: "Identity System",    span: "" },
+    { src: work3, title: "Boomerang FM",     tag: "UI / UX",            span: "" },
   ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Heading reveal
+      gsap.from(".g-showcase-heading", {
+        scrollTrigger: { trigger: ".g-showcase-heading", start: "top 85%", once: true },
+        opacity: 0,
+        y: 40,
+        duration: 0.9,
+        ease: "power3.out",
+      });
+
+      // Work item cards: stagger from below
+      gsap.from(".g-work-item", {
+        scrollTrigger: { trigger: ".g-work-grid", start: "top 80%", once: true },
+        opacity: 0,
+        y: 50,
+        scale: 0.97,
+        duration: 0.75,
+        ease: "power3.out",
+        stagger: 0.1,
+      });
+
+      // Parallax: inner images move at 70% scroll speed
+      document.querySelectorAll<HTMLElement>(".g-work-item img").forEach((img) => {
+        gsap.fromTo(img,
+          { yPercent: -8 },
+          {
+            yPercent: 8,
+            ease: "none",
+            scrollTrigger: {
+              trigger: img.parentElement!,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.2,
+            },
+          }
+        );
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="work" className="py-24 md:py-32 bg-ink text-cream relative overflow-hidden">
+    <section ref={sectionRef} id="work" className="py-24 md:py-32 bg-ink text-cream relative overflow-hidden">
       <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-20" />
       <div className="relative px-8 md:px-14 lg:px-20">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
+        <div className="g-showcase-heading flex flex-wrap items-end justify-between gap-6 mb-14">
           <div>
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-cream/60">Selected work</span>
             <h2 className="font-display mt-3 text-5xl md:text-7xl leading-[0.95]">
@@ -215,16 +304,10 @@ function Showcase() {
           </Link>
         </div>
 
-        <motion.div
-          className="grid md:grid-cols-4 md:auto-rows-[220px] gap-4"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-        >
+        <div className="g-work-grid grid md:grid-cols-4 md:auto-rows-[220px] gap-4">
           {items.map((it, i) => (
-            <motion.a key={i} variants={fadeUp} href="#" className={`group relative rounded-3xl overflow-hidden ${it.span || ""}`}>
-              <img src={it.src} alt={it.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+            <a key={i} href="#" className={`g-work-item group relative rounded-3xl overflow-hidden ${it.span || ""}`}>
+              <img src={it.src} alt={it.title} className="h-full w-full object-cover will-change-transform" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/0 to-ink/0" />
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                 <div>
@@ -233,23 +316,73 @@ function Showcase() {
                 </div>
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cream text-ink opacity-0 group-hover:opacity-100 transition">↗</span>
               </div>
-            </motion.a>
+            </a>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
 function Manifesto() {
+  const sectionRef = useRef<HTMLElement>(null);
   const principles = [
     { n: "01", t: "Strategy first", d: "Every pixel earns its place. We design from the brief, not the mood board." },
     { n: "02", t: "Craft obsessed", d: "Kerning, timing, easing — the small stuff is the whole stuff." },
     { n: "03", t: "Brave by default", d: "Safe is forgettable. We ship work that makes people stop scrolling." },
     { n: "04", t: "Partners, not vendors", d: "We build with you, not for you. Honest, fast, allergic to fluff." },
   ];
+
+  const stats = [
+    { k: "12", suffix: "+", v: "Years in the game" },
+    { k: "60", suffix: "+", v: "Brands shipped" },
+    { k: "14", suffix: "",  v: "Awards on the shelf" },
+    { k: "∞",  suffix: "",  v: "Cups of espresso" },
+  ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Big h2 word-by-word reveal
+      gsap.from(".g-manifesto-word", {
+        scrollTrigger: { trigger: ".g-manifesto-h2", start: "top 80%", once: true },
+        yPercent: 110,
+        duration: 0.75,
+        ease: "power4.out",
+        stagger: 0.055,
+      });
+
+      // Principles cards fan in
+      gsap.from(".g-principle", {
+        scrollTrigger: { trigger: ".g-principles-grid", start: "top 82%", once: true },
+        opacity: 0,
+        x: -30,
+        duration: 0.65,
+        ease: "power3.out",
+        stagger: 0.1,
+      });
+
+      // Stats count-up
+      document.querySelectorAll<HTMLElement>(".g-stat-num").forEach((el) => {
+        const target = parseFloat(el.dataset.target || "0");
+        const suffix = el.dataset.suffix || "";
+        if (isNaN(target)) return;
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 2,
+          ease: "power2.out",
+          snap: { val: 1 },
+          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          onUpdate() { el.textContent = Math.round(obj.val) + suffix; },
+        });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="studio" className="relative overflow-hidden bg-ink text-cream py-24 md:py-32">
+    <section ref={sectionRef} id="studio" className="relative overflow-hidden bg-ink text-cream py-24 md:py-32">
       <div aria-hidden className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-gradient-brand opacity-30 blur-3xl" />
       <div aria-hidden className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-brand-pink opacity-20 blur-3xl" />
 
@@ -261,10 +394,28 @@ function Manifesto() {
 
         <div className="mt-8 grid lg:grid-cols-12 gap-10 lg:gap-16">
           <div className="lg:col-span-7">
-            <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tight">
-              A small studio
+            <h2 className="g-manifesto-h2 font-display text-6xl md:text-8xl leading-[0.9] tracking-tight">
+              {/* Line 1 */}
+              {["A", "small", "studio"].map((w) => (
+                <span key={w} className="inline-block overflow-hidden align-bottom mr-[0.22em]">
+                  <span className="g-manifesto-word inline-block">{w}</span>
+                </span>
+              ))}
               <br />
-              with <span className="font-serif-italic font-normal text-brand-yellow">loud</span> ideas.
+              {/* Line 2 */}
+              {["with"].map((w) => (
+                <span key={w} className="inline-block overflow-hidden align-bottom mr-[0.22em]">
+                  <span className="g-manifesto-word inline-block">{w}</span>
+                </span>
+              ))}
+              <span className="inline-block overflow-hidden align-bottom mr-[0.22em]">
+                <span className="g-manifesto-word font-serif-italic font-normal text-brand-yellow inline-block">loud</span>
+              </span>
+              {["ideas."].map((w) => (
+                <span key={w} className="inline-block overflow-hidden align-bottom">
+                  <span className="g-manifesto-word inline-block">{w}</span>
+                </span>
+              ))}
             </h2>
           </div>
           <div className="lg:col-span-5 lg:pt-6">
@@ -275,9 +426,9 @@ function Manifesto() {
           </div>
         </div>
 
-        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-cream/10 border border-cream/10 rounded-3xl overflow-hidden">
+        <div className="g-principles-grid mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-cream/10 border border-cream/10 rounded-3xl overflow-hidden">
           {principles.map((p) => (
-            <div key={p.n} className="bg-ink p-8 hover:bg-cream/[0.04] transition-colors group">
+            <div key={p.n} className="g-principle bg-ink p-8 hover:bg-cream/[0.04] transition-colors group">
               <div className="flex items-baseline justify-between">
                 <span className="font-display text-4xl text-cream/30 group-hover:text-brand-yellow transition-colors">{p.n}</span>
                 <span className="h-2 w-2 rounded-full bg-brand-green" />
@@ -288,53 +439,71 @@ function Manifesto() {
           ))}
         </div>
 
-        <motion.div
-          className="mt-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-t border-cream/10 pt-10"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-40px" }}
-        >
-          {[
-            { k: "12+", v: "Years in the game" },
-            { k: "60+", v: "Brands shipped" },
-            { k: "14", v: "Awards on the shelf" },
-            { k: "∞", v: "Cups of espresso" },
-          ].map((s) => (
-            <motion.div key={s.v} variants={fadeUp}>
-              <div className="font-display text-5xl md:text-6xl text-cream">{s.k}</div>
+        <div className="mt-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-t border-cream/10 pt-10">
+          {stats.map((s) => (
+            <div key={s.v}>
+              {s.k === "∞" ? (
+                <div className="font-display text-5xl md:text-6xl text-cream">∞</div>
+              ) : (
+                <div
+                  className="g-stat-num font-display text-5xl md:text-6xl text-cream"
+                  data-target={s.k}
+                  data-suffix={s.suffix}
+                >
+                  0{s.suffix}
+                </div>
+              )}
               <div className="text-xs uppercase tracking-[0.2em] text-cream/50 mt-2">{s.v}</div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
 function Billboard() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".g-billboard-inner", {
+        scrollTrigger: { trigger: ".g-billboard-inner", start: "top 85%", once: true },
+        clipPath: "inset(100% 0 0 0)",
+        duration: 1.2,
+        ease: "power4.inOut",
+      });
+
+      gsap.from(".g-billboard-text", {
+        scrollTrigger: { trigger: ".g-billboard-inner", start: "top 75%", once: true },
+        opacity: 0,
+        y: 32,
+        duration: 0.9,
+        ease: "power3.out",
+        stagger: 0.12,
+        delay: 0.3,
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-20 md:py-28 bg-cream">
+    <section ref={sectionRef} className="py-20 md:py-28 bg-cream">
       <div className="px-8 md:px-14 lg:px-20">
-        <div className="relative rounded-[2rem] overflow-hidden bg-ink p-10 md:p-16 text-cream">
+        <div className="g-billboard-inner relative rounded-[2rem] overflow-hidden bg-ink p-10 md:p-16 text-cream">
           <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-30" />
-          <motion.div
-            className="relative"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-60px" }}
-          >
-            <motion.span variants={fadeUp} className="text-xs font-medium uppercase tracking-[0.2em] text-cream/60">No. 08 / Studio Note</motion.span>
-            <motion.p variants={fadeUp} className="font-display mt-6 text-4xl md:text-6xl lg:text-7xl leading-[1.02] max-w-5xl">
+          <div className="relative">
+            <span className="g-billboard-text text-xs font-medium uppercase tracking-[0.2em] text-cream/60">No. 08 / Studio Note</span>
+            <p className="g-billboard-text font-display mt-6 text-4xl md:text-6xl lg:text-7xl leading-[1.02] max-w-5xl">
               Let's make magic that{" "}
               <span className="font-serif-italic font-normal text-gradient-brand">feels like tomorrow.</span>
-            </motion.p>
-            <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-cream/70 text-lg">
+            </p>
+            <p className="g-billboard-text mt-6 max-w-2xl text-cream/70 text-lg">
               Warning: working with us may cause design addiction, sudden bursts of confidence,
               and a permanent allergy to boring brand decks.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -392,7 +561,7 @@ function ContactForm() {
       )}
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium uppercase tracking-widest text-muted-foreground mb-2">Your name *</label>
+          <label className="block text-xs font-medium uppercase tracking-widests text-muted-foreground mb-2">Your name *</label>
           <input required name="name" value={form.name} onChange={handleChange} placeholder="Alex Johnson" className={inputCls} />
         </div>
         <div>
@@ -447,12 +616,35 @@ function ContactForm() {
 }
 
 function CTA() {
+  const sectionRef = useRef<HTMLElement>(null);
   const whatsapp = "923472551975";
   const waUrl = `https://wa.me/${whatsapp}?text=${encodeURIComponent("Hi Trimmic! I'd like to discuss a project.")}`;
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".g-cta-left", {
+        scrollTrigger: { trigger: ".g-cta-left", start: "top 82%", once: true },
+        opacity: 0,
+        x: -40,
+        duration: 0.9,
+        ease: "power3.out",
+      });
+      gsap.from(".g-cta-right", {
+        scrollTrigger: { trigger: ".g-cta-right", start: "top 82%", once: true },
+        opacity: 0,
+        x: 40,
+        duration: 0.9,
+        ease: "power3.out",
+        delay: 0.1,
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
-      <section id="contact" className="py-24 md:py-32 relative overflow-hidden bg-background">
+      <section ref={sectionRef} id="contact" className="py-24 md:py-32 relative overflow-hidden bg-background">
         <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-40" />
         <div aria-hidden className="absolute -top-32 -left-32 h-[500px] w-[500px] rounded-full bg-gradient-brand opacity-20 blur-3xl" />
 
@@ -460,7 +652,7 @@ function CTA() {
           <div className="grid lg:grid-cols-12 gap-14 lg:gap-20">
 
             {/* Left — info */}
-            <div className="lg:col-span-5 flex flex-col justify-between gap-12">
+            <div className="g-cta-left lg:col-span-5 flex flex-col justify-between gap-12">
               <div>
                 <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">Let's talk</span>
                 <h2 className="font-display mt-4 text-5xl md:text-6xl lg:text-7xl leading-[0.95]">
@@ -523,7 +715,7 @@ function CTA() {
             </div>
 
             {/* Right — form */}
-            <div className="lg:col-span-7">
+            <div className="g-cta-right lg:col-span-7">
               <div className="rounded-3xl border border-border bg-card/60 backdrop-blur p-8 md:p-10">
                 <div className="mb-8">
                   <h3 className="font-display text-3xl">Start a project</h3>
@@ -582,7 +774,7 @@ function Footer() {
             </ul>
           </div>
           <div className="md:col-span-3">
-            <div className="text-xs uppercase tracking-widest text-cream/50 mb-4">Say hi</div>
+            <div className="text-xs uppercase tracking-widests text-cream/50 mb-4">Say hi</div>
             <a href="mailto:hello@trimmic.com" className="font-display text-2xl text-gradient-brand">hello@trimmic.com</a>
             <p className="mt-3 text-cream/70 text-sm">+92 347 255 1975</p>
           </div>
