@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link, Route, Switch, useLocation } from "wouter";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import SaasVideoPage from "./pages/saas-video";
 import ServicePage from "./pages/service-page";
@@ -854,6 +855,7 @@ export default function App() {
         </Route>
         <Route path="*" component={NotFound} />
       </Switch>
+      <SpeedInsights />
     </div>
   );
 }
