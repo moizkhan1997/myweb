@@ -12,13 +12,14 @@ export function LogoWhite() {
 
 export function Nav() {
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(1200px,calc(100%-2rem))]">
+    <header className="fixed top-4 left-4 right-4 z-50">
       <nav className="flex items-center justify-between gap-4 rounded-full border border-border/60 bg-background/70 px-3 py-2 pl-5 backdrop-blur-xl shadow-soft">
         <Link href="/" className="flex items-center gap-2">
           <LogoBlack />
         </Link>
         <ul className="hidden md:flex items-center gap-7 text-sm font-medium">
           <li><a href="/#work" className="hover:text-foreground/60 transition">Work</a></li>
+          <li><Link href="/portfolio" className="hover:text-foreground/60 transition">Portfolio</Link></li>
           <li><a href="/#services" className="hover:text-foreground/60 transition">Services</a></li>
           <li><a href="/#studio" className="hover:text-foreground/60 transition">Studio</a></li>
           <li><a href="/#contact" className="hover:text-foreground/60 transition">Contact</a></li>

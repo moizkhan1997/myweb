@@ -1,8 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Link, Route, Switch } from "wouter";
+import { motion } from "framer-motion";
+import { Link, Route, Switch, useLocation } from "wouter";
 
 import SaasVideoPage from "./pages/saas-video";
 import ServicePage from "./pages/service-page";
+import PortfolioPage from "./pages/portfolio";
+import AdminPage from "./pages/admin";
 import NotFound from "./pages/not-found";
 import heroBlob from "@assets/hero-blob_1781021356323.jpg";
 import work1 from "@assets/work-1_1781021356324.jpg";
@@ -26,71 +29,99 @@ const services = [
 
 const marqueeWords = ["SaaS Videos", "★", "Shorts", "★", "UGC", "★", "YouTube Videos", "★", "Digital Marketing", "★", "Content Creation", "★", "Social Media Management", "★", "Branding", "★", "Explainer Videos", "★", "Motion Graphics", "★"];
 
+const ease = [0.22, 1, 0.36, 1] as const;
+const fadeUp = {
+  hidden: { opacity: 0, y: 32 },
+  show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.65, ease, delay: i * 0.1 } }),
+};
+const staggerContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+};
+
 
 function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
-      <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-70" />
-      <div aria-hidden className="absolute -top-32 -right-40 h-[640px] w-[640px] rounded-full bg-gradient-brand opacity-30 blur-3xl" />
+    <section id="top" className="relative overflow-hidden flex flex-col lg:flex-row min-h-screen">
+      <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-70 pointer-events-none" />
+      <div aria-hidden className="absolute -top-32 left-0 h-[700px] w-[700px] rounded-full bg-gradient-brand opacity-20 blur-3xl pointer-events-none" />
 
-      <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7">
-            <h1 className="font-display mt-6 text-[clamp(2.75rem,7vw,6.5rem)] leading-[0.95]">
-              We don't just make videos.
-              <br />
-              We make{" "}
-              <span className="font-serif-italic font-normal text-gradient-brand">'damn'</span>{" "}
-              good ones.
-            </h1>
-            <p className="mt-7 max-w-xl text-lg text-muted-foreground leading-relaxed">
-              We don't just edit videos — we breathe life into them. Motion graphics, SaaS videos, and 2D animation that stops the scroll and starts the sale.
-            </p>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-cream px-7 py-4 text-base font-medium hover:bg-ink/90 transition">
-                Start a Project
-                <span>→</span>
-              </a>
-              <a href="#work" className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-background/60 backdrop-blur px-7 py-4 text-base font-medium hover:bg-ink/5 transition">
-                See the Work
-              </a>
-            </div>
-            <div className="mt-10 flex items-center gap-5">
-              <div className="flex -space-x-2">
-                {[work1, work3, work4].map((s, i) => (
-                  <img key={i} src={s} alt="" className="h-10 w-10 rounded-full object-cover border-2 border-background" />
-                ))}
-              </div>
-              <div className="text-sm">
-                <div className="font-display text-lg">200+ damn-good projects</div>
-                <div className="text-muted-foreground">shipped for brands worldwide</div>
-              </div>
+      {/* Left — text, flush to left edge */}
+      <motion.div
+        className="relative z-10 flex flex-col w-full lg:w-[52%] px-8 md:px-14 lg:px-20 pt-32 pb-16 lg:pt-36 lg:pb-20"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.h1 variants={fadeUp} className="font-display text-[clamp(2.75rem,5.5vw,5.5rem)] leading-[0.95]">
+          We don't just make videos.
+          <br />
+          We make{" "}
+          <span className="font-serif-italic font-normal text-gradient-brand">'damn'</span>{" "}
+          good ones.
+        </motion.h1>
+        <motion.p variants={fadeUp} className="mt-7 max-w-lg text-lg text-muted-foreground leading-relaxed">
+          We don't just edit videos — we breathe life into them. Motion graphics, SaaS videos, and 2D animation that stops the scroll and starts the sale.
+        </motion.p>
+        <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-3">
+          <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-cream px-7 py-4 text-base font-medium hover:bg-ink/90 transition">
+            Start a Project <span>→</span>
+          </a>
+          <a href="#work" className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-background/60 backdrop-blur px-7 py-4 text-base font-medium hover:bg-ink/5 transition">
+            See the Work
+          </a>
+        </motion.div>
+        <motion.div variants={fadeUp} className="mt-10 flex items-center gap-5">
+          <div className="flex -space-x-2">
+            {[work1, work3, work4].map((s, i) => (
+              <img key={i} src={s} alt="" className="h-10 w-10 rounded-full object-cover border-2 border-background" />
+            ))}
+          </div>
+          <div className="text-sm">
+            <div className="font-display text-lg">200+ damn-good projects</div>
+            <div className="text-muted-foreground">shipped for brands worldwide</div>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Right — image mosaic flush to right edge */}
+      <div className="relative flex-1 min-h-[520px] lg:min-h-screen">
+        <div
+          className="absolute inset-0 pl-3 pr-8 md:pr-14 lg:pr-20 pt-32 pb-16 lg:pt-36 lg:pb-20 grid gap-3"
+          style={{ gridTemplateColumns: "3fr 2fr", gridTemplateRows: "repeat(3, 1fr)" }}
+        >
+          {/* heroBlob — dominant, spans top 2 rows on the left */}
+          <div className="row-span-2 relative rounded-2xl overflow-hidden bg-ink">
+            <img
+              src={heroBlob}
+              alt="Liquid gradient blob"
+              className="absolute inset-0 h-full w-full object-cover animate-float-y"
+            />
+            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-cream">
+              <span className="font-display text-base leading-tight">Magic that feels<br />like tomorrow.</span>
+              <span className="text-xs opacity-60">↗</span>
             </div>
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="grid grid-cols-6 grid-rows-6 gap-3 h-[560px] md:h-[620px]">
-              <div className="col-span-4 row-span-3 relative rounded-3xl overflow-hidden bg-ink">
-                <img src={heroBlob} alt="Liquid gradient blob" className="absolute inset-0 h-full w-full object-cover animate-float-y" />
-                <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-cream">
-                  <span className="font-display text-sm leading-tight">Magic that feels<br />like tomorrow.</span>
-                  <span className="text-xs opacity-70">↗</span>
-                </div>
-              </div>
-              <div className="col-span-2 row-span-3 rounded-3xl overflow-hidden">
-                <img src={work2} alt="POP gradient typography" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div className="col-span-2 row-span-3 rounded-3xl overflow-hidden">
-                <img src={work1} alt="Designer at work" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div className="col-span-2 row-span-3 rounded-3xl overflow-hidden">
-                <img src={work3} alt="Creative team" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div className="col-span-2 row-span-3 rounded-3xl bg-gradient-brand p-5 flex flex-col justify-between text-ink">
-                <span className="font-display text-2xl leading-none">Loud.<br />Playful.<br />Bold.</span>
-                <span className="text-xs font-medium uppercase tracking-widest">Est. Trimmic</span>
-              </div>
-            </div>
+          {/* work2 — top right */}
+          <div className="relative rounded-2xl overflow-hidden">
+            <img src={work2} alt="" className="h-full w-full object-cover" loading="lazy" />
+          </div>
+
+          {/* work1 — middle right */}
+          <div className="relative rounded-2xl overflow-hidden">
+            <img src={work1} alt="" className="h-full w-full object-cover" loading="lazy" />
+          </div>
+
+          {/* work3 — bottom left */}
+          <div className="relative rounded-2xl overflow-hidden">
+            <img src={work3} alt="" className="h-full w-full object-cover" loading="lazy" />
+          </div>
+
+          {/* Brand card — bottom right */}
+          <div className="relative rounded-2xl bg-gradient-brand p-5 flex flex-col justify-between text-ink">
+            <span className="font-display text-2xl leading-none">Loud.<br />Playful.<br />Bold.</span>
+            <span className="text-xs font-medium uppercase tracking-widest">Est. Trimmic</span>
           </div>
         </div>
       </div>
@@ -114,7 +145,7 @@ function MarqueeBand() {
 function Services() {
   return (
     <section id="services" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="px-8 md:px-14 lg:px-20">
         <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
           <div>
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">What we do</span>
@@ -127,9 +158,16 @@ function Services() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {services.map((s, i) => (
-            <Link key={s.t} href={`/service/${s.slug}`} className="block">
+            <motion.div key={s.t} variants={fadeUp}>
+            <Link href={`/service/${s.slug}`} className="block">
               <article className="group relative rounded-3xl border border-border bg-card p-7 overflow-hidden transition hover:-translate-y-1 hover:shadow-soft h-full">
                 <div aria-hidden className="absolute -top-20 -right-20 h-44 w-44 rounded-full bg-gradient-brand opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-60" />
                 <div className="relative flex items-start justify-between">
@@ -144,8 +182,9 @@ function Services() {
                 </div>
               </article>
             </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -161,7 +200,7 @@ function Showcase() {
   return (
     <section id="work" className="py-24 md:py-32 bg-ink text-cream relative overflow-hidden">
       <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-20" />
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative px-8 md:px-14 lg:px-20">
         <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
           <div>
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-cream/60">Selected work</span>
@@ -171,14 +210,20 @@ function Showcase() {
               <span className="font-serif-italic font-normal">&amp; come alive.</span>
             </h2>
           </div>
-          <a href="#contact" className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-5 py-3 text-sm font-medium hover:bg-cream hover:text-ink transition">
+          <Link href="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-5 py-3 text-sm font-medium hover:bg-cream hover:text-ink transition">
             View Portfolio →
-          </a>
+          </Link>
         </div>
 
-        <div className="grid md:grid-cols-4 md:auto-rows-[220px] gap-4">
+        <motion.div
+          className="grid md:grid-cols-4 md:auto-rows-[220px] gap-4"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+        >
           {items.map((it, i) => (
-            <a key={i} href="#" className={`group relative rounded-3xl overflow-hidden ${it.span || ""}`}>
+            <motion.a key={i} variants={fadeUp} href="#" className={`group relative rounded-3xl overflow-hidden ${it.span || ""}`}>
               <img src={it.src} alt={it.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/0 to-ink/0" />
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
@@ -188,9 +233,9 @@ function Showcase() {
                 </div>
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cream text-ink opacity-0 group-hover:opacity-100 transition">↗</span>
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -208,7 +253,7 @@ function Manifesto() {
       <div aria-hidden className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-gradient-brand opacity-30 blur-3xl" />
       <div aria-hidden className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-brand-pink opacity-20 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative px-8 md:px-14 lg:px-20">
         <div className="flex items-center gap-3">
           <span className="h-px w-10 bg-cream/40" />
           <span className="text-xs font-medium uppercase tracking-[0.25em] text-cream/60">The studio · Est. since forever</span>
@@ -243,19 +288,25 @@ function Manifesto() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-t border-cream/10 pt-10">
+        <motion.div
+          className="mt-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-t border-cream/10 pt-10"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-40px" }}
+        >
           {[
             { k: "12+", v: "Years in the game" },
             { k: "60+", v: "Brands shipped" },
             { k: "14", v: "Awards on the shelf" },
             { k: "∞", v: "Cups of espresso" },
           ].map((s) => (
-            <div key={s.v}>
+            <motion.div key={s.v} variants={fadeUp}>
               <div className="font-display text-5xl md:text-6xl text-cream">{s.k}</div>
               <div className="text-xs uppercase tracking-[0.2em] text-cream/50 mt-2">{s.v}</div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -264,20 +315,26 @@ function Manifesto() {
 function Billboard() {
   return (
     <section className="py-20 md:py-28 bg-cream">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="px-8 md:px-14 lg:px-20">
         <div className="relative rounded-[2rem] overflow-hidden bg-ink p-10 md:p-16 text-cream">
           <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-30" />
-          <div className="relative">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-cream/60">No. 08 / Studio Note</span>
-            <p className="font-display mt-6 text-4xl md:text-6xl lg:text-7xl leading-[1.02] max-w-5xl">
+          <motion.div
+            className="relative"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-60px" }}
+          >
+            <motion.span variants={fadeUp} className="text-xs font-medium uppercase tracking-[0.2em] text-cream/60">No. 08 / Studio Note</motion.span>
+            <motion.p variants={fadeUp} className="font-display mt-6 text-4xl md:text-6xl lg:text-7xl leading-[1.02] max-w-5xl">
               Let's make magic that{" "}
               <span className="font-serif-italic font-normal text-gradient-brand">feels like tomorrow.</span>
-            </p>
-            <p className="mt-6 max-w-2xl text-cream/70 text-lg">
+            </motion.p>
+            <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-cream/70 text-lg">
               Warning: working with us may cause design addiction, sudden bursts of confidence,
               and a permanent allergy to boring brand decks.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -399,7 +456,7 @@ function CTA() {
         <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-40" />
         <div aria-hidden className="absolute -top-32 -left-32 h-[500px] w-[500px] rounded-full bg-gradient-brand opacity-20 blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-6">
+        <div className="relative px-8 md:px-14 lg:px-20">
           <div className="grid lg:grid-cols-12 gap-14 lg:gap-20">
 
             {/* Left — info */}
@@ -500,7 +557,7 @@ function CTA() {
 function Footer() {
   return (
     <footer className="bg-ink text-cream pt-20 pb-10">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="px-8 md:px-14 lg:px-20">
         <div className="grid md:grid-cols-12 gap-10">
           <div className="md:col-span-5">
             <LogoWhite />
@@ -540,10 +597,17 @@ function Footer() {
 }
 
 export default function App() {
+  const [location] = useLocation();
+
+  if (location.startsWith("/admin")) {
+    return <AdminPage />;
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
       <Switch>
+        <Route path="/portfolio" component={PortfolioPage} />
         <Route path="/service/saas-videos" component={SaasVideoPage} />
         <Route path="/service/:slug" component={ServicePage} />
         <Route path="/">

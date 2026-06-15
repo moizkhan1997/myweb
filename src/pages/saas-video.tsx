@@ -1,6 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Nav } from "@/components/nav";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
+
+type CmsItem = {
+  id: number; title: string; client: string; category: string;
+  tall: boolean; imageUrl: string | null; videoUrl: string; description: string;
+};
+
+function getYouTubeId(url: string) {
+  const m = url.match(/[?&]v=([^&]+)/) || url.match(/youtu\.be\/([^?]+)/);
+  return m ? m[1] : null;
+}
 
 const WHY_US: { n: string; title: string; body: string }[] = [
   { n: "01", title: "Story Before Script", body: "We start with your product, your users, and your goals. Every video begins with strategy — not a blank timeline." },
@@ -158,7 +168,7 @@ function Hero() {
         <div className="absolute left-1/2 top-56 h-1 w-64 -translate-x-1/2 rounded-full bg-[#4bbfae]/30 blur-2xl" aria-hidden />
       </div>
 
-      <div className="relative z-10 flex min-h-[100svh] flex-col justify-center px-6 pt-32 pb-20 sm:px-16">
+      <div className="relative z-10 flex min-h-[100svh] flex-col justify-center px-8 md:px-14 lg:px-20 pt-32 pb-20">
         <div className="max-w-3xl">
           <p className="text-xs uppercase tracking-[0.35em] text-white/50">SaaS video production</p>
           <h1 className="font-display mt-6 text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
@@ -203,7 +213,7 @@ function Showreel() {
   };
 
   return (
-    <section id="our-process" className="px-4 py-24 sm:px-10 sm:py-32">
+    <section id="our-process" className="px-8 md:px-14 lg:px-20 py-24 sm:py-32">
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
         <div>
           <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
@@ -261,8 +271,8 @@ function Showreel() {
 
 function WhyUs() {
   return (
-    <section className="px-4 py-24 sm:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section className="px-8 md:px-14 lg:px-20 py-24">
+      <div className="w-full">
         <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
           Why Us?
         </span>
@@ -290,8 +300,8 @@ function WhyUs() {
 
 function Pricing() {
   return (
-    <section id="pricing" className="px-4 py-24 sm:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section id="pricing" className="px-8 md:px-14 lg:px-20 py-24">
+      <div className="w-full">
         <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
           Pricing
         </span>
@@ -341,9 +351,21 @@ function Pricing() {
 }
 
 function PreviousWork() {
+  const [cmsItems, setCmsItems] = useState<CmsItem[]>([]);
+
+  useEffect(() => {
+    fetch("/portfolio-data.json?" + Date.now())
+      .then(r => r.json())
+      .then(d => {
+        const filtered = (d.items || []).filter((i: CmsItem) => i.category === "SaaS Videos");
+        setCmsItems(filtered);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
-    <section id="previous-work" className="px-4 py-24 sm:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section id="previous-work" className="px-8 md:px-14 lg:px-20 py-24">
+      <div className="w-full">
         <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
           Previous Work
         </span>
@@ -353,12 +375,76 @@ function PreviousWork() {
           <span className="font-serif-italic font-normal text-[color:var(--brand-yellow)]">everything.</span>
         </h2>
         <div className="mt-14 grid gap-6 md:grid-cols-2">
-          {WORK.map((w) => (
-            <WorkCard key={w.title} {...w} />
-          ))}
+          {cmsItems.length > 0
+            ? cmsItems.map((item) => <CmsWorkCard key={item.id} item={item} />)
+            : WORK.map((w) => <WorkCard key={w.title} {...w} />)
+          }
         </div>
       </div>
     </section>
+  );
+}
+
+function VideoModal({ item, onClose }: { item: CmsItem; onClose: () => void }) {
+  const ytId = item.videoUrl ? getYouTubeId(item.videoUrl) : null;
+  const isDirectVideo = item.videoUrl && /\.(mp4|mov|webm)$/i.test(item.videoUrl);
+  const isUploadedVideo = item.imageUrl && /\.(mp4|mov|webm)$/i.test(item.imageUrl);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [onClose]);
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4" onClick={onClose}>
+      <button onClick={onClose} className="absolute top-5 right-5 h-11 w-11 rounded-full bg-white/10 text-white hover:bg-white/20 transition flex items-center justify-center text-xl z-10">✕</button>
+      <div className="relative w-full max-w-5xl" style={{ aspectRatio: "16/9" }} onClick={e => e.stopPropagation()}>
+        {ytId ? (
+          <iframe src={`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`} className="h-full w-full rounded-2xl" allow="autoplay; fullscreen" allowFullScreen />
+        ) : isDirectVideo ? (
+          <video src={item.videoUrl} className="h-full w-full rounded-2xl" controls autoPlay />
+        ) : isUploadedVideo ? (
+          <video src={item.imageUrl!} className="h-full w-full rounded-2xl" controls autoPlay />
+        ) : (
+          <div className="h-full w-full rounded-2xl bg-black flex items-center justify-center text-white/40">No video available</div>
+        )}
+      </div>
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
+        <p className="font-display text-xl text-white">{item.title}</p>
+        {item.client && <p className="text-sm text-white/50 mt-1">{item.client}</p>}
+      </div>
+    </div>
+  );
+}
+
+function CmsWorkCard({ item }: { item: CmsItem }) {
+  const [open, setOpen] = useState(false);
+  const ytId = item.videoUrl ? getYouTubeId(item.videoUrl) : null;
+  const thumb = item.imageUrl || (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : null);
+  return (
+    <>
+      {open && <VideoModal item={item} onClose={() => setOpen(false)} />}
+      <div
+        className="group relative aspect-video overflow-hidden rounded-3xl cursor-pointer"
+        style={!thumb ? { backgroundImage: "linear-gradient(135deg,var(--brand-yellow) 0%,#1a1a1a 100%)" } : undefined}
+        onClick={() => setOpen(true)}
+      >
+        {thumb && (
+          /\.(mp4|mov|webm)$/i.test(thumb)
+            ? <video src={thumb} className="absolute inset-0 h-full w-full object-cover" muted loop playsInline autoPlay />
+            : <img src={thumb} alt={item.title} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6">
+          <div>
+            <h3 className="font-display text-2xl text-white sm:text-3xl">{item.title}</h3>
+            {item.client && <p className="text-sm text-white/50 mt-0.5">{item.client}</p>}
+          </div>
+          <span className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">{item.category}</span>
+        </div>
+        <div className="absolute top-4 right-4 h-11 w-11 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition text-sm">▶</div>
+      </div>
+    </>
   );
 }
 
@@ -397,8 +483,8 @@ function Testimonials() {
   );
 
   return (
-    <section id="testimonials" className="px-4 py-24 sm:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section id="testimonials" className="px-8 md:px-14 lg:px-20 py-24">
+      <div className="w-full">
         <span className="inline-block rounded-full bg-black/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
           Testimonials
         </span>
@@ -428,7 +514,7 @@ function Testimonials() {
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="px-4 py-24 sm:px-10">
+    <section id="faq" className="px-8 md:px-14 lg:px-20 py-24">
       <div className="mx-auto max-w-4xl">
         <h2 className="font-display text-5xl leading-[0.95] sm:text-6xl md:text-7xl">
           Frequently Asked{" "}

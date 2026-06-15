@@ -1,3 +1,20 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="180" height="180" rx="36" fill="#FF3C00"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
+  <defs>
+    <style>
+      .st0 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="34.58" y1="154.62" x2="125.53" y2="3.26" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffbf40"/>
+      <stop offset=".05" stop-color="#feb94c"/>
+      <stop offset=".14" stop-color="#fea96c"/>
+      <stop offset=".25" stop-color="#fd8fa0"/>
+      <stop offset=".35" stop-color="#fd76d4"/>
+      <stop offset=".73" stop-color="#83dd6c"/>
+      <stop offset="1" stop-color="#0ad5b8"/>
+    </linearGradient>
+  </defs>
+  <path class="st0" d="M99.27,180h-22.46v-54.02c-.3-5.58-1.27-14.85-2.51-18.58-2.73-8.15-10.17-15.63-20.42-20.51-8.45-4.03-27.72-8.04-34.43-9.25l-9.8-1.76c-3.52-.63-5.19-4.71-3.13-7.64l23.02-32.62c1.33-1.89,3.5-3.01,5.81-3.01h139.03v22.46H43.3l-2.87,4.07c7.94,1.94,16.95,4.52,23.11,7.46,15.96,7.61,27.34,19.57,32.06,33.67,2.69,8.03,3.52,22.09,3.66,24.83v.57s.01,54.32.01,54.32Z"/>
 </svg>
