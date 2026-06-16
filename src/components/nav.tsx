@@ -13,7 +13,7 @@ export function LogoWhite() {
 export function Nav() {
   return (
     <header className="fixed top-4 left-4 right-4 z-50">
-      <nav className="flex items-center justify-between gap-4 rounded-full border border-border/60 bg-background/70 px-3 py-2 pl-5 backdrop-blur-xl shadow-soft">
+      <nav className="flex items-center justify-between gap-4 rounded-full border border-border/60 bg-[oklch(0.97_0.015_80/0.96)] px-3 py-2 pl-5 backdrop-blur-xl shadow-soft">
         <Link href="/" className="flex items-center gap-2">
           <LogoBlack />
         </Link>

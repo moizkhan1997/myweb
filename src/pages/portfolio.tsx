@@ -226,7 +226,7 @@ export default function PortfolioPage() {
             <span className="block overflow-hidden pb-1">
               <span className="g-pf-hero-line block">A never-ending stream</span>
             </span>
-            <span className="block overflow-hidden pb-1">
+            <span className="block overflow-hidden pb-4">
               <span className="g-pf-hero-line block">
                 of{" "}
                 <span className="font-serif-italic font-normal text-gradient-brand">damn-good</span>{" "}
