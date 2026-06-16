@@ -8,7 +8,9 @@ import ServicePage from "./pages/service-page";
 import PortfolioPage from "./pages/portfolio";
 import AdminPage from "./pages/admin";
 import NotFound from "./pages/not-found";
-import heroBlob from "@assets/hero-blob_1781021356323.jpg";
+import CaseStudyTrimmic from "./pages/case-study-trimmic";
+import SocialContentPage from "./pages/social-content";
+import LogoAnimationPage from "./pages/logo-animation";
 import work1 from "@assets/work-1_1781021356324.jpg";
 import work2 from "@assets/work-2_1781021356324.jpg";
 import work3 from "@assets/work-3_1781021356324.jpg";
@@ -65,14 +67,14 @@ function ScrollToTop() {
 
 const services = [
   { n: "01", t: "SaaS Videos",            slug: "saas-videos",            d: "Product demos, feature walkthroughs, and onboarding videos that convert trials into customers." },
-  { n: "02", t: "Shorts",                  slug: "shorts",                  d: "TikTok, Reels, and Shorts engineered for scroll-stopping hook — and algorithmic growth." },
+  { n: "02", t: "Shorts",                  slug: "shorts",                  d: "TikTok, Reels, and Shorts engineered for scroll-stopping hooks and algorithmic growth." },
   { n: "03", t: "UGC",                     slug: "ugc",                     d: "Raw, authentic, user-generated content that feels organic and converts like paid media." },
   { n: "04", t: "YouTube Videos",          slug: "youtube-videos",          d: "Long-form content, thumbnails, and pacing that builds subscribers and watch time." },
   { n: "05", t: "Digital Marketing",       slug: "digital-marketing",       d: "Paid creative, ad variants, and funnel content that turns impressions into revenue." },
-  { n: "06", t: "Content Creation",        slug: "content-creation",        d: "Everything from brand blogs to LinkedIn carousels to pitch decks — all on-brand." },
+  { n: "06", t: "Content Creation",        slug: "content-creation",        d: "Everything from brand blogs to LinkedIn carousels to pitch decks. All on-brand." },
   { n: "07", t: "Social Media Management", slug: "social-media-management", d: "Posting calendars, engagement strategy, and community building that keeps your brand alive." },
   { n: "08", t: "Branding",               slug: "branding",                d: "Identities that don't blend in. Logos, systems, and stories with a pulse." },
-  { n: "09", t: "Explainer Videos",        slug: "explainer-videos",        d: "Complex ideas, simply told — animated, narrated, and impossible to ignore." },
+  { n: "09", t: "Explainer Videos",        slug: "explainer-videos",        d: "Complex ideas, simply told. Animated, narrated, and impossible to ignore." },
   { n: "10", t: "Motion Graphics",         slug: "motion-graphics",         d: "Type that dances, shapes that swing. Motion that earns the rewind." },
 ];
 
@@ -137,7 +139,7 @@ function Hero() {
           </span>
         </h1>
         <p className="g-hero-sub mt-7 max-w-lg text-lg text-muted-foreground leading-relaxed">
-          We don't just edit videos — we breathe life into them. Motion graphics, SaaS videos, and 2D animation that stops the scroll and starts the sale.
+          We don't just edit videos. We breathe life into them. Motion graphics, SaaS videos, and 2D animation that stops the scroll and starts the sale.
         </p>
         <div className="g-hero-sub mt-9 flex flex-wrap items-center gap-3">
           <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-cream px-7 py-4 text-base font-medium hover:bg-ink/90 transition">
@@ -167,24 +169,39 @@ function Hero() {
           style={{ gridTemplateColumns: "3fr 2fr", gridTemplateRows: "repeat(3, 1fr)" }}
         >
           <div className="g-hero-tile row-span-2 relative rounded-2xl overflow-hidden bg-ink">
-            <img src={heroBlob} alt="Liquid gradient blob" className="absolute inset-0 h-full w-full object-cover animate-float-y" />
+            <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover">
+              <source src="/videos/Chrag.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-cream">
               <span className="font-display text-base leading-tight">Magic that feels<br />like tomorrow.</span>
               <span className="text-xs opacity-60">↗</span>
             </div>
           </div>
           <div className="g-hero-tile relative rounded-2xl overflow-hidden">
-            <img src={work2} alt="" className="h-full w-full object-cover" loading="lazy" />
+            <video autoPlay muted loop playsInline className="h-full w-full object-cover">
+              <source src="/videos/Crypto.mp4" type="video/mp4" />
+            </video>
           </div>
           <div className="g-hero-tile relative rounded-2xl overflow-hidden">
-            <img src={work1} alt="" className="h-full w-full object-cover" loading="lazy" />
+            <video autoPlay muted loop playsInline className="h-full w-full object-cover">
+              <source src="/videos/Jeremy.mp4" type="video/mp4" />
+            </video>
           </div>
           <div className="g-hero-tile relative rounded-2xl overflow-hidden">
-            <img src={work3} alt="" className="h-full w-full object-cover" loading="lazy" />
+            <video autoPlay muted loop playsInline className="h-full w-full object-cover">
+              <source src="/videos/NextChatbot.mp4" type="video/mp4" />
+            </video>
           </div>
-          <div className="g-hero-tile relative rounded-2xl bg-gradient-brand p-5 flex flex-col justify-between text-ink">
-            <span className="font-display text-2xl leading-none">Loud.<br />Playful.<br />Bold.</span>
-            <span className="text-xs font-medium uppercase tracking-widest">Est. Trimmic</span>
+          <div className="g-hero-tile relative rounded-2xl overflow-hidden">
+            <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover">
+              <source src="/videos/travel-booster.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-brand opacity-60" />
+            <div className="relative h-full p-5 flex flex-col justify-between text-ink">
+              <span className="font-display text-2xl leading-none">Loud.<br />Playful.<br />Bold.</span>
+              <span className="text-xs font-medium uppercase tracking-widest">Est. Trimmic</span>
+            </div>
           </div>
         </div>
       </div>
@@ -252,7 +269,7 @@ function Services() {
             </h2>
           </div>
           <p className="max-w-md text-muted-foreground text-lg">
-            Ten disciplines, one studio, zero predictability. Pick a lane — or let us drive.
+            Ten disciplines, one studio, zero predictability. Pick a lane. Or let us drive.
           </p>
         </div>
 
@@ -283,10 +300,9 @@ function Services() {
 function Showcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const items = [
-    { src: work1, title: "Nova Studios",     tag: "Branding · Motion", span: "md:col-span-2 md:row-span-2" },
-    { src: work2, title: "Pop Beverage Co.", tag: "Campaign",           span: "md:col-span-2" },
-    { src: work4, title: "Folio Atelier",    tag: "Identity System",    span: "" },
-    { src: work3, title: "Boomerang FM",     tag: "UI / UX",            span: "" },
+    { src: "/work/trimmic-branding/Trimmic-12.png", title: "Trimmic Studio",   tag: "Brand Identity · Visual System", span: "md:col-span-2 md:row-span-2", href: "/case-study/trimmic-branding" },
+    { src: "/work/logo-animations/logo-novus-digital.mp4", title: "Logo Animation", tag: "Motion Identity · Brand Motion",  span: "md:col-span-2",                 href: "/logo-animation", isVideo: true },
+    { src: "/work/social-posts/social-main.jpg",       title: "Social Media",     tag: "Content · Campaigns · Feed",     span: "",                              href: "/social-content" },
   ];
 
   useEffect(() => {
@@ -340,8 +356,7 @@ function Showcase() {
           <div>
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-cream/60">Selected work</span>
             <h2 className="font-display mt-3 text-5xl md:text-7xl leading-[0.95]">
-              We don't just create —<br />
-              we make ideas <span className="text-gradient-brand">dance, pop</span>{" "}
+              We make ideas <span className="text-gradient-brand">dance, pop</span>{" "}
               <span className="font-serif-italic font-normal">&amp; come alive.</span>
             </h2>
           </div>
@@ -352,8 +367,12 @@ function Showcase() {
 
         <div className="g-work-grid grid md:grid-cols-4 md:auto-rows-[220px] gap-4">
           {items.map((it, i) => (
-            <a key={i} href="#" className={`g-work-item group relative rounded-3xl overflow-hidden ${it.span || ""}`}>
-              <img src={it.src} alt={it.title} className="h-full w-full object-cover will-change-transform" loading="lazy" />
+            <a key={i} href={it.href} className={`g-work-item group relative rounded-3xl overflow-hidden ${it.span || ""}`}>
+              {(it as any).isVideo ? (
+                <video autoPlay muted loop playsInline className="h-full w-full object-cover will-change-transform" src={it.src} />
+              ) : (
+                <img src={it.src} alt={it.title} className={`h-full w-full object-cover will-change-transform${i === 0 ? " scale-[1.15]" : ""}`} loading="lazy" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/0 to-ink/0" />
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                 <div>
@@ -374,7 +393,7 @@ function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
   const principles = [
     { n: "01", t: "Strategy first", d: "Every pixel earns its place. We design from the brief, not the mood board." },
-    { n: "02", t: "Craft obsessed", d: "Kerning, timing, easing — the small stuff is the whole stuff." },
+    { n: "02", t: "Craft obsessed", d: "Kerning, timing, easing. The small stuff is the whole stuff." },
     { n: "03", t: "Brave by default", d: "Safe is forgettable. We ship work that makes people stop scrolling." },
     { n: "04", t: "Partners, not vendors", d: "We build with you, not for you. Honest, fast, allergic to fluff." },
   ];
@@ -467,7 +486,7 @@ function Manifesto() {
           <div className="lg:col-span-5 lg:pt-6">
             <p className="text-lg text-cream/70 leading-relaxed">
               Trimmic is a tight crew of strategists, designers and motion nerds.
-              We build brands that pick a fight with boring — and win.
+              We build brands that pick a fight with boring. And win.
             </p>
           </div>
         </div>
@@ -584,7 +603,7 @@ function ContactForm() {
       <div className="flex flex-col items-center justify-center h-full min-h-[340px] text-center gap-4">
         <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand text-ink text-3xl">✓</div>
         <h3 className="font-display text-3xl">Message received!</h3>
-        <p className="text-muted-foreground max-w-xs">We'll be in touch within 24 hours. Check your inbox — or WhatsApp us if you can't wait.</p>
+        <p className="text-muted-foreground max-w-xs">We'll be in touch within 24 hours. Check your inbox, or WhatsApp us if you can't wait.</p>
         <button
           onClick={() => { setStatus("idle"); setForm({ name: "", email: "", service: "", budget: "", message: "" }); }}
           className="mt-2 text-sm underline underline-offset-4 text-muted-foreground hover:text-foreground transition"
@@ -847,6 +866,9 @@ export default function App() {
       <Nav />
       <Switch key={location}>
         <Route path="/portfolio" component={PortfolioPage} />
+        <Route path="/case-study/trimmic-branding" component={CaseStudyTrimmic} />
+        <Route path="/social-content" component={SocialContentPage} />
+        <Route path="/logo-animation" component={LogoAnimationPage} />
         <Route path="/service/saas-videos" component={SaasVideoPage} />
         <Route path="/service/:slug" component={ServicePage} />
         <Route path="/">

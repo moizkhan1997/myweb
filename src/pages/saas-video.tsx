@@ -16,10 +16,10 @@ function getYouTubeId(url: string) {
 }
 
 const WHY_US: { n: string; title: string; body: string }[] = [
-  { n: "01", title: "Story Before Script", body: "We start with your product, your users, and your goals. Every video begins with strategy — not a blank timeline." },
+  { n: "01", title: "Story Before Script", body: "We start with your product, your users, and your goals. Every video begins with strategy, not a blank timeline." },
   { n: "02", title: "End-to-End Production", body: "Scriptwriting, storyboarding, animation, voiceover, sound design. One team. Zero handoff chaos." },
-  { n: "03", title: "Flexible Packages", body: "One-off launch video or ongoing monthly content — built around your roadmap, not ours." },
-  { n: "04", title: "SaaS-Native Visuals", body: "We know dashboards, UI flows, and feature walkthroughs. Our animations feel native — not like a generic template." },
+  { n: "03", title: "Flexible Packages", body: "One-off launch video or ongoing monthly content, built around your roadmap, not ours." },
+  { n: "04", title: "SaaS-Native Visuals", body: "We know dashboards, UI flows, and feature walkthroughs. Our animations feel native, not like a generic template." },
   { n: "05", title: "Revision-Friendly Process", body: "Feedback rounds are built into every stage. We don't stop until you love every frame." },
   { n: "06", title: "Fast Turnaround", body: "Most projects delivered in 7–14 business days. Because your launch window won't wait." },
 ];
@@ -40,7 +40,7 @@ const PLANS: Plan[] = [
   },
   {
     title: "Growth Package", price: "$1,200", popular: true, accent: "var(--brand-pink)",
-    desc: "For growing SaaS teams who need a full video suite — hero, onboarding, and feature highlights.",
+    desc: "For growing SaaS teams who need a full video suite: hero, onboarding, and feature highlights.",
     features: [
       "Up to 3 videos (60–90 sec each)",
       "Script & storyboard for all",
@@ -53,7 +53,7 @@ const PLANS: Plan[] = [
   },
   {
     title: "Monthly Retainer", price: "$2,500/mo", accent: "var(--brand-green)",
-    desc: "An embedded video production partner — without the cost of hiring in-house.",
+    desc: "An embedded video production partner, without the cost of hiring in-house.",
     features: [
       "4 videos per month",
       "Dedicated motion designer",
@@ -78,19 +78,19 @@ const WORK: { title: string; cat: string; tint: string }[] = [
 const TESTIMONIALS: { quote: string; name: string; loc: string }[] = [
   { quote: "Trimmic took our boring product tour and turned it into something we're proud to put on our homepage. Conversions went up 34% in the first month.", name: "Sarah K., Founder", loc: "Austin, TX" },
   { quote: "We needed a video fast for our Product Hunt launch. They delivered in 5 days and it looked better than anything we'd seen from bigger agencies.", name: "James R., Head of Marketing", loc: "London, UK" },
-  { quote: "Finally a team that actually understands SaaS. They didn't just animate our UI — they told our story. Our investors loved it.", name: "Priya M., CEO", loc: "Singapore" },
+  { quote: "Finally a team that actually understands SaaS. They didn't just animate our UI. They told our story. Our investors loved it.", name: "Priya M., CEO", loc: "Singapore" },
   { quote: "The script they wrote was better than what our copywriter came up with. End-to-end service, zero stress.", name: "Tom W., Product Lead", loc: "Berlin, Germany" },
   { quote: "We've worked with 3 video agencies before Trimmic. None of them came close. These guys just get it.", name: "Ali H., CMO", loc: "Dubai, UAE" },
 ];
 
 const FAQS: { q: string; a: string }[] = [
   { q: "What types of SaaS videos do you make?", a: "We cover everything: product explainers, onboarding walkthroughs, feature announcements, investor pitch videos, social media cuts, and homepage hero videos." },
-  { q: "Do you write the script too?", a: "Yes — always. Every project starts with a strategy call, then we craft the script and storyboard before any animation begins. Your input shapes every word." },
+  { q: "Do you write the script too?", a: "Yes, always. Every project starts with a strategy call, then we craft the script and storyboard before any animation begins. Your input shapes every word." },
   { q: "How long does a video take?", a: "Most single videos are delivered within 7–14 business days. Rush delivery is available on request." },
-  { q: "Can I provide my own script or voiceover?", a: "Absolutely. We adapt to your workflow — your script, your voiceover artist, your existing brand assets. We just make it shine." },
+  { q: "Can I provide my own script or voiceover?", a: "Absolutely. We adapt to your workflow: your script, your voiceover artist, your existing brand assets. We just make it shine." },
   { q: "What format will I receive the final video in?", a: "HD MP4 optimised for web. We also include social cuts (16:9, 9:16, 1:1) in Growth and Retainer packages." },
-  { q: "Do you offer revisions?", a: "Yes — revision rounds are built into every package. We don't consider a project done until you're genuinely happy." },
-  { q: "Can I pause or cancel the monthly retainer?", a: "No long-term contracts. Pause or cancel before your next billing cycle — no questions asked." },
+  { q: "Do you offer revisions?", a: "Yes, revision rounds are built into every package. We don't consider a project done until you're genuinely happy." },
+  { q: "Can I pause or cancel the monthly retainer?", a: "No long-term contracts. Pause or cancel before your next billing cycle. No questions asked." },
 ];
 
 const SUB_NAV_LINKS = [
@@ -252,7 +252,7 @@ function Hero() {
             </h1>
           </div>
           <p className="g-sp-hero-sub mt-6 max-w-2xl text-base text-white/75 sm:text-lg">
-            Whether you're launching a product, onboarding users, or pitching investors — our SaaS videos make complex software impossible to ignore.
+            Whether you're launching a product, onboarding users, or pitching investors, our SaaS videos make complex software impossible to ignore.
           </p>
           <div className="g-sp-hero-btns mt-10 flex flex-wrap gap-4">
             <a href="#pricing" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#090b10] transition hover:opacity-90">
@@ -301,7 +301,7 @@ function Showreel() {
           </h2>
           <p className="mt-6 max-w-lg text-lg text-[color:var(--ink)]/75">
             We work with SaaS founders and marketing teams to craft videos that explain fast,
-            engage deep, and convert hard. From first frame to final cut — every second earns its place.
+            engage deep, and convert hard. From first frame to final cut. Every second earns its place.
           </p>
         </div>
         <div className="g-sp-showreel-right">

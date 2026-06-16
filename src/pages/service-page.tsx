@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+﻿import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Nav } from "@/components/nav";
 import NotFound from "./not-found";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
@@ -76,7 +76,7 @@ function H({ text, color }: { text: string; color: string }) {
 const TESTIMONIALS = [
   { quote: "Trimmic turned our boring product tour into something we're proud to put on our homepage. Conversions went up 34% in the first month.", name: "Sarah K., Founder", loc: "Austin, TX" },
   { quote: "We needed content fast for our Product Hunt launch. They delivered in 5 days and it looked better than anything we'd seen from bigger agencies.", name: "James R., Head of Marketing", loc: "London, UK" },
-  { quote: "Finally a team that actually understands our brand. They didn't just make content — they told our story.", name: "Priya M., CEO", loc: "Singapore" },
+  { quote: "Finally a team that actually understands our brand. They didn't just make content. They told our story.", name: "Priya M., CEO", loc: "Singapore" },
   { quote: "The script they wrote was better than what our copywriter came up with. End-to-end service, zero stress.", name: "Tom W., Product Lead", loc: "Berlin, Germany" },
   { quote: "We've worked with 3 agencies before Trimmic. None of them came close. These guys just get it.", name: "Ali H., CMO", loc: "Dubai, UAE" },
 ];
@@ -100,21 +100,21 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "Short-form video production",
       h1: "Shorts That Stop The Scroll [Dead.]",
-      subtitle: "TikTok, Reels, and YouTube Shorts engineered for algorithmic growth — with hooks that grab in 2 seconds and storytelling that earns the share.",
+      subtitle: "TikTok, Reels, and YouTube Shorts engineered for algorithmic growth, with hooks that grab in 2 seconds and storytelling that earns the share.",
     },
     showreel: {
       badge: "Shorts in Action",
       h2: "We make your brand [impossible] to scroll past.",
-      desc: "From hook writing to final cut, we build short-form content that performs across TikTok, Instagram, YouTube, and LinkedIn — every frame designed for retention.",
+      desc: "From hook writing to final cut, we build short-form content that performs across TikTok, Instagram, YouTube, and LinkedIn. Every frame designed for retention.",
     },
     whyUs: {
       h2: "Fast. [Hook-first.] Built to go viral.",
       items: [
         { n: "01", title: "Hook Engineering", body: "We craft the first 2 seconds to stop the scroll. Every short starts with a tested hook structure built to keep viewers watching." },
-        { n: "02", title: "Platform-Native Editing", body: "Each short is edited for its platform — pacing, captions, aspect ratios, and audio optimized for TikTok, Reels, or Shorts." },
+        { n: "02", title: "Platform-Native Editing", body: "Each short is edited for its platform: pacing, captions, aspect ratios, and audio optimized for TikTok, Reels, or Shorts." },
         { n: "03", title: "Trend-Aware Production", body: "We monitor trending sounds, formats, and creative styles weekly so your content always feels timely and native to the feed." },
         { n: "04", title: "Hook A/B Variants", body: "Growth packages include multiple hook variants per video, so you can test what converts and scale the winner." },
-        { n: "05", title: "Sound Design Included", body: "Every short gets music selection, SFX, and audio mixing tuned for mobile-first playback — with and without sound." },
+        { n: "05", title: "Sound Design Included", body: "Every short gets music selection, SFX, and audio mixing tuned for mobile-first playback, with and without sound." },
         { n: "06", title: "Fast Batch Delivery", body: "Batch production means consistent posting without creative blocks. We deliver in scheduled drops that keep your feed alive." },
       ],
     },
@@ -146,14 +146,14 @@ const SERVICES: Record<string, ServiceData> = {
     faqs: [
       { q: "Which platforms do you create shorts for?", a: "TikTok, Instagram Reels, YouTube Shorts, LinkedIn Video, Twitter/X, and Pinterest Idea Pins. Each is edited natively for its platform." },
       { q: "What's the ideal length for a short?", a: "Depends on the platform. TikTok and Reels perform best at 7–30s for hooks, 30–60s for storytelling. We'll recommend the right length per goal." },
-      { q: "Do you add captions and subtitles?", a: "Yes — always. 85% of social video is watched without sound. Every short includes styled, platform-native captions." },
-      { q: "Can I use existing footage?", a: "Absolutely. We can edit raw footage you provide, or handle full production from scratch — shooting, editing, and delivery." },
+      { q: "Do you add captions and subtitles?", a: "Yes, always. 85% of social video is watched without sound. Every short includes styled, platform-native captions." },
+      { q: "Can I use existing footage?", a: "Absolutely. We can edit raw footage you provide, or handle full production from scratch: shooting, editing, and delivery." },
       { q: "How do you handle trending audio?", a: "We monitor trending sounds weekly and recommend usage per platform. We also clear music rights for paid promotion where needed." },
-      { q: "What formats will I receive?", a: "9:16 (vertical), 16:9 (landscape), and 1:1 (square) — all included in Growth and Retainer packages, starter gets 9:16 + 16:9." },
+      { q: "What formats will I receive?", a: "9:16 (vertical), 16:9 (landscape), and 1:1 (square), all included in Growth and Retainer packages, starter gets 9:16 + 16:9." },
     ],
     cta: {
       h2: "Got a Brand Worth [Seeing?]",
-      desc: "Tell us your goal. We'll build short-form content that stops the scroll, earns the share, and keeps your brand growing — week after week.",
+      desc: "Tell us your goal. We'll build short-form content that stops the scroll, earns the share, and keeps your brand growing, week after week.",
     },
   },
 
@@ -163,21 +163,21 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "User-generated content production",
       h1: "UGC That Feels Real. [Converts] Even Harder.",
-      subtitle: "Raw, authentic, creator-style videos that blend into the feed — and quietly outperform every polished ad you've ever run.",
+      subtitle: "Raw, authentic, creator-style videos that blend into the feed. They quietly outperform every polished ad you've ever run.",
     },
     showreel: {
       badge: "UGC in Action",
       h2: "Content that [earns] trust before it earns the click.",
-      desc: "We produce UGC that keeps the realness intact — script-led, creator-performed, and edited to feel organic while hitting every conversion beat.",
+      desc: "We produce UGC that keeps the realness intact: script-led, creator-performed, and edited to feel organic while hitting every conversion beat.",
     },
     whyUs: {
       h2: "Authentic. [Scripted.] Impossible to skip.",
       items: [
-        { n: "01", title: "Script & Brief Included", body: "We write the hook, the story, and the CTA. Creators just bring the energy — your brand stays in control of the message." },
-        { n: "02", title: "Creator Matching", body: "We match creators to your product's audience — age, niche, tone, and aesthetic. No random talent, only right-fit faces." },
+        { n: "01", title: "Script & Brief Included", body: "We write the hook, the story, and the CTA. Creators just bring the energy. Your brand stays in control of the message." },
+        { n: "02", title: "Creator Matching", body: "We match creators to your product's audience: age, niche, tone, and aesthetic. No random talent, only right-fit faces." },
         { n: "03", title: "Multiple Hook Variants", body: "Each video comes with 2–3 hook variations so you can A/B test what resonates before scaling spend." },
-        { n: "04", title: "Raw + Edited Delivery", body: "You get both raw files and edited cuts — so you can repurpose, remix, or run both as separate ad variants." },
-        { n: "05", title: "Unlimited Usage Rights", body: "Every UGC asset comes with full usage rights — organic, paid, website, email, forever. No re-licensing fees." },
+        { n: "04", title: "Raw + Edited Delivery", body: "You get both raw files and edited cuts, so you can repurpose, remix, or run both as separate ad variants." },
+        { n: "05", title: "Unlimited Usage Rights", body: "Every UGC asset comes with full usage rights: organic, paid, website, email, forever. No re-licensing fees." },
         { n: "06", title: "Fast Production Cycle", body: "From brief to final delivery in 5–10 business days. Rush options available for launch windows and campaign deadlines." },
       ],
     },
@@ -194,7 +194,7 @@ const SERVICES: Record<string, ServiceData> = {
       },
       {
         title: "Retainer", price: "$2,200/mo", accent: "var(--brand-green)",
-        desc: "A steady stream of fresh UGC every month — never run out of creative.",
+        desc: "A steady stream of fresh UGC every month. Never run out of creative.",
         features: ["15 UGC videos/month", "Dedicated creator roster", "Full script production", "Weekly delivery", "Priority turnaround", "Monthly strategy call"],
       },
     ],
@@ -207,16 +207,16 @@ const SERVICES: Record<string, ServiceData> = {
       { title: "Fashion Try-On Reel", cat: "UGC · Fashion", tint: "var(--brand-yellow)" },
     ],
     faqs: [
-      { q: "What is UGC and why does it work?", a: "UGC (user-generated content) mimics organic creator posts rather than polished ads — it blends into the feed, feels trustworthy, and typically outperforms branded creative on paid channels." },
-      { q: "Do you provide the creators or do I?", a: "We have a roster of vetted creators across niches. You can also provide your own talent — we'll handle scripting, direction, and editing either way." },
+      { q: "What is UGC and why does it work?", a: "UGC (user-generated content) mimics organic creator posts rather than polished ads. It blends into the feed, feels trustworthy, and typically outperforms branded creative on paid channels." },
+      { q: "Do you provide the creators or do I?", a: "We have a roster of vetted creators across niches. You can also provide your own talent. We'll handle scripting, direction, and editing either way." },
       { q: "Who writes the script?", a: "We do. Every brief comes with a hook, story structure, and CTA built around your product's key selling points. You review and approve before filming." },
-      { q: "What platforms is UGC best for?", a: "TikTok, Instagram Reels, Facebook Ads, and YouTube Shorts — anywhere native-feeling video outperforms polished brand creative." },
-      { q: "Do I own the content?", a: "Yes — fully. Every asset comes with unlimited, perpetual usage rights for organic and paid use across all platforms." },
+      { q: "What platforms is UGC best for?", a: "TikTok, Instagram Reels, Facebook Ads, and YouTube Shorts. Anywhere native-feeling video outperforms polished brand creative." },
+      { q: "Do I own the content?", a: "Yes, fully. Every asset comes with unlimited, perpetual usage rights for organic and paid use across all platforms." },
       { q: "How fast can you deliver?", a: "Most batches are delivered within 5–10 business days from brief approval. Rush delivery (3–5 days) is available on request." },
     ],
     cta: {
       h2: "Ready to Make Content That [Actually Converts?]",
-      desc: "Tell us your product and your audience. We'll build UGC that feels like it came from your best customer — and performs like your best ad.",
+      desc: "Tell us your product and your audience. We'll build UGC that feels like it came from your best customer, and performs like your best ad.",
     },
   },
 
@@ -231,13 +231,13 @@ const SERVICES: Record<string, ServiceData> = {
     showreel: {
       badge: "YouTube in Action",
       h2: "We make your channel [impossible] to stop watching.",
-      desc: "From research and scripting to cinematic editing and thumbnail direction — we handle the full YouTube production pipeline so you can focus on building the brand.",
+      desc: "From research and scripting to cinematic editing and thumbnail direction. We handle the full YouTube production pipeline so you can focus on building the brand.",
     },
     whyUs: {
       h2: "Strategy-led. [Binge-worthy.] Built to grow.",
       items: [
         { n: "01", title: "Research-First Approach", body: "Every video starts with keyword research, audience analysis, and topic validation. We build content people are already searching for." },
-        { n: "02", title: "Script + Outline Included", body: "We write or structure every script — hooks, pacing, transitions, and calls-to-action that hold attention and drive retention." },
+        { n: "02", title: "Script + Outline Included", body: "We write or structure every script: hooks, pacing, transitions, and calls-to-action that hold attention and drive retention." },
         { n: "03", title: "Cinematic Editing", body: "B-roll, motion graphics, chapter markers, and colour grading that makes your video look like it belongs on a premium channel." },
         { n: "04", title: "Thumbnail Direction", body: "Thumbnails drive clicks. We design high-CTR thumbnails with proven visual formulas that stand out in a competitive feed." },
         { n: "05", title: "SEO Titles & Descriptions", body: "Every upload comes with an SEO-optimised title, description, tags, and chapter timestamps to maximise discoverability." },
@@ -257,7 +257,7 @@ const SERVICES: Record<string, ServiceData> = {
       },
       {
         title: "Channel Retainer", price: "$3,800/mo", accent: "var(--brand-green)",
-        desc: "Your embedded YouTube team — strategy, production, and publishing handled end-to-end.",
+        desc: "Your embedded YouTube team: strategy, production, and publishing handled end-to-end.",
         features: ["8 videos/month", "Dedicated producer", "Script, edit, thumbnail + SEO", "Community tab strategy", "Shorts clips from long-form", "Weekly delivery + check-ins"],
       },
     ],
@@ -271,15 +271,15 @@ const SERVICES: Record<string, ServiceData> = {
     ],
     faqs: [
       { q: "What video length do you produce?", a: "Typically 8–20 minutes for standard long-form, though we also do 3–8 minute mid-form depending on your niche and audience retention data." },
-      { q: "Do you handle SEO and titles?", a: "Yes — every video comes with an SEO-optimised title, description, tags, and chapter timestamps researched for your specific niche and search intent." },
-      { q: "Do you design thumbnails?", a: "Absolutely. Thumbnails are included in all packages — designed with proven CTR formulas, A/B variants available on Growth and Retainer plans." },
+      { q: "Do you handle SEO and titles?", a: "Yes, every video comes with an SEO-optimised title, description, tags, and chapter timestamps researched for your specific niche and search intent." },
+      { q: "Do you design thumbnails?", a: "Absolutely. Thumbnails are included in all packages, designed with proven CTR formulas, A/B variants available on Growth and Retainer plans." },
       { q: "Can you work from my raw footage?", a: "Yes. You can provide raw recordings, screen captures, or talking-head footage and we'll handle all editing, graphics, and delivery." },
       { q: "What format will I receive?", a: "Final MP4 in 1080p or 4K, optimised for YouTube upload. Chapters are embedded and a social cut (60s highlight) is included in Growth plans and above." },
-      { q: "How do you help my channel grow?", a: "Through research-led topic selection, retention-optimised editing, and SEO metadata — we build content specifically designed to surface in YouTube search and recommendations." },
+      { q: "How do you help my channel grow?", a: "Through research-led topic selection, retention-optimised editing, and SEO metadata. We build content specifically designed to surface in YouTube search and recommendations." },
     ],
     cta: {
       h2: "Got a Channel Worth [Growing?]",
-      desc: "Tell us your niche, your audience, and your goals. We'll build a YouTube presence your viewers can't stop watching — and your competitors can't ignore.",
+      desc: "Tell us your niche, your audience, and your goals. We'll build a YouTube presence your viewers can't stop watching. Your competitors can't ignore.",
     },
   },
 
@@ -289,21 +289,21 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "Performance creative & paid advertising",
       h1: "Ad Creative That [Converts,] Not Just Clicks.",
-      subtitle: "Paid creative, funnel assets, and ad variants engineered for ROAS — built on what actually works across Meta, TikTok, Google, and LinkedIn.",
+      subtitle: "Paid creative, funnel assets, and ad variants engineered for ROAS, built on what actually works across Meta, TikTok, Google, and LinkedIn.",
     },
     showreel: {
       badge: "Performance Creative in Action",
       h2: "We make ads your [audience] actually wants to watch.",
-      desc: "From hook to CTA, every creative we produce is built to stop the scroll, earn the click, and close the conversion — with variants for testing and scaling.",
+      desc: "From hook to CTA, every creative we produce is built to stop the scroll, earn the click, and close the conversion, with variants for testing and scaling.",
     },
     whyUs: {
       h2: "ROAS-focused. [Creative-obsessed.] Built to scale.",
       items: [
-        { n: "01", title: "Conversion-First Creative", body: "Every ad is built with a conversion goal in mind — from hook to offer to CTA. We don't make ads that look good but don't sell." },
-        { n: "02", title: "Platform-Specific Formats", body: "Meta, TikTok, Google Display, LinkedIn — every platform gets its own native creative treatment, not a resized copy of something else." },
+        { n: "01", title: "Conversion-First Creative", body: "Every ad is built with a conversion goal in mind: from hook to offer to CTA. We don't make ads that look good but don't sell." },
+        { n: "02", title: "Platform-Specific Formats", body: "Meta, TikTok, Google Display, LinkedIn. Every platform gets its own native creative treatment, not a resized copy of something else." },
         { n: "03", title: "Hook A/B Variants", body: "Every asset comes with multiple hook variations so your media buyer can test and scale what works without waiting on creative turnaround." },
-        { n: "04", title: "Static + Motion Options", body: "We produce video ads, animated statics, carousels, and story ads — whatever the funnel stage and platform demands." },
-        { n: "05", title: "Copy & CTA Included", body: "Ad copy, headline variants, and CTA language are written as part of every brief — so your creative and copy always work together." },
+        { n: "04", title: "Static + Motion Options", body: "We produce video ads, animated statics, carousels, and story ads. Whatever the funnel stage and platform demands." },
+        { n: "05", title: "Copy & CTA Included", body: "Ad copy, headline variants, and CTA language are written as part of every brief, so your creative and copy always work together." },
         { n: "06", title: "Fast Iteration Cycles", body: "When a creative fatigue hits, we turn new variants around in 48–72 hours. No bottlenecks on your scaling." },
       ],
     },
@@ -334,15 +334,15 @@ const SERVICES: Record<string, ServiceData> = {
     ],
     faqs: [
       { q: "Which ad platforms do you create for?", a: "Meta (Facebook + Instagram), TikTok, Google Display & YouTube, LinkedIn, Pinterest, and Snapchat. Each gets platform-native creative treatment." },
-      { q: "Do you write the ad copy?", a: "Yes — primary text, headlines, and CTA variants are written as part of every brief. We work alongside your media buyer or handle it ourselves." },
+      { q: "Do you write the ad copy?", a: "Yes, primary text, headlines, and CTA variants are written as part of every brief. We work alongside your media buyer or handle it ourselves." },
       { q: "How many hook variants do you include?", a: "Starter gets 1 hook per creative. Growth gets 3 hook variants per ad. Retainer plans get unlimited hook iterations based on performance data." },
-      { q: "Can you iterate on winning creatives?", a: "Absolutely. Retainer clients get ongoing iteration — we take your top performers and build new variants, extensions, and seasonal spins continuously." },
+      { q: "Can you iterate on winning creatives?", a: "Absolutely. Retainer clients get ongoing iteration. We take your top performers and build new variants, extensions, and seasonal spins continuously." },
       { q: "Do you provide targeting advice?", a: "We can advise on creative-targeting alignment, but we don't manage ad accounts directly. We work best alongside your in-house media buyer or agency." },
       { q: "What's the turnaround time?", a: "First batch delivered in 5–7 business days. Retainer clients get weekly delivery drops and 48-hour turnaround on iteration requests." },
     ],
     cta: {
       h2: "Got Ad Spend Looking for [Better Creative?]",
-      desc: "Tell us your platform, your product, and your conversion goal. We'll build creative that earns every click — and scales every pound of your budget.",
+      desc: "Tell us your platform, your product, and your conversion goal. We'll build creative that earns every click and scales every pound of your budget.",
     },
   },
 
@@ -352,22 +352,22 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "Content strategy & creation",
       h1: "Content That Makes Your Brand [Impossible] to Ignore.",
-      subtitle: "Blog posts, carousels, email newsletters, pitch decks, and everything in between — all on-brand, all built to move your audience.",
+      subtitle: "Blog posts, carousels, email newsletters, pitch decks, and everything in between, all on-brand, all built to move your audience.",
     },
     showreel: {
       badge: "Content in Action",
       h2: "We give your brand a [voice] worth listening to.",
-      desc: "We build content systems that stay consistent across every channel — strategy, writing, design, and delivery in one place, so your brand always has something worth saying.",
+      desc: "We build content systems that stay consistent across every channel: strategy, writing, design, and delivery in one place, so your brand always has something worth saying.",
     },
     whyUs: {
       h2: "Brand-led. [Multi-format.] Built to last.",
       items: [
-        { n: "01", title: "Brand Voice First", body: "We develop or refine your brand voice before writing a single word — so every piece sounds like you, not us." },
-        { n: "02", title: "Multi-Format Output", body: "Blog posts, LinkedIn carousels, email sequences, pitch decks, case studies — one team, all formats, zero inconsistency." },
-        { n: "03", title: "Strategy Before Creation", body: "Every content plan starts with audience mapping, keyword research, and editorial strategy — not a random content calendar." },
-        { n: "04", title: "SEO-Aware Writing", body: "Every long-form piece is written with search intent in mind — built to rank, educate, and convert over time." },
-        { n: "05", title: "Fast, Consistent Output", body: "Weekly delivery cadence means you always have something to post — without creative blocks, briefs, or chasing freelancers." },
-        { n: "06", title: "Notion-Based Workflow", body: "All content is delivered via a shared Notion workspace — draft, feedback, and approval in one place, no email chains." },
+        { n: "01", title: "Brand Voice First", body: "We develop or refine your brand voice before writing a single word, so every piece sounds like you, not us." },
+        { n: "02", title: "Multi-Format Output", body: "Blog posts, LinkedIn carousels, email sequences, pitch decks, case studies. One team, all formats, zero inconsistency." },
+        { n: "03", title: "Strategy Before Creation", body: "Every content plan starts with audience mapping, keyword research, and editorial strategy, not a random content calendar." },
+        { n: "04", title: "SEO-Aware Writing", body: "Every long-form piece is written with search intent in mind, built to rank, educate, and convert over time." },
+        { n: "05", title: "Fast, Consistent Output", body: "Weekly delivery cadence means you always have something to post, without creative blocks, briefs, or chasing freelancers." },
+        { n: "06", title: "Notion-Based Workflow", body: "All content is delivered via a shared Notion workspace. Draft, feedback, and approval in one place, no email chains." },
       ],
     },
     plans: [
@@ -383,7 +383,7 @@ const SERVICES: Record<string, ServiceData> = {
       },
       {
         title: "Full Studio", price: "$2,500/mo", accent: "var(--brand-green)",
-        desc: "End-to-end content production — from strategy to publication.",
+        desc: "End-to-end content production, from strategy to publication.",
         features: ["Unlimited content", "Dedicated content strategist", "Full calendar management", "Multi-platform distribution", "Analytics reporting", "Weekly check-ins"],
       },
     ],
@@ -397,15 +397,15 @@ const SERVICES: Record<string, ServiceData> = {
     ],
     faqs: [
       { q: "What content formats do you create?", a: "Blog posts, LinkedIn carousels, email newsletters, Twitter/X threads, pitch decks, case studies, landing page copy, and more. We adapt to whatever your channels demand." },
-      { q: "Do you develop our brand voice?", a: "Yes — all plans include brand voice development or refinement. We document tone, vocabulary, and persona before writing anything." },
+      { q: "Do you develop our brand voice?", a: "Yes, all plans include brand voice development or refinement. We document tone, vocabulary, and persona before writing anything." },
       { q: "How do revisions work?", a: "Starter includes 1 revision round per piece. Growth and Full Studio include unlimited revisions until you're happy with every word." },
       { q: "Do you handle posting and distribution?", a: "Full Studio includes distribution management across your channels. Growth and Starter deliver content ready for you to post." },
-      { q: "Who owns the content?", a: "You do — 100%. All content is written exclusively for your brand and transferred in full upon delivery." },
+      { q: "Who owns the content?", a: "Yes, 100%. All content is written exclusively for your brand and transferred in full upon delivery." },
       { q: "How quickly can we start?", a: "Onboarding and strategy session in week one, first content delivered in week two. Most clients are in full production within 10 days." },
     ],
     cta: {
       h2: "Got a Brand That Deserves to Be [Heard?]",
-      desc: "Tell us your audience and your goals. We'll build a content system that makes your brand impossible to scroll past — on every channel that matters.",
+      desc: "Tell us your audience and your goals. We'll build a content system that makes your brand impossible to scroll past, on every channel that matters.",
     },
   },
 
@@ -415,22 +415,22 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "Social media management",
       h1: "Your Brand. [Always On.] Always Sharp.",
-      subtitle: "Consistent posting, community management, and growth strategy across every platform — so your brand stays loud, relevant, and impossible to ignore.",
+      subtitle: "Consistent posting, community management, and growth strategy across every platform, so your brand stays loud, relevant, and impossible to ignore.",
     },
     showreel: {
       badge: "Social Media in Action",
       h2: "We keep your brand [alive] in every feed.",
-      desc: "From content calendars to community engagement, we run your social media like it's the most important channel in your business — because it probably is.",
+      desc: "From content calendars to community engagement, we run your social media like it's the most important channel in your business, because it probably is.",
     },
     whyUs: {
       h2: "Strategy-led. [Community-first.] Relentlessly consistent.",
       items: [
-        { n: "01", title: "Platform-Specific Strategy", body: "Every platform gets its own strategy — what works on TikTok doesn't work on LinkedIn. We treat each channel as a unique audience." },
-        { n: "02", title: "Content Calendars That Work", body: "We build editorial calendars around your product launches, seasonal moments, and trending topics — never reactive, always planned." },
-        { n: "03", title: "Community Management", body: "Comments, DMs, and mentions handled daily — every reply protects your brand voice and builds real audience relationships." },
-        { n: "04", title: "Original Visual Content", body: "Custom graphics, short-form videos, carousels, and stories designed specifically for social — not repurposed from other formats." },
-        { n: "05", title: "Analytics & Reporting", body: "Monthly reports on reach, engagement, follower growth, and content performance — with recommendations that actually inform next month's strategy." },
-        { n: "06", title: "Trend Monitoring", body: "We watch what's trending in your industry daily and jump on relevant moments fast — so your brand stays culturally current." },
+        { n: "01", title: "Platform-Specific Strategy", body: "Every platform gets its own strategy. What works on TikTok doesn't work on LinkedIn. We treat each channel as its own." },
+        { n: "02", title: "Content Calendars That Work", body: "We build editorial calendars around your product launches, seasonal moments, and trending topics. Never reactive, always planned." },
+        { n: "03", title: "Community Management", body: "Comments, DMs, and mentions handled daily. Every reply protects your brand voice and builds real audience relationships." },
+        { n: "04", title: "Original Visual Content", body: "Custom graphics, short-form videos, carousels, and stories designed specifically for social, not repurposed from other formats." },
+        { n: "05", title: "Analytics & Reporting", body: "Monthly reports on reach, engagement, follower growth, and content performance, with recommendations that actually inform next month's strategy." },
+        { n: "06", title: "Trend Monitoring", body: "We watch what's trending in your industry daily and jump on relevant moments fast, so your brand stays culturally current." },
       ],
     },
     plans: [
@@ -446,7 +446,7 @@ const SERVICES: Record<string, ServiceData> = {
       },
       {
         title: "Full Management", price: "$3,500/mo", accent: "var(--brand-green)",
-        desc: "Your brand's social presence, fully owned — strategy to execution.",
+        desc: "Your brand's social presence, fully owned. Strategy to execution.",
         features: ["All major platforms", "Daily posting", "Short-form video + stories", "Full team engagement", "Paid content boosting strategy", "Weekly reports + calls"],
       },
     ],
@@ -461,14 +461,14 @@ const SERVICES: Record<string, ServiceData> = {
     faqs: [
       { q: "Which platforms do you manage?", a: "Instagram, TikTok, LinkedIn, Twitter/X, Facebook, YouTube, and Pinterest. Most clients start with 2–3 platforms and expand from there." },
       { q: "How many posts do you publish per month?", a: "Starter: 12 posts. Growth: 30 posts. Full Management: daily posting plus stories, reels, and community content as needed." },
-      { q: "Do you respond to comments and DMs?", a: "Yes — community management is included in all plans. We respond in your brand voice within defined hours and escalate anything requiring your attention." },
-      { q: "Do you create the visuals and copy?", a: "Yes — everything. Captions, graphics, short videos, carousels, and stories are all produced by our team using your brand guidelines." },
+      { q: "Do you respond to comments and DMs?", a: "Yes, community management is included in all plans. We respond in your brand voice within defined hours and escalate anything requiring your attention." },
+      { q: "Do you create the visuals and copy?", a: "Yes, everything. Captions, graphics, short videos, carousels, and stories are all produced by our team using your brand guidelines." },
       { q: "How do you measure success?", a: "Monthly reports cover follower growth, reach, engagement rate, story views, and link clicks. We set quarterly goals and review progress monthly." },
       { q: "Can I approve content before it's posted?", a: "Absolutely. All content goes through your Notion approval board before scheduling. Nothing posts without your sign-off." },
     ],
     cta: {
       h2: "Ready for a Social Presence That Actually [Grows?]",
-      desc: "Tell us your platforms, your audience, and your goals. We'll build a social strategy that keeps your brand loud, consistent, and growing — every single week.",
+      desc: "Tell us your platforms, your audience, and your goals. We'll build a social strategy that keeps your brand loud, consistent, and growing, every single week.",
     },
   },
 
@@ -478,20 +478,20 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "Brand identity & design systems",
       h1: "An Identity That [Refuses] to Blend In.",
-      subtitle: "Logos, visual systems, brand guidelines, and motion assets that give your brand a presence worth remembering — and a system worth scaling.",
+      subtitle: "Logos, visual systems, brand guidelines, and motion assets that give your brand a presence worth remembering, with a system worth scaling.",
     },
     showreel: {
       badge: "Branding in Action",
       h2: "We build brands that [pick a fight] with boring.",
-      desc: "From strategy to final asset delivery, we create visual identities that feel alive — built for digital-first brands that need to stand out across every screen and platform.",
+      desc: "From strategy to final asset delivery, we create visual identities that feel alive, built for digital-first brands that need to stand out everywhere.",
     },
     whyUs: {
       h2: "Research-first. [Brave by default.] Built to scale.",
       items: [
         { n: "01", title: "Strategy Before Design", body: "We start with audience research, competitor mapping, and positioning before a single logo concept is drawn. Beautiful design means nothing without strategy." },
-        { n: "02", title: "Full Logo Suite", body: "Primary logo, wordmark, icon, stacked variant, dark and light versions — every logo format you'll ever need, built to work at any size." },
-        { n: "03", title: "Motion-Ready System", body: "Every identity we build is designed with motion in mind — animated logo reveals, transitions, and social templates ready for video from day one." },
-        { n: "04", title: "Comprehensive Brand Guidelines", body: "Colour palette, typography, iconography, photography direction, tone of voice, and do/don't examples — so your team can scale the brand without breaking it." },
+        { n: "02", title: "Full Logo Suite", body: "Primary logo, wordmark, icon, stacked variant, dark and light versions. Every logo format you'll ever need, built to work at any size." },
+        { n: "03", title: "Motion-Ready System", body: "Every identity we build is designed with motion in mind. Animated logo reveals, transitions, and social templates ready for video from day one." },
+        { n: "04", title: "Comprehensive Brand Guidelines", body: "Colour palette, typography, iconography, photography direction, tone of voice, and do/don't examples, so your team can scale the brand without breaking it." },
         { n: "05", title: "Multiple Concepts", body: "We present 2–3 distinct brand directions before refining, so you choose the strategic fit, not just the personal favourite." },
         { n: "06", title: "Trademark-Safe Design", body: "We run preliminary trademark checks on all logo concepts so you can launch with confidence and protect what you build." },
       ],
@@ -523,15 +523,15 @@ const SERVICES: Record<string, ServiceData> = {
     ],
     faqs: [
       { q: "What's included in a brand identity?", a: "At minimum: logo suite, colour palette, typography system, and brand guidelines. Full Brand adds motion, voice guidelines, and social kits. Brand + Motion adds a full animation system." },
-      { q: "How many logo concepts will I see?", a: "2–3 distinct strategic directions in the first round. We don't present 10 options and ask you to pick — we curate the best fits for your brief." },
+      { q: "How many logo concepts will I see?", a: "2–3 distinct strategic directions in the first round. We don't present 10 options and ask you to pick. We curate the best fits for your brief." },
       { q: "How long does branding take?", a: "Starter Identity: 2–3 weeks. Full Brand: 4–6 weeks. Brand + Motion: 6–8 weeks. Timelines depend on feedback turnaround." },
-      { q: "Do you provide source files?", a: "Yes — all packages include vector source files (AI/SVG) plus export-ready PNGs, PDFs, and web formats. Brand + Motion includes After Effects project files." },
-      { q: "Can you work with an existing brand?", a: "Absolutely. We offer brand refresh and evolution — taking existing elements and building a stronger, more consistent system around them." },
+      { q: "Do you provide source files?", a: "Yes, all packages include vector source files (AI/SVG) plus export-ready PNGs, PDFs, and web formats. Brand + Motion includes After Effects project files." },
+      { q: "Can you work with an existing brand?", a: "Absolutely. We offer brand refresh and evolution, taking existing elements and building a stronger, more consistent system around them." },
       { q: "Do you check for trademark conflicts?", a: "We run preliminary trademark searches on all logo directions before presenting them. Final legal trademark registration is your responsibility, but we flag conflicts early." },
     ],
     cta: {
       h2: "Got a Brand That Deserves to Be [Remembered?]",
-      desc: "Tell us who you are, who you're for, and what you want to stand for. We'll build an identity that makes you impossible to confuse — and impossible to forget.",
+      desc: "Tell us who you are, who you're for, and what you want to stand for. We'll build an identity that makes you impossible to confuse. And impossible to forget.",
     },
   },
 
@@ -541,21 +541,21 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "Explainer video production",
       h1: "Complex Ideas, [Brilliantly] Simple.",
-      subtitle: "Animated explainers that take the most technical, niche, or complicated product and make it crystal clear — in 90 seconds or less.",
+      subtitle: "Animated explainers that take the most technical, niche, or complicated product and make it crystal clear in 90 seconds or less.",
     },
     showreel: {
       badge: "Explainer Videos in Action",
       h2: "We make your product [impossible] to misunderstand.",
-      desc: "From scriptwriting and storyboarding to animation, voiceover, and sound design — we create explainers that work on homepages, pitch decks, onboarding flows, and investor presentations.",
+      desc: "From scriptwriting and storyboarding to animation, voiceover, and sound design. We create explainers that work on homepages, pitch decks, onboarding flows, and investor presentations.",
     },
     whyUs: {
       h2: "Story-first. [Animation-obsessed.] Built to clarify.",
       items: [
-        { n: "01", title: "Script & Storyboard Included", body: "Every project starts with a discovery call, then a script that distills your value prop into a clear, engaging story — before a single frame is animated." },
-        { n: "02", title: "Custom Animation Style", body: "No templates. Every explainer is animated in a style that matches your brand — flat 2D, motion graphics, screen recording, or character-based." },
-        { n: "03", title: "Professional Voiceover", body: "We cast and direct native voiceover talent that matches your brand tone — warm, authoritative, energetic, or conversational." },
+        { n: "01", title: "Script & Storyboard Included", body: "Every project starts with a discovery call, then a script that distills your value prop into a clear, engaging story, before a single frame is animated." },
+        { n: "02", title: "Custom Animation Style", body: "No templates. Every explainer is animated in a style that matches your brand: flat 2D, motion graphics, screen recording, or character-based." },
+        { n: "03", title: "Professional Voiceover", body: "We cast and direct native voiceover talent that matches your brand tone: warm, authoritative, energetic, or conversational." },
         { n: "04", title: "Sound Design & Music", body: "Custom sound effects and background music that reinforce your story and make the video feel polished from first frame to last." },
-        { n: "05", title: "Revision-Friendly Process", body: "We structure the project in stages — script, storyboard, animation — with feedback rounds built in so nothing goes off-track." },
+        { n: "05", title: "Revision-Friendly Process", body: "We structure the project in stages: script, storyboard, animation, with feedback rounds built in so nothing goes off-track." },
         { n: "06", title: "Fast Delivery", body: "Most explainers delivered in 7–14 business days. Rush delivery available for launches, demos, and investor deadlines." },
       ],
     },
@@ -586,7 +586,7 @@ const SERVICES: Record<string, ServiceData> = {
     ],
     faqs: [
       { q: "What types of explainer videos do you make?", a: "2D animation, motion graphics, screen recording with animation, character-based animation, and mixed-media explainers. We recommend the right style for your product and audience." },
-      { q: "Do you write the script?", a: "Yes — always. The script is the most important part of an explainer. We research your product, audience, and competition before writing a single word." },
+      { q: "Do you write the script?", a: "Yes, always. The script is the most important part of an explainer. We research your product, audience, and competition before writing a single word." },
       { q: "How long should an explainer be?", a: "60–90 seconds is the sweet spot for most products. Complex B2B solutions sometimes warrant 90–120s. We'll advise based on your specific use case." },
       { q: "Can I provide my own voiceover?", a: "Absolutely. You can provide your own voice recording or use our talent roster. We also offer multi-language voiceover for global audiences." },
       { q: "What file formats do I receive?", a: "HD MP4 (1080p) for web. Optionally: social cuts (16:9, 9:16, 1:1), GIF version, and subtitle file (SRT). Lottie JSON available for animated web embeds on request." },
@@ -594,7 +594,7 @@ const SERVICES: Record<string, ServiceData> = {
     ],
     cta: {
       h2: "Got a Product That's Hard to [Explain?]",
-      desc: "That's exactly where we thrive. Tell us what it does and who it's for — we'll turn it into an explainer your audience watches until the very last second.",
+      desc: "That's exactly where we thrive. Tell us what it does and who it's for. We'll turn it into an explainer your audience watches until the very last second.",
     },
   },
 
@@ -604,7 +604,7 @@ const SERVICES: Record<string, ServiceData> = {
     hero: {
       badge: "Motion design & animation",
       h1: "Motion That Makes People [Stop and Rewind.]",
-      subtitle: "Kinetic type, logo animations, data visualizations, and motion systems that make your brand feel alive — on every screen, at every scale.",
+      subtitle: "Kinetic type, logo animations, data visualizations, and motion systems that make your brand feel alive, on every screen, at every scale.",
     },
     showreel: {
       badge: "Motion Graphics in Action",
@@ -614,12 +614,12 @@ const SERVICES: Record<string, ServiceData> = {
     whyUs: {
       h2: "Brand-safe. [Craft-obsessed.] Built for any screen.",
       items: [
-        { n: "01", title: "Brand-Safe Animation", body: "Every motion asset is built strictly within your brand system — colours, typography, and style always consistent, never off-brand." },
-        { n: "02", title: "After Effects + Lottie", body: "We work in After Effects for video and export Lottie JSON for web — so your animations work equally well in video and on your website." },
+        { n: "01", title: "Brand-Safe Animation", body: "Every motion asset is built strictly within your brand system: colours, typography, and style always consistent, never off-brand." },
+        { n: "02", title: "After Effects + Lottie", body: "We work in After Effects for video and export Lottie JSON for web, so your animations work equally well in video and on your website." },
         { n: "03", title: "Kinetic Typography", body: "Words that move with purpose. We animate type that guides attention, reinforces hierarchy, and makes every headline land harder." },
-        { n: "04", title: "2D + Light 3D", body: "Flat 2D animation, shape morphing, parallax effects, and light 3D transitions — all handled in-house without render farm delays." },
-        { n: "05", title: "Iteration-Ready", body: "All projects are built with clean, organised After Effects files — so updating text, colours, or timing is fast and cost-efficient." },
-        { n: "06", title: "Format-Flexible Delivery", body: "MP4, GIF, WebM, Lottie JSON, ProRes for broadcast — we deliver in every format your platform and workflow demands." },
+        { n: "04", title: "2D + Light 3D", body: "Flat 2D animation, shape morphing, parallax effects, and light 3D transitions. All handled in-house without render farm delays." },
+        { n: "05", title: "Iteration-Ready", body: "All projects are built with clean, organised After Effects files, so updating text, colours, or timing is fast and cost-efficient." },
+        { n: "06", title: "Format-Flexible Delivery", body: "MP4, GIF, WebM, Lottie JSON, ProRes for broadcast. We deliver in every format your platform and workflow demands." },
       ],
     },
     plans: [
@@ -635,7 +635,7 @@ const SERVICES: Record<string, ServiceData> = {
       },
       {
         title: "Monthly Retainer", price: "$2,500/mo", accent: "var(--brand-green)",
-        desc: "A dedicated motion designer on your team — without the full-time cost.",
+        desc: "A dedicated motion designer on your team, without the full-time cost.",
         features: ["6 motion assets/month", "Dedicated motion designer", "Consistent brand motion system", "Priority delivery", "Slack support throughout", "Monthly creative review"],
       },
     ],
@@ -649,15 +649,15 @@ const SERVICES: Record<string, ServiceData> = {
     ],
     faqs: [
       { q: "What software do you use?", a: "Primarily Adobe After Effects, with Illustrator for vector assets. We export to Lottie (Bodymovin) for web, and all standard video formats for other uses." },
-      { q: "Can you animate our existing brand assets?", a: "Yes — we work from your logo, colour palette, and typography to build motion that feels like a natural extension of your existing brand." },
+      { q: "Can you animate our existing brand assets?", a: "Yes, we work from your logo, colour palette, and typography to build motion that feels like a natural extension of your existing brand." },
       { q: "Do you deliver Lottie files for web?", a: "Absolutely. All relevant assets are exported as Lottie JSON, optimised for web performance, and tested across major browsers." },
       { q: "What if we need to update the text or colours later?", a: "Retainer and Full Sequence clients receive organised After Effects source files, making future updates fast and cost-efficient." },
-      { q: "Can you do 3D animation?", a: "We handle light 3D — depth, parallax, and layer-based 3D within After Effects. For fully rendered 3D, we work with trusted 3D partners and manage the project end-to-end." },
+      { q: "Can you do 3D animation?", a: "We handle light 3D: depth, parallax, and layer-based 3D within After Effects. For fully rendered 3D, we work with trusted 3D partners and manage the project end-to-end." },
       { q: "What format will I receive?", a: "Standard delivery: MP4 (H.264), GIF, and Lottie JSON. On request: ProRes 4444, WebM, transparent PNG sequence, and social-specific format cuts." },
     ],
     cta: {
       h2: "Got a Brand Ready to Come [Alive?]",
-      desc: "Tell us what needs to move — and why it matters. We'll build motion that makes your brand feel like the most polished thing in any feed, deck, or screen.",
+      desc: "Tell us what needs to move and why it matters. We'll build motion that makes your brand feel like the most polished thing in any feed, deck, or screen.",
     },
   },
 

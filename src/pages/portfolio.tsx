@@ -25,7 +25,7 @@ const portfolioItems = [
 
 const testimonials = [
   {
-    quote: "Trimmic delivered our SaaS demo in record time — our trial-to-paid conversion jumped 38% in the first month.",
+    quote: "Trimmic delivered our SaaS demo in record time. Our trial-to-paid conversion jumped 38% in the first month.",
     name: "Sarah Chen",
     role: "Head of Marketing, Pulse Health",
   },
@@ -35,7 +35,7 @@ const testimonials = [
     role: "CEO, Nova Studios",
   },
   {
-    quote: "Trimmic doesn't just execute — they think. The fastest, most reliable creative team we've ever worked with.",
+    quote: "Trimmic doesn't just execute. They think. The fastest, most reliable creative team we've ever worked with.",
     name: "Aisha Patel",
     role: "Brand Director, Atlas Ventures",
   },
@@ -294,7 +294,7 @@ export default function PortfolioPage() {
           ) : (
             <div className="py-24 text-center">
               <p className="font-display text-4xl text-cream/30">Nothing here yet.</p>
-              <p className="mt-3 text-cream/40 text-sm">We ship fast — check back soon.</p>
+              <p className="mt-3 text-cream/40 text-sm">We ship fast. Check back soon.</p>
             </div>
           )}
         </div>
@@ -362,7 +362,7 @@ export default function PortfolioPage() {
                 <span className="font-serif-italic font-normal">to the stream.</span>
               </h2>
               <p className="mt-6 max-w-xl text-lg text-ink/70 leading-relaxed">
-                Tell us what you're building. We'll make it look like it belongs here — and then some.
+                Tell us what you're building. We'll make it look like it belongs here.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
