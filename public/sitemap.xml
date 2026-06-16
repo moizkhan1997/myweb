@@ -1,62 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://trimmic.com/</loc>
+    <loc>https://www.trimmic.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/portfolio</loc>
+    <loc>https://www.trimmic.com/portfolio</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/saas-videos</loc>
+    <loc>https://www.trimmic.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.trimmic.com/case-study/trimmic-branding</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.trimmic.com/social-content</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.trimmic.com/logo-animation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.trimmic.com/service/saas-videos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/shorts</loc>
+    <loc>https://www.trimmic.com/service/shorts</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/ugc</loc>
+    <loc>https://www.trimmic.com/service/ugc</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/youtube-videos</loc>
+    <loc>https://www.trimmic.com/service/youtube-videos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/digital-marketing</loc>
+    <loc>https://www.trimmic.com/service/digital-marketing</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/content-creation</loc>
+    <loc>https://www.trimmic.com/service/content-creation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/social-media-management</loc>
+    <loc>https://www.trimmic.com/service/social-media-management</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/branding</loc>
+    <loc>https://www.trimmic.com/service/branding</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/explainer-videos</loc>
+    <loc>https://www.trimmic.com/service/explainer-videos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trimmic.com/service/motion-graphics</loc>
+    <loc>https://www.trimmic.com/service/motion-graphics</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
