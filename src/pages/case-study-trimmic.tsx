@@ -4,8 +4,7 @@ import gsap from "gsap";
 import { Nav } from "@/components/nav";
 import { useSEO } from "@/lib/seo";
 
-const imgs = (n: number) => `/work/trimmic-branding/Trimmic-0${n < 10 ? n : ""}.png`.replace("0", n < 10 ? "0" : "");
-const img = (n: number) => `/work/trimmic-branding/Trimmic-${String(n).padStart(2, "0")}.png`;
+const img = (n: number) => `/work/trimmic-branding/Trimmic-${String(n).padStart(2, "0")}.jpg`;
 
 const results = [
   { k: "20+", v: "Brand assets delivered" },

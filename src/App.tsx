@@ -304,7 +304,7 @@ function Services() {
 function Showcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const items = [
-    { src: "/work/trimmic-branding/Trimmic-12.png", title: "Trimmic Studio",   tag: "Brand Identity · Visual System", span: "md:col-span-2 md:row-span-2", href: "/case-study/trimmic-branding" },
+    { src: "/work/trimmic-branding/Trimmic-12.jpg", title: "Trimmic Studio",   tag: "Brand Identity · Visual System", span: "md:col-span-2 md:row-span-2", href: "/case-study/trimmic-branding" },
     { src: "/work/logo-animations/logo-novus-digital.mp4", title: "Logo Animation", tag: "Motion Identity · Brand Motion",  span: "md:col-span-2",                 href: "/logo-animation", isVideo: true },
     { src: "/work/social-posts/social-main.jpg",       title: "Social Media",     tag: "Content · Campaigns · Feed",     span: "",                              href: "/social-content" },
   ];

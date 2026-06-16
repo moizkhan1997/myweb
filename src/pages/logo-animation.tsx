@@ -64,13 +64,26 @@ function VideoCard({ logo, index }: { logo: LogoEntry; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hovered, setHovered] = useState(false);
 
+  const [inView, setInView] = useState(false);
+
+  // Only load/play once the card is near the viewport
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setInView(true); obs.disconnect(); }
+    }, { rootMargin: "200px" });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   // Ensure video plays — some browsers need explicit play() call
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || !inView) return;
     v.muted = true;
     v.play().catch(() => {/* autoplay blocked — silent fail */});
-  }, []);
+  }, [inView]);
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -92,15 +105,13 @@ function VideoCard({ logo, index }: { logo: LogoEntry; index: number }) {
     >
       <video
         ref={videoRef}
-        autoPlay
+        src={inView ? la(logo.file) : undefined}
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-      >
-        <source src={la(logo.file)} type="video/mp4" />
-      </video>
+      />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <div className="absolute top-4 left-4 font-mono text-xs text-white/20 group-hover:opacity-0 transition-opacity duration-200">

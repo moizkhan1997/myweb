@@ -112,10 +112,38 @@ function getYouTubeId(url: string) {
   return m ? m[1] : null;
 }
 
+function LazyVideo({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setInView(true); obs.disconnect(); }
+    }, { rootMargin: "200px" });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={inView ? src : undefined}
+      preload="none"
+      className="h-full w-full object-cover"
+      muted
+      loop
+      playsInline
+      autoPlay={inView}
+    />
+  );
+}
+
 function ItemMedia({ item }: { item: CmsItem }) {
   if (item.imageUrl) {
     if (/\.(mp4|mov|webm)$/i.test(item.imageUrl)) {
-      return <video src={item.imageUrl} className="h-full w-full object-cover" muted loop playsInline autoPlay />;
+      return <LazyVideo src={item.imageUrl} />;
     }
     return <img src={item.imageUrl} alt={item.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />;
   }
