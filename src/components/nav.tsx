@@ -22,12 +22,12 @@ export function Nav() {
           <li><Link href="/portfolio" className="hover:text-foreground/60 transition">Portfolio</Link></li>
           <li><a href="/#services" className="hover:text-foreground/60 transition">Services</a></li>
           <li><a href="/#studio" className="hover:text-foreground/60 transition">Studio</a></li>
-          <li><a href="/#contact" className="hover:text-foreground/60 transition">Contact</a></li>
+          <li><Link href="/contact" className="hover:text-foreground/60 transition">Contact</Link></li>
         </ul>
-        <a href="/#contact" className="group inline-flex items-center gap-2 rounded-full bg-ink text-cream px-5 py-2.5 text-sm font-medium hover:bg-ink/90 transition">
+        <Link href="/contact" className="group inline-flex items-center gap-2 rounded-full bg-ink text-cream px-5 py-2.5 text-sm font-medium hover:bg-ink/90 transition">
           Let's Talk
           <span className="inline-block transition group-hover:translate-x-0.5">→</span>
-        </a>
+        </Link>
       </nav>
     </header>
   );

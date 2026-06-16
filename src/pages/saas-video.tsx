@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { Link } from "wouter";
 import { Nav } from "@/components/nav";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
 import gsap from "gsap";
@@ -258,9 +259,9 @@ function Hero() {
             <a href="#pricing" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#090b10] transition hover:opacity-90">
               View Pricing →
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15">
+            <Link href="/contact" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15">
               Book a Call →
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -411,12 +412,12 @@ function Pricing() {
               <h3 className="font-display mt-5 text-3xl">{p.title}</h3>
               <p className="font-display mt-3 text-5xl">{p.price}</p>
               <p className="mt-3 text-sm text-[color:var(--ink)]/70">{p.desc}</p>
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 className="mt-6 inline-flex justify-center rounded-full bg-[color:var(--ink)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
               >
                 Book a Call
-              </a>
+              </Link>
               <ul className="mt-6 space-y-3 border-t border-black/10 pt-6 text-sm">
                 {p.features.map((f) => (
                   <li key={f} className="flex gap-2">
@@ -660,18 +661,18 @@ function ClosingCTA() {
           users actually watch till the end.
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className="rounded-full bg-[color:var(--ink)] px-7 py-4 text-base font-semibold text-white transition hover:opacity-90"
           >
             Start a Project →
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            href="/contact"
             className="rounded-full border-2 border-[color:var(--ink)] px-7 py-4 text-base font-semibold text-[color:var(--ink)] transition hover:bg-[color:var(--ink)] hover:text-white"
           >
             Book a Discovery Call
-          </a>
+          </Link>
         </div>
       </div>
     </section>

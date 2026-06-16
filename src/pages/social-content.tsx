@@ -143,9 +143,9 @@ export default function SocialContentPage() {
             From concept to publish, we create social content that builds brands, drives engagement, and makes your audience stop mid-swipe.
           </p>
           <div className="sc-hero-sub mt-10 flex gap-4">
-            <a href="/#contact" className="inline-flex items-center gap-2 bg-white text-black rounded-full px-7 py-3.5 text-sm font-semibold hover:bg-[#FCBA3F] transition-colors duration-200">
+            <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-black rounded-full px-7 py-3.5 text-sm font-semibold hover:bg-[#FCBA3F] transition-colors duration-200">
               Start a project →
-            </a>
+            </Link>
             <a href="#work" className="inline-flex items-center gap-2 border border-white/20 rounded-full px-7 py-3.5 text-sm text-white/70 hover:border-white/50 hover:text-white transition-colors duration-200">
               See our work
             </a>
@@ -256,12 +256,12 @@ export default function SocialContentPage() {
             </span>
           </h2>
           <div className="flex flex-wrap gap-4">
-            <a
-              href="/#contact"
+            <Link
+              href="/contact"
               className="inline-flex items-center gap-3 bg-white text-black rounded-full px-10 py-5 text-base font-semibold hover:bg-[#FCBA3F] transition-colors duration-200"
             >
               Start a project →
-            </a>
+            </Link>
             <Link
               href="/portfolio"
               className="inline-flex items-center gap-3 border border-white/20 rounded-full px-10 py-5 text-base text-white/70 hover:border-white/50 hover:text-white transition-colors duration-200"

@@ -352,9 +352,9 @@ export default function CaseStudyTrimmic() {
             </h2>
           </div>
           <div className="flex flex-col gap-4 shrink-0">
-            <a href="/#contact" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-8 py-4 text-base font-medium hover:bg-white/90 transition">
+            <Link href="/contact" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-8 py-4 text-base font-medium hover:bg-white/90 transition">
               Start a Project →
-            </a>
+            </Link>
             <Link href="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-base font-medium hover:bg-white/5 transition text-center justify-center">
               View More Work
             </Link>

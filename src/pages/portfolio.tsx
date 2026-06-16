@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
+import { Link } from "wouter";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -365,12 +366,12 @@ export default function PortfolioPage() {
                 Tell us what you're building. We'll make it look like it belongs here.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="/#contact"
+                <Link
+                  href="/contact"
                   className="inline-flex items-center gap-2 rounded-full bg-ink text-cream px-8 py-4 text-base font-medium hover:bg-ink/90 transition"
                 >
                   Start a Project →
-                </a>
+                </Link>
                 <a
                   href="/#services"
                   className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-ink/5 px-8 py-4 text-base font-medium hover:bg-ink/10 transition"
