@@ -19,6 +19,7 @@ import work4 from "@assets/work-4_1781021356324.jpg";
 import { Nav, LogoBlack, LogoWhite } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ContactSection } from "@/components/contact-section";
+import { useSEO } from "@/lib/seo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -607,6 +608,11 @@ export default function App() {
 }
 
 function Home() {
+  useSEO({
+    title: "Trimmic — A Creative Studio with a Rebel Soul",
+    description: "We turn 'meh' brands into 'damn' brands. Branding, motion, explainer videos, and UI/UX from a studio that refuses to be boring.",
+    path: "/",
+  });
   return (
     <>
       <Hero />

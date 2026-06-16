@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
 import { Nav } from "@/components/nav";
+import { useSEO } from "@/lib/seo";
 
 const la = (file: string) => `/work/logo-animations/${file}`;
 
@@ -151,6 +152,11 @@ const steps = [
 ];
 
 export default function LogoAnimationPage() {
+  useSEO({
+    title: "Logo Animation & Motion Identity Services | Trimmic",
+    description: "Bring your logo to life. Trimmic crafts custom logo animations and motion identities delivered in MP4, WebM, GIF, and Lottie formats.",
+    path: "/logo-animation",
+  });
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

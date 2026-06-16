@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
 import { Nav } from "@/components/nav";
+import { useSEO } from "@/lib/seo";
 
 const imgs = (n: number) => `/work/trimmic-branding/Trimmic-0${n < 10 ? n : ""}.png`.replace("0", n < 10 ? "0" : "");
 const img = (n: number) => `/work/trimmic-branding/Trimmic-${String(n).padStart(2, "0")}.png`;
@@ -14,6 +15,11 @@ const results = [
 ];
 
 export default function CaseStudyTrimmic() {
+  useSEO({
+    title: "Trimmic Brand Identity Case Study — Visual System & Branding",
+    description: "Inside the Trimmic brand identity project: logo system, color palette, typography, and motion guidelines built from scratch for a creative studio.",
+    path: "/case-study/trimmic-branding",
+  });
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

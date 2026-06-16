@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
 import { Nav } from "@/components/nav";
+import { useSEO } from "@/lib/seo";
 
 const sp = (file: string) => `/work/social-posts/${file}`;
 
@@ -78,6 +79,11 @@ const featured = [
 ];
 
 export default function SocialContentPage() {
+  useSEO({
+    title: "Social Media Content Creation Services | Trimmic",
+    description: "Scroll-stopping feed posts, Stories, Reels, and campaign content designed to build brands and drive engagement. See Trimmic's social media work.",
+    path: "/social-content",
+  });
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

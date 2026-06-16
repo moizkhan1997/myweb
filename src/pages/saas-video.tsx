@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "wouter";
 import { Nav } from "@/components/nav";
+import { useSEO, useJsonLd } from "@/lib/seo";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -128,6 +129,20 @@ function SubNav() {
 }
 
 export default function SaasVideosPage() {
+  useSEO({
+    title: "SaaS Explainer Video Production Agency | Trimmic",
+    description: "Trimmic creates SaaS product videos, demos, and onboarding content that turn signups into sales. From script to final cut, built for software brands.",
+    path: "/service/saas-videos",
+  });
+  useJsonLd({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "SaaS Video Production",
+    name: "SaaS Video Production",
+    provider: { "@type": "Organization", name: "Trimmic", url: "https://www.trimmic.com/" },
+    areaServed: "Worldwide",
+    description: "SaaS product videos, demos, and onboarding content that turn signups into sales.",
+  });
   const pageRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     window.scrollTo(0, 0);

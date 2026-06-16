@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import { Link } from "wouter";
+import { useSEO } from "@/lib/seo";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -131,6 +132,11 @@ function ItemMedia({ item }: { item: CmsItem }) {
 }
 
 export default function PortfolioPage() {
+  useSEO({
+    title: "Portfolio — 200+ SaaS Video, Branding & Motion Projects | Trimmic",
+    description: "Explore Trimmic's portfolio of SaaS videos, explainer videos, motion graphics, branding, and social content across 200+ projects for startups and global brands.",
+    path: "/portfolio",
+  });
   const [activeCategory, setActiveCategory] = useState("All");
   const [cmsItems, setCmsItems] = useState<CmsItem[] | null>(null);
   const [modalItem, setModalItem] = useState<CmsItem | null>(null);

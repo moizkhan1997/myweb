@@ -1,6 +1,7 @@
 ﻿import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "wouter";
 import { Nav } from "@/components/nav";
+import { useSEO, useJsonLd } from "@/lib/seo";
 import NotFound from "./not-found";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
 import gsap from "gsap";
@@ -48,6 +49,7 @@ type Faq = { q: string; a: string };
 type ServiceData = {
   slug: string;
   accentColor: string;
+  seo: { title: string; description: string };
   hero: { badge: string; h1: string; subtitle: string };
   showreel: { badge: string; h2: string; desc: string };
   whyUs: { h2: string; items: Item[] };
@@ -98,6 +100,10 @@ const SERVICES: Record<string, ServiceData> = {
   "shorts": {
     slug: "shorts",
     accentColor: "var(--brand-pink)",
+    seo: {
+      title: "Short-Form Video Production (TikTok, Reels, Shorts) | Trimmic",
+      description: "TikTok, Reels, and YouTube Shorts engineered for algorithmic growth, with hooks that grab in 2 seconds and storytelling that earns the share.",
+    },
     hero: {
       badge: "Short-form video production",
       h1: "Shorts That Stop The Scroll [Dead.]",
@@ -161,6 +167,10 @@ const SERVICES: Record<string, ServiceData> = {
   "ugc": {
     slug: "ugc",
     accentColor: "var(--brand-green)",
+    seo: {
+      title: "UGC Video Content Creation Agency | Trimmic",
+      description: "Raw, authentic, creator-style UGC videos that blend into the feed and quietly outperform every polished ad you've ever run.",
+    },
     hero: {
       badge: "User-generated content production",
       h1: "UGC That Feels Real. [Converts] Even Harder.",
@@ -224,6 +234,10 @@ const SERVICES: Record<string, ServiceData> = {
   "youtube-videos": {
     slug: "youtube-videos",
     accentColor: "var(--brand-turquoise)",
+    seo: {
+      title: "YouTube Video Production & Channel Growth | Trimmic",
+      description: "Long-form video strategy, scripting, and production that grows your channel, deepens trust, and turns viewers into customers.",
+    },
     hero: {
       badge: "YouTube video production",
       h1: "YouTube Videos That [Build] Your Brand.",
@@ -287,6 +301,10 @@ const SERVICES: Record<string, ServiceData> = {
   "digital-marketing": {
     slug: "digital-marketing",
     accentColor: "var(--brand-yellow)",
+    seo: {
+      title: "Digital Marketing & Performance Ad Creative | Trimmic",
+      description: "Paid creative, funnel assets, and ad variants engineered for ROAS, built on what actually works across Meta, TikTok, Google, and LinkedIn.",
+    },
     hero: {
       badge: "Performance creative & paid advertising",
       h1: "Ad Creative That [Converts,] Not Just Clicks.",
@@ -350,6 +368,10 @@ const SERVICES: Record<string, ServiceData> = {
   "content-creation": {
     slug: "content-creation",
     accentColor: "var(--brand-pink)",
+    seo: {
+      title: "Content Creation Agency | Trimmic",
+      description: "Blog posts, carousels, email newsletters, pitch decks, and everything in between, all on-brand, all built to move your audience.",
+    },
     hero: {
       badge: "Content strategy & creation",
       h1: "Content That Makes Your Brand [Impossible] to Ignore.",
@@ -413,6 +435,10 @@ const SERVICES: Record<string, ServiceData> = {
   "social-media-management": {
     slug: "social-media-management",
     accentColor: "var(--brand-green)",
+    seo: {
+      title: "Social Media Management Services | Trimmic",
+      description: "Consistent posting, community management, and growth strategy across every platform, so your brand stays loud, relevant, and impossible to ignore.",
+    },
     hero: {
       badge: "Social media management",
       h1: "Your Brand. [Always On.] Always Sharp.",
@@ -476,6 +502,10 @@ const SERVICES: Record<string, ServiceData> = {
   "branding": {
     slug: "branding",
     accentColor: "var(--brand-turquoise)",
+    seo: {
+      title: "Brand Identity & Branding Design Agency | Trimmic",
+      description: "Logos, visual systems, brand guidelines, and motion assets that give your brand a presence worth remembering, with a system worth scaling.",
+    },
     hero: {
       badge: "Brand identity & design systems",
       h1: "An Identity That [Refuses] to Blend In.",
@@ -539,6 +569,10 @@ const SERVICES: Record<string, ServiceData> = {
   "explainer-videos": {
     slug: "explainer-videos",
     accentColor: "var(--brand-yellow)",
+    seo: {
+      title: "Explainer Video Production Company | Trimmic",
+      description: "Animated explainers that take the most technical, niche, or complicated product and make it crystal clear in 90 seconds or less.",
+    },
     hero: {
       badge: "Explainer video production",
       h1: "Complex Ideas, [Brilliantly] Simple.",
@@ -602,6 +636,10 @@ const SERVICES: Record<string, ServiceData> = {
   "motion-graphics": {
     slug: "motion-graphics",
     accentColor: "var(--brand-pink)",
+    seo: {
+      title: "Motion Graphics & Animation Studio | Trimmic",
+      description: "Kinetic type, logo animations, data visualizations, and motion systems that make your brand feel alive, on every screen, at every scale.",
+    },
     hero: {
       badge: "Motion design & animation",
       h1: "Motion That Makes People [Stop and Rewind.]",
@@ -695,6 +733,21 @@ function SubNav() {
 export default function ServicePage({ params }: { params: { slug: string } }) {
   const data = SERVICES[params.slug];
   if (!data) return <NotFound />;
+
+  useSEO({
+    title: data.seo.title,
+    description: data.seo.description,
+    path: `/service/${data.slug}`,
+  });
+  useJsonLd({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: data.hero.badge,
+    name: data.seo.title,
+    provider: { "@type": "Organization", name: "Trimmic", url: "https://www.trimmic.com/" },
+    areaServed: "Worldwide",
+    description: data.seo.description,
+  });
 
   const pageRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {

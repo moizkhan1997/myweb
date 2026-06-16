@@ -5,6 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ContactSection } from "@/components/contact-section";
+import { useSEO } from "@/lib/seo";
 
 function CalBooking() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -109,6 +110,11 @@ function CalBooking() {
 }
 
 export default function ContactPage() {
+  useSEO({
+    title: "Contact Trimmic — Book a Call or Start Your Project",
+    description: "Book a free intro call on Google Meet or send us your project brief. Trimmic replies within 24 hours and specializes in SaaS videos, branding, and motion design.",
+    path: "/contact",
+  });
   return (
     <div className="bg-background text-foreground min-h-screen">
       <Nav />
