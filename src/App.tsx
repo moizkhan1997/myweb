@@ -12,6 +12,8 @@ import CaseStudyTrimmic from "./pages/case-study-trimmic";
 import SocialContentPage from "./pages/social-content";
 import LogoAnimationPage from "./pages/logo-animation";
 import ContactPage from "./pages/contact";
+import BlogPage from "./pages/blog";
+import BlogPost from "./pages/blog-post";
 import work1 from "@assets/work-1_1781021356324.jpg";
 import work2 from "@assets/work-2_1781021356324.jpg";
 import work3 from "@assets/work-3_1781021356324.jpg";
@@ -596,6 +598,8 @@ export default function App() {
         <Route path="/social-content" component={SocialContentPage} />
         <Route path="/logo-animation" component={LogoAnimationPage} />
         <Route path="/contact" component={ContactPage} />
+        <Route path="/blog/:slug" component={BlogPost} />
+        <Route path="/blog" component={BlogPage} />
         <Route path="/service/saas-videos" component={SaasVideoPage} />
         <Route path="/service/:slug" component={ServicePage} />
         <Route path="/">

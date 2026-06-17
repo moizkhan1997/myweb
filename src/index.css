@@ -217,3 +217,55 @@ html {
 .marquee-rev:hover {
   animation-play-state: paused;
 }
+
+/* ── Blog prose typography ── */
+.blog-prose .prose-content {
+  color: oklch(0.08 0.01 60);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.blog-prose .prose-content p {
+  margin-bottom: 1.5rem;
+}
+.blog-prose .prose-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: oklch(0.08 0.01 60);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.blog-prose .prose-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: oklch(0.08 0.01 60);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.blog-prose .prose-content ul,
+.blog-prose .prose-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.blog-prose .prose-content ul { list-style-type: disc; }
+.blog-prose .prose-content ol { list-style-type: decimal; }
+.blog-prose .prose-content li {
+  margin-bottom: 0.5rem;
+  color: oklch(0.25 0.01 60);
+}
+.blog-prose .prose-content strong {
+  font-weight: 600;
+  color: oklch(0.08 0.01 60);
+}
+.blog-prose .prose-content a {
+  color: oklch(0.08 0.01 60);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.blog-prose .prose-content a:hover {
+  opacity: 0.7;
+}
