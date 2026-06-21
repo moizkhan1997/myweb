@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "wouter";
-import { Nav } from "@/components/nav";
-import { useSEO, useJsonLd } from "@/lib/seo";
+import { useSEO, useJsonLd, useBreadcrumbJsonLd, useFaqJsonLd } from "@/lib/seo";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -134,6 +133,11 @@ export default function SaasVideosPage() {
     description: "Trimmic creates SaaS product videos, demos, and onboarding content that turn signups into sales. From script to final cut, built for software brands.",
     path: "/service/saas-videos",
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/#services" },
+    { name: "SaaS Videos", path: "/service/saas-videos" },
+  ]);
   useJsonLd({
     "@context": "https://schema.org",
     "@type": "Service",
@@ -143,6 +147,7 @@ export default function SaasVideosPage() {
     areaServed: "Worldwide",
     description: "SaaS product videos, demos, and onboarding content that turn signups into sales.",
   });
+  useFaqJsonLd(FAQS);
   const pageRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
@@ -215,7 +220,6 @@ export default function SaasVideosPage() {
 
   return (
     <div ref={pageRef} className="bg-[color:var(--cream)] text-[color:var(--ink)]">
-      <Nav />
       <SubNav />
       <main>
 

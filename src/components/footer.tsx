@@ -22,9 +22,11 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="text-xs uppercase tracking-widest text-cream/50 mb-4">Social</div>
             <ul className="space-y-2.5">
-              <li><a href="#" className="hover:text-cream/70 transition">Instagram</a></li>
-              <li><a href="#" className="hover:text-cream/70 transition">Behance</a></li>
-              <li><a href="#" className="hover:text-cream/70 transition">Dribbble</a></li>
+              <li><a href="https://www.instagram.com/trimmic.creative/" target="_blank" rel="noopener noreferrer" className="hover:text-cream/70 transition">Instagram</a></li>
+              <li><a href="https://www.linkedin.com/company/trimmicc" target="_blank" rel="noopener noreferrer" className="hover:text-cream/70 transition">LinkedIn</a></li>
+              <li><a href="https://www.facebook.com/trimmic" target="_blank" rel="noopener noreferrer" className="hover:text-cream/70 transition">Facebook</a></li>
+              <li><a href="https://www.behance.net/trimmic" target="_blank" rel="noopener noreferrer" className="hover:text-cream/70 transition">Behance</a></li>
+              <li><a href="https://dribbble.com/trimmic" target="_blank" rel="noopener noreferrer" className="hover:text-cream/70 transition">Dribbble</a></li>
             </ul>
           </div>
           <div className="md:col-span-3">

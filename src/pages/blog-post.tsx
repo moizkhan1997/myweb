@@ -1,7 +1,6 @@
 import { Link } from "wouter";
-import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
-import { useSEO, useJsonLd } from "@/lib/seo";
+import { useSEO, useJsonLd, useBreadcrumbJsonLd } from "@/lib/seo";
 import { getPost } from "@/blog/index";
 
 function formatDate(iso: string) {
@@ -27,6 +26,12 @@ function PostContent({ slug }: { slug: string }) {
     publisher: { "@type": "Organization", name: "Trimmic", url: "https://www.trimmic.com" },
     url: `https://www.trimmic.com/blog/${post.meta.slug}`,
   } : { "@context": "https://schema.org", "@type": "WebPage" });
+
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: post?.meta.title ?? "Post", path: `/blog/${slug}` },
+  ]);
 
   if (!post) {
     return (
@@ -109,7 +114,6 @@ function PostContent({ slug }: { slug: string }) {
 export default function BlogPost({ params }: { params: { slug: string } }) {
   return (
     <div className="min-h-screen bg-background">
-      <Nav />
       <PostContent slug={params.slug} />
       <Footer />
     </div>

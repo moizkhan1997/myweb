@@ -1,7 +1,6 @@
 ﻿import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "wouter";
-import { Nav } from "@/components/nav";
-import { useSEO, useJsonLd } from "@/lib/seo";
+import { useSEO, useJsonLd, useBreadcrumbJsonLd, useFaqJsonLd } from "@/lib/seo";
 import NotFound from "./not-found";
 import agencyPromoUrl from "@assets/agency-promo.mp4?url";
 import gsap from "gsap";
@@ -739,6 +738,11 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
     description: data.seo.description,
     path: `/service/${data.slug}`,
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/#services" },
+    { name: data.title, path: `/service/${data.slug}` },
+  ]);
   useJsonLd({
     "@context": "https://schema.org",
     "@type": "Service",
@@ -748,6 +752,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
     areaServed: "Worldwide",
     description: data.seo.description,
   });
+  useFaqJsonLd(data.faqs.map((f) => ({ q: f.q, a: f.a })));
 
   const pageRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -821,7 +826,6 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
 
   return (
     <div ref={pageRef} className="bg-[color:var(--cream)] text-[color:var(--ink)]">
-      <Nav />
       <SubNav />
       <main>
         <Hero data={data} />

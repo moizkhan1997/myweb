@@ -132,7 +132,11 @@ function Hero() {
 
       {/* Left — text */}
       <div className="relative z-10 flex flex-col w-full lg:w-[52%] px-8 md:px-14 lg:px-20 pt-32 pb-16 lg:pt-36 lg:pb-20">
-        <h1 className="font-display text-[clamp(2.75rem,5.5vw,5.5rem)] leading-[0.95]">
+        <h1 className="sr-only">Motion Graphics & Video Production Studio for SaaS Brands</h1>
+        <p className="g-hero-sub text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
+          Motion Graphics &amp; Video Production for SaaS Brands
+        </p>
+        <div className="font-display text-[clamp(2.75rem,5.5vw,5.5rem)] leading-[0.95]">
           <span className="block overflow-hidden pb-1">
             <span className="g-hero-line block">We don't just make videos.</span>
           </span>
@@ -143,7 +147,7 @@ function Hero() {
               good ones.
             </span>
           </span>
-        </h1>
+        </div>
         <p className="g-hero-sub mt-7 max-w-lg text-lg text-muted-foreground leading-relaxed">
           We don't just edit videos. We breathe life into them. Motion graphics, SaaS videos, and 2D animation that stops the scroll and starts the sale.
         </p>
@@ -306,9 +310,9 @@ function Services() {
 function Showcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const items = [
-    { src: "/work/trimmic-branding/Trimmic-12.jpg", title: "Trimmic Studio",   tag: "Brand Identity · Visual System", span: "md:col-span-2 md:row-span-2", href: "/case-study/trimmic-branding" },
-    { src: "/work/logo-animations/logo-novus-digital.mp4", title: "Logo Animation", tag: "Motion Identity · Brand Motion",  span: "md:col-span-2",                 href: "/logo-animation", isVideo: true },
-    { src: "/work/social-posts/social-main.jpg",       title: "Social Media",     tag: "Content · Campaigns · Feed",     span: "",                              href: "/social-content" },
+    { src: "/work/trimmic-branding/Trimmic-12.jpg", title: "Trimmic Studio",   tag: "Brand Identity · Visual System", span: "md:col-span-2 md:row-span-2", href: "/case-study/trimmic-branding", alt: "Trimmic brand identity case study — visual system and logo design" },
+    { src: "/work/logo-animations/logo-novus-digital.mp4", title: "Logo Animation", tag: "Motion Identity · Brand Motion",  span: "md:col-span-2",                 href: "/logo-animation", isVideo: true, alt: "Animated logo motion identity reel by Trimmic studio" },
+    { src: "/work/social-posts/social-main.jpg",       title: "Social Media",     tag: "Content · Campaigns · Feed",     span: "",                              href: "/social-content", alt: "Social media content and campaign design by Trimmic" },
   ];
 
   useEffect(() => {
@@ -375,9 +379,9 @@ function Showcase() {
           {items.map((it, i) => (
             <a key={i} href={it.href} className={`g-work-item group relative rounded-3xl overflow-hidden ${it.span || ""}`}>
               {(it as any).isVideo ? (
-                <video autoPlay muted loop playsInline className="h-full w-full object-cover will-change-transform" src={it.src} />
+                <video autoPlay muted loop playsInline aria-label={it.alt} className="h-full w-full object-cover will-change-transform" src={it.src} />
               ) : (
-                <img src={it.src} alt={it.title} className={`h-full w-full object-cover will-change-transform${i === 0 ? " scale-[1.15]" : ""}`} loading="lazy" />
+                <img src={it.src} alt={it.alt} className={`h-full w-full object-cover will-change-transform${i === 0 ? " scale-[1.15]" : ""}`} loading="lazy" />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/0 to-ink/0" />
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
@@ -613,8 +617,8 @@ export default function App() {
 
 function Home() {
   useSEO({
-    title: "Trimmic — A Creative Studio with a Rebel Soul",
-    description: "We turn 'meh' brands into 'damn' brands. Branding, motion, explainer videos, and UI/UX from a studio that refuses to be boring.",
+    title: "Trimmic | Video Editing, Motion Graphics & Explainer Videos Studio",
+    description: "Trimmic is a creative video studio specializing in SaaS videos, explainer videos, motion graphics, and brand content. Get work that converts. Start your project today.",
     path: "/",
   });
   return (

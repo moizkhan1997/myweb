@@ -1,7 +1,6 @@
 import { Link } from "wouter";
-import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
-import { useSEO } from "@/lib/seo";
+import { useSEO, useBreadcrumbJsonLd } from "@/lib/seo";
 import { posts } from "@/blog/index";
 
 function formatDate(iso: string) {
@@ -14,11 +13,13 @@ export default function Blog() {
     description: "Expert guides on SaaS explainer videos, logo animation, motion graphics, and brand strategy from Trimmic's creative team.",
     path: "/blog",
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+  ]);
 
   return (
     <div className="min-h-screen bg-background">
-      <Nav />
-
       {/* Hero */}
       <section className="pt-40 pb-16 px-6">
         <div className="max-w-4xl mx-auto">

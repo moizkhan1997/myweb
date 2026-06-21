@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
-import { Nav } from "@/components/nav";
-import { useSEO } from "@/lib/seo";
+import { useSEO, useBreadcrumbJsonLd } from "@/lib/seo";
 
 const la = (file: string) => `/work/logo-animations/${file}`;
 
@@ -168,6 +167,10 @@ export default function LogoAnimationPage() {
     description: "Bring your logo to life. Trimmic crafts custom logo animations and motion identities delivered in MP4, WebM, GIF, and Lottie formats.",
     path: "/logo-animation",
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Logo Animation", path: "/logo-animation" },
+  ]);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -207,8 +210,6 @@ export default function LogoAnimationPage() {
 
   return (
     <div ref={rootRef} className="bg-[#0a0a0a] text-white min-h-screen overflow-x-hidden">
-      <Nav />
-
       {/* ── HERO ── */}
       <section className="relative flex flex-col justify-center min-h-[75vh] px-8 md:px-14 lg:px-20 pt-36 pb-16">
         <div aria-hidden className="absolute inset-0 pointer-events-none">

@@ -2,10 +2,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
-import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ContactSection } from "@/components/contact-section";
-import { useSEO } from "@/lib/seo";
+import { useSEO, useBreadcrumbJsonLd } from "@/lib/seo";
 
 function CalBooking() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -115,9 +114,12 @@ export default function ContactPage() {
     description: "Book a free intro call on Google Meet or send us your project brief. Trimmic replies within 24 hours and specializes in SaaS videos, branding, and motion design.",
     path: "/contact",
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Contact", path: "/contact" },
+  ]);
   return (
     <div className="bg-background text-foreground min-h-screen">
-      <Nav />
       <CalBooking />
       <ContactSection />
       <Footer />

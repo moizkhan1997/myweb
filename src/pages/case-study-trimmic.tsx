@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
-import { Nav } from "@/components/nav";
-import { useSEO } from "@/lib/seo";
+import { useSEO, useBreadcrumbJsonLd } from "@/lib/seo";
 
 const img = (n: number) => `/work/trimmic-branding/Trimmic-${String(n).padStart(2, "0")}.jpg`;
 
@@ -19,6 +18,11 @@ export default function CaseStudyTrimmic() {
     description: "Inside the Trimmic brand identity project: logo system, color palette, typography, and motion guidelines built from scratch for a creative studio.",
     path: "/case-study/trimmic-branding",
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Portfolio", path: "/portfolio" },
+    { name: "Trimmic Branding Case Study", path: "/case-study/trimmic-branding" },
+  ]);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,8 +69,6 @@ export default function CaseStudyTrimmic() {
 
   return (
     <div ref={rootRef} className="bg-[#0a0a0a] text-white min-h-screen">
-      <Nav />
-
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex flex-col justify-end px-8 md:px-14 lg:px-20 pb-16 pt-36 overflow-hidden">
         <div aria-hidden className="absolute inset-0">

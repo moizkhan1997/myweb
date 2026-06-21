@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
-import { Nav } from "@/components/nav";
-import { useSEO } from "@/lib/seo";
+import { useSEO, useBreadcrumbJsonLd } from "@/lib/seo";
 
 const sp = (file: string) => `/work/social-posts/${file}`;
 
@@ -84,6 +83,10 @@ export default function SocialContentPage() {
     description: "Scroll-stopping feed posts, Stories, Reels, and campaign content designed to build brands and drive engagement. See Trimmic's social media work.",
     path: "/social-content",
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Social Content", path: "/social-content" },
+  ]);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -122,8 +125,6 @@ export default function SocialContentPage() {
 
   return (
     <div ref={rootRef} className="bg-[#0a0a0a] text-white min-h-screen overflow-x-hidden">
-      <Nav />
-
       {/* ── HERO ── */}
       <section className="relative flex flex-col justify-center min-h-[75vh] px-8 md:px-14 lg:px-20 pt-36 pb-16">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
