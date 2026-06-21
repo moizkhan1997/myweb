@@ -54,7 +54,8 @@ function Thumbnail({ item }: { item: Item }) {
   if (ytId) {
     return (
       <img
-        src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`}
+        src={`https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`}
+        onError={(e) => { e.currentTarget.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`; }}
         alt={item.title}
         className="h-full w-full object-cover"
       />

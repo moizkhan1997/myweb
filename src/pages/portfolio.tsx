@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import { Link } from "wouter";
-import { useSEO } from "@/lib/seo";
+import { useSEO, useBreadcrumbJsonLd } from "@/lib/seo";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
-import { LogoWhite } from "@/components/nav";
+import { Footer } from "@/components/footer";
 import work1 from "@assets/work-1_1781021356324.jpg";
 import work2 from "@assets/work-2_1781021356324.jpg";
 import work3 from "@assets/work-3_1781021356324.jpg";
@@ -140,6 +140,46 @@ function LazyVideo({ src }: { src: string }) {
   );
 }
 
+// Plays the actual YouTube clip muted on a loop once it scrolls into view,
+// instead of a static (often low-res, sometimes mid-scene) thumbnail.
+function YouTubePreview({ ytId, title }: { ytId: string; title: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [thumbSrc, setThumbSrc] = useState(`https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => setPlaying(e.isIntersecting),
+      { rootMargin: "100px", threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="absolute inset-0">
+      <img
+        src={thumbSrc}
+        onError={() => setThumbSrc(`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`)}
+        alt={title}
+        className={`h-full w-full object-cover transition-opacity duration-500 ${playing ? "opacity-0" : "opacity-100"}`}
+        loading="lazy"
+      />
+      {playing && (
+        <iframe
+          src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&playsinline=1`}
+          className="absolute inset-0 h-full w-full"
+          style={{ pointerEvents: "none" }}
+          allow="autoplay; encrypted-media"
+          title={title}
+        />
+      )}
+    </div>
+  );
+}
+
 function ItemMedia({ item }: { item: CmsItem }) {
   if (item.imageUrl) {
     if (/\.(mp4|mov|webm)$/i.test(item.imageUrl)) {
@@ -149,7 +189,7 @@ function ItemMedia({ item }: { item: CmsItem }) {
   }
   const ytId = item.videoUrl ? getYouTubeId(item.videoUrl) : null;
   if (ytId) {
-    return <img src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`} alt={item.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />;
+    return <YouTubePreview ytId={ytId} title={item.title} />;
   }
   return (
     <div className="h-full w-full flex items-center justify-center text-4xl font-bold text-white"
@@ -165,6 +205,10 @@ export default function PortfolioPage() {
     description: "Explore Trimmic's portfolio of SaaS videos, explainer videos, motion graphics, branding, and social content across 200+ projects for startups and global brands.",
     path: "/portfolio",
   });
+  useBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Portfolio", path: "/portfolio" },
+  ]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [cmsItems, setCmsItems] = useState<CmsItem[] | null>(null);
   const [modalItem, setModalItem] = useState<CmsItem | null>(null);
@@ -300,27 +344,21 @@ export default function PortfolioPage() {
       <section className="py-12">
         <div className="mx-auto max-w-7xl px-6">
           {filtered.length > 0 ? (
-            <div className="g-pf-grid columns-1 sm:columns-2 lg:columns-3 gap-5">
+            <div className="g-pf-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {filtered.map((item) => (
                 <div
                   key={item.id}
-                  className="g-pf-grid-item group relative mb-5 block break-inside-avoid overflow-hidden rounded-[1.5rem] cursor-pointer"
-                  style={{ height: item.tall ? "440px" : "280px" }}
+                  className="g-pf-grid-item group relative aspect-video overflow-hidden rounded-2xl cursor-pointer bg-ink/40"
                   onClick={() => setModalItem(item)}
                 >
                   <ItemMedia item={item} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-transparent opacity-60 group-hover:opacity-100 transition duration-300" />
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <div className="translate-y-2 group-hover:translate-y-0 transition duration-300">
-                      <span className="text-xs uppercase tracking-[0.2em] text-cream/50">{item.category}</span>
-                      <h3 className="font-display text-2xl text-cream mt-1">{item.title}</h3>
-                      <p className="text-sm text-cream/50 mt-0.5">{item.client}</p>
-                      {item.description && (
-                        <p className="text-xs text-cream/40 mt-1 line-clamp-2">{item.description}</p>
-                      )}
-                    </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                  <div className="absolute inset-0 p-5 flex flex-col justify-end">
+                    <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-cream/60">{item.category}</span>
+                    <h3 className="font-display text-xl text-cream mt-1 leading-tight">{item.title}</h3>
+                    {item.client && <p className="text-xs text-cream/55 mt-0.5">{item.client}</p>}
                   </div>
-                  <div className="absolute top-5 right-5 h-10 w-10 flex items-center justify-center rounded-full bg-white/20 backdrop-blur text-white opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition duration-300 text-sm">
+                  <div className="absolute top-4 right-4 h-9 w-9 flex items-center justify-center rounded-full bg-white/20 backdrop-blur text-white opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition duration-300 text-sm">
                     ▶
                   </div>
                 </div>
@@ -418,46 +456,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-cream/10 pt-16 pb-10">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid md:grid-cols-12 gap-10">
-            <div className="md:col-span-5">
-              <LogoWhite />
-              <p className="mt-6 max-w-sm text-cream/70">
-                A creative studio with a rebel soul. Born to make brands that don't sit quietly in the corner.
-              </p>
-            </div>
-            <div className="md:col-span-2">
-              <div className="text-xs uppercase tracking-widest text-cream/50 mb-4">Studio</div>
-              <ul className="space-y-2.5 text-sm">
-                <li><a href="/#studio" className="hover:text-cream/70 transition">About</a></li>
-                <li><a href="/#work" className="hover:text-cream/70 transition">Work</a></li>
-                <li><a href="/#services" className="hover:text-cream/70 transition">Services</a></li>
-              </ul>
-            </div>
-            <div className="md:col-span-2">
-              <div className="text-xs uppercase tracking-widest text-cream/50 mb-4">Social</div>
-              <ul className="space-y-2.5 text-sm">
-                <li><a href="#" className="hover:text-cream/70 transition">Instagram</a></li>
-                <li><a href="#" className="hover:text-cream/70 transition">Behance</a></li>
-                <li><a href="#" className="hover:text-cream/70 transition">Dribbble</a></li>
-              </ul>
-            </div>
-            <div className="md:col-span-3">
-              <div className="text-xs uppercase tracking-widests text-cream/50 mb-4">Say hi</div>
-              <a href="mailto:hello@trimmic.com" className="font-display text-2xl text-gradient-brand">
-                hello@trimmic.com
-              </a>
-              <p className="mt-3 text-cream/70 text-sm">+92 347 255 1975</p>
-            </div>
-          </div>
-          <div className="mt-16 pt-6 border-t border-cream/10 flex flex-wrap items-center justify-between gap-4 text-sm text-cream/60">
-            <p>© {new Date().getFullYear()} Trimmic Studio. All rights reserved.</p>
-            <p className="font-serif-italic">Wearing this site may cause design addiction.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
