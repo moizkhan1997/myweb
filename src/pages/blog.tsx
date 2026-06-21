@@ -1,7 +1,9 @@
+import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Footer } from "@/components/footer";
 import { useSEO, useBreadcrumbJsonLd } from "@/lib/seo";
 import { posts } from "@/blog/index";
+import gsap from "gsap";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
@@ -18,17 +20,48 @@ export default function Blog() {
     { name: "Blog", path: "/blog" },
   ]);
 
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const ctx = gsap.context(() => {
+      gsap.from(".g-blog-hero-label", {
+        opacity: 0, y: 16, duration: 0.8, ease: "power2.out",
+      });
+      gsap.from(".g-blog-hero-h1", {
+        opacity: 0, y: 28, duration: 1.1, ease: "power2.out", delay: 0.15,
+      });
+      gsap.from(".g-blog-hero-sub", {
+        opacity: 0, y: 24, duration: 1, ease: "power2.out", delay: 0.4,
+      });
+
+      const cards = root.querySelectorAll(".g-blog-card");
+      if (cards.length) {
+        const obs = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            gsap.from(cards, { opacity: 0, y: 35, duration: 0.8, ease: "power2.out", stagger: 0.12 });
+            obs.disconnect();
+          }
+        }, { threshold: 0.1 });
+        obs.observe(cards[0]);
+        return () => obs.disconnect();
+      }
+    }, root);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div ref={rootRef} className="min-h-screen bg-background">
       {/* Hero */}
       <section className="pt-40 pb-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <p className="text-sm font-medium text-foreground/40 uppercase tracking-widest mb-4">The Trimmic Blog</p>
-          <h1 className="font-display text-5xl md:text-6xl font-semibold leading-[1.05] text-ink mb-6">
+          <p className="g-blog-hero-label text-sm font-medium text-foreground/40 uppercase tracking-widest mb-4">The Trimmic Blog</p>
+          <h1 className="g-blog-hero-h1 font-display text-5xl md:text-6xl font-semibold leading-[1.05] text-ink mb-6">
             Ideas worth<br />
             <span className="italic font-normal">reading.</span>
           </h1>
-          <p className="text-lg text-foreground/60 max-w-xl">
+          <p className="g-blog-hero-sub text-lg text-foreground/60 max-w-xl">
             Guides on SaaS video, motion design, branding, and the creative decisions that actually move the needle.
           </p>
         </div>
@@ -38,7 +71,7 @@ export default function Blog() {
       <section className="px-6 pb-32">
         <div className="max-w-4xl mx-auto grid gap-6">
           {posts.map((post) => (
-            <Link key={post.meta.slug} href={`/blog/${post.meta.slug}`} className="group block">
+            <Link key={post.meta.slug} href={`/blog/${post.meta.slug}`} className="g-blog-card group block">
               <article className="rounded-2xl border border-border/60 bg-white/60 p-8 hover:shadow-[0_8px_40px_-12px_rgba(20,16,8,0.15)] transition-all duration-300 hover:-translate-y-0.5">
                 <div className="flex flex-col md:flex-row md:items-start gap-6">
                   {/* Color swatch */}

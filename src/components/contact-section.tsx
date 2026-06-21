@@ -186,10 +186,16 @@ export function ContactSection() {
 
               <div className="border-t border-border pt-8">
                 <div className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Follow the studio</div>
-                <div className="flex items-center gap-3">
-                  {["Instagram", "Behance", "Dribbble"].map((s) => (
-                    <a key={s} href="#" className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-ink hover:text-cream hover:border-ink transition">
-                      {s}
+                <div className="flex items-center gap-3 flex-wrap">
+                  {[
+                    { label: "Instagram", href: "https://www.instagram.com/trimmic.creative/" },
+                    { label: "LinkedIn", href: "https://www.linkedin.com/company/trimmicc" },
+                    { label: "Facebook", href: "https://www.facebook.com/trimmic" },
+                    { label: "Behance", href: "https://www.behance.net/trimmic" },
+                    { label: "Dribbble", href: "https://dribbble.com/trimmic" },
+                  ].map((s) => (
+                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-ink hover:text-cream hover:border-ink transition">
+                      {s.label}
                     </a>
                   ))}
                 </div>

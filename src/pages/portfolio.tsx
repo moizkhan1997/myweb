@@ -228,45 +228,100 @@ export default function PortfolioPage() {
       .catch(() => {});
   }, []);
 
+  // Hero + scroll-triggered animations. None of these depend on the CMS fetch
+  // (the filter bar and grid handle their own content independently), so they
+  // run immediately on mount instead of waiting on a network round trip.
   useEffect(() => {
     const root = pageRef.current;
     if (!root) return;
 
-    const tweens: gsap.core.Tween[] = [];
-    const observers: IntersectionObserver[] = [];
+    const ctx = gsap.context(() => {
+      gsap.from(".g-pf-hero-badge", {
+        opacity: 0, x: -16, duration: 0.8, ease: "power2.out",
+      });
+      gsap.from(".g-pf-hero-line", {
+        yPercent: 115, duration: 1.4, ease: "power3.out", stagger: 0.2, delay: 0.25,
+      });
+      gsap.from(".g-pf-hero-sub", {
+        opacity: 0, y: 24, duration: 1.1, ease: "power2.out", delay: 0.7,
+      });
 
-    tweens.push(gsap.from(root.querySelectorAll(".g-pf-hero-line"), {
-      yPercent: 115, duration: 1, ease: "power4.out", stagger: 0.15, delay: 0.2,
-    }));
-    tweens.push(gsap.from(root.querySelectorAll(".g-pf-hero-sub"), {
-      opacity: 0, y: 24, duration: 0.8, ease: "power3.out", delay: 0.55,
-    }));
+      gsap.from(".g-pf-stat-item", {
+        scrollTrigger: { trigger: ".g-pf-stat-grid", start: "top 85%", once: true },
+        opacity: 0, y: 30, duration: 1, ease: "power2.out", stagger: 0.12,
+      });
+      gsap.from(".g-pf-cta-inner", {
+        scrollTrigger: { trigger: ".g-pf-cta-inner", start: "top 85%", once: true },
+        opacity: 0, y: 55, scale: 0.96, duration: 1.2, ease: "power2.out",
+      });
 
-    const onScroll = (triggerSel: string, targetSel: string, vars: gsap.TweenVars) => {
-      const trigger = root.querySelector(triggerSel);
-      const targets = Array.from(root.querySelectorAll(targetSel));
-      if (!trigger || !targets.length) return;
-      const obs = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          tweens.push(gsap.from(targets, vars));
-          obs.disconnect();
-        }
-      }, { threshold: 0.1 });
-      obs.observe(trigger);
-      observers.push(obs);
-    };
+      // Stats count-up, triggered once the stat grid scrolls into view
+      root.querySelectorAll<HTMLElement>(".g-pf-stat-num").forEach((el) => {
+        const target = parseFloat(el.dataset.target || "0");
+        const suffix = el.dataset.suffix || "";
+        if (isNaN(target)) return;
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 1.8,
+          ease: "power2.out",
+          snap: { val: 1 },
+          scrollTrigger: { trigger: el, start: "top 90%", once: true },
+          onUpdate() { el.textContent = Math.round(obj.val) + suffix; },
+        });
+      });
+    }, root);
 
-    onScroll(".g-pf-grid",                ".g-pf-grid-item",        { y: 35, duration: 0.65, ease: "power3.out", stagger: 0.04 });
-    onScroll(".g-pf-stat-grid",           ".g-pf-stat-item",        { y: 30, duration: 0.6,  ease: "power3.out", stagger: 0.1 });
-    onScroll(".g-pf-testimonials-heading",".g-pf-testimonials-heading", { y: 40, duration: 0.8, ease: "power3.out" });
-    onScroll(".g-pf-testimonials",        ".g-pf-testimonial",      { y: 40, duration: 0.65, ease: "power3.out" });
-    onScroll(".g-pf-cta-inner",           ".g-pf-cta-inner",        { y: 50, scale: 0.98,  duration: 0.9, ease: "power3.out" });
+    // Safety net: no matter what race condition or interrupted tween might
+    // leave an element stuck at opacity 0, force everything visible after a
+    // few seconds so the page can never get permanently stuck invisible.
+    const safety = setTimeout(() => {
+      gsap.set(
+        root.querySelectorAll(
+          ".g-pf-hero-badge, .g-pf-hero-line, .g-pf-hero-sub, .g-pf-stat-item, .g-pf-cta-inner, .g-pf-grid-item"
+        ),
+        { clearProps: "all" }
+      );
+    }, 4000);
+
+    // Hero videos and grid images/videos load asynchronously and can grow the
+    // page after ScrollTrigger has already measured it, pushing every trigger
+    // point further down than expected. Recalculate once everything has
+    // actually finished loading.
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 1500);
 
     return () => {
-      tweens.forEach(t => t.kill());
-      observers.forEach(o => o.disconnect());
+      clearTimeout(safety);
+      clearTimeout(refreshTimer);
+      window.removeEventListener("load", onLoad);
+      ctx.revert();
     };
   }, []);
+
+  // Re-animate the grid every time the category filter changes (and on first mount)
+  useEffect(() => {
+    const root = pageRef.current;
+    if (!root) return;
+    const items = root.querySelectorAll(".g-pf-grid-item");
+    if (!items.length) return;
+    const ctx = gsap.context(() => {
+      gsap.from(items, {
+        opacity: 0, y: 30, scale: 0.97, duration: 0.7, ease: "power2.out", stagger: 0.04,
+      });
+    }, root);
+    return () => ctx.revert();
+  }, [activeCategory, cmsItems]);
+
+  // When the CMS data swaps in, the grid shrinks/grows and the whole page's
+  // height changes. Recalculate ScrollTrigger positions against the new
+  // layout, otherwise triggers below the grid stay anchored to the old
+  // (taller) layout and only fire after scrolling past and back.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => cancelAnimationFrame(id);
+  }, [cmsItems]);
 
   const staticAsCms: CmsItem[] = portfolioItems.map(i => ({
     id: i.id,
@@ -295,7 +350,7 @@ export default function PortfolioPage() {
         <div aria-hidden className="absolute inset-0 bg-gradient-brand-soft opacity-[0.12]" />
         <div aria-hidden className="absolute -top-40 -right-40 h-[700px] w-[700px] rounded-full bg-gradient-brand opacity-15 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-6">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="g-pf-hero-badge flex items-center gap-2 mb-4">
             <span className="h-2 w-2 rounded-full bg-brand-green" />
             <span className="text-xs font-medium uppercase tracking-[0.25em] text-cream/50">
               The stream · 200+ projects
@@ -378,13 +433,19 @@ export default function PortfolioPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="g-pf-stat-grid grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { k: "200+", v: "Projects shipped" },
-              { k: "60+",  v: "Brands served" },
-              { k: "10",   v: "Creative disciplines" },
-              { k: "14",   v: "Awards on the shelf" },
+              { target: 200, suffix: "+", v: "Projects shipped" },
+              { target: 60,  suffix: "+", v: "Brands served" },
+              { target: 10,  suffix: "",  v: "Creative disciplines" },
+              { target: 14,  suffix: "",  v: "Awards on the shelf" },
             ].map((s) => (
               <div key={s.v} className="g-pf-stat-item text-center">
-                <div className="font-display text-5xl md:text-6xl text-cream">{s.k}</div>
+                <div
+                  className="g-pf-stat-num font-display text-5xl md:text-6xl text-cream"
+                  data-target={s.target}
+                  data-suffix={s.suffix}
+                >
+                  0{s.suffix}
+                </div>
                 <div className="text-xs uppercase tracking-[0.2em] text-cream/40 mt-2">{s.v}</div>
               </div>
             ))}

@@ -95,19 +95,19 @@ function Hero() {
       // — Masked line reveal for h1
       gsap.from(".g-hero-line", {
         yPercent: 115,
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.15,
+        duration: 1.5,
+        ease: "power3.out",
+        stagger: 0.22,
       });
 
       // — Fade-up for paragraph, buttons, avatar row
       gsap.from(".g-hero-sub", {
         opacity: 0,
         y: 28,
-        duration: 0.85,
-        ease: "power3.out",
-        stagger: 0.1,
-        delay: 0.45,
+        duration: 1.2,
+        ease: "power2.out",
+        stagger: 0.15,
+        delay: 0.6,
       });
 
       // — Right image tiles: scale + fade stagger
@@ -115,10 +115,10 @@ function Hero() {
         opacity: 0,
         scale: 0.88,
         y: 24,
-        duration: 0.9,
-        ease: "expo.out",
-        stagger: 0.07,
-        delay: 0.3,
+        duration: 1.3,
+        ease: "power2.out",
+        stagger: 0.12,
+        delay: 0.4,
       });
     }, sectionRef);
 
@@ -241,9 +241,9 @@ function Services() {
       gsap.from(".g-services-heading .g-word", {
         scrollTrigger: { trigger: ".g-services-heading", start: "top 85%", once: true },
         yPercent: 110,
-        duration: 0.8,
-        ease: "power4.out",
-        stagger: 0.06,
+        duration: 1.2,
+        ease: "power3.out",
+        stagger: 0.1,
       });
 
       // Cards scroll-stagger reveal
@@ -251,9 +251,9 @@ function Services() {
         scrollTrigger: { trigger: ".g-services-grid", start: "top 80%", once: true },
         opacity: 0,
         y: 55,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.07,
+        duration: 1.05,
+        ease: "power2.out",
+        stagger: 0.12,
       });
     }, sectionRef);
 
@@ -322,8 +322,8 @@ function Showcase() {
         scrollTrigger: { trigger: ".g-showcase-heading", start: "top 85%", once: true },
         opacity: 0,
         y: 40,
-        duration: 0.9,
-        ease: "power3.out",
+        duration: 1.3,
+        ease: "power2.out",
       });
 
       // Work item cards: stagger from below
@@ -332,9 +332,9 @@ function Showcase() {
         opacity: 0,
         y: 50,
         scale: 0.97,
-        duration: 0.75,
-        ease: "power3.out",
-        stagger: 0.1,
+        duration: 1.1,
+        ease: "power2.out",
+        stagger: 0.15,
       });
 
       // Parallax: inner images move at 70% scroll speed
@@ -421,9 +421,9 @@ function Manifesto() {
       gsap.from(".g-manifesto-word", {
         scrollTrigger: { trigger: ".g-manifesto-h2", start: "top 80%", once: true },
         yPercent: 110,
-        duration: 0.75,
-        ease: "power4.out",
-        stagger: 0.055,
+        duration: 1.15,
+        ease: "power3.out",
+        stagger: 0.09,
       });
 
       // Principles cards fan in
@@ -431,9 +431,9 @@ function Manifesto() {
         scrollTrigger: { trigger: ".g-principles-grid", start: "top 82%", once: true },
         opacity: 0,
         x: -30,
-        duration: 0.65,
-        ease: "power3.out",
-        stagger: 0.1,
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.15,
       });
 
       // Stats count-up
@@ -545,18 +545,18 @@ function Billboard() {
       gsap.from(".g-billboard-inner", {
         scrollTrigger: { trigger: ".g-billboard-inner", start: "top 85%", once: true },
         clipPath: "inset(100% 0 0 0)",
-        duration: 1.2,
-        ease: "power4.inOut",
+        duration: 1.7,
+        ease: "power3.inOut",
       });
 
       gsap.from(".g-billboard-text", {
         scrollTrigger: { trigger: ".g-billboard-inner", start: "top 75%", once: true },
         opacity: 0,
         y: 32,
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: 0.12,
-        delay: 0.3,
+        duration: 1.3,
+        ease: "power2.out",
+        stagger: 0.18,
+        delay: 0.4,
       });
     }, sectionRef);
 
