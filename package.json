@@ -5,6 +5,8 @@
   "type": "module",
   "packageManager": "pnpm@10.0.0",
   "dependencies": {
+    "@sanity/client": "^7.23.0",
+    "@sanity/image-url": "^2.1.1",
     "gsap": "^3.13.0",
     "resend": "^6.12.4"
   },
