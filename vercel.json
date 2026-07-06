@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "installCommand": "pnpm install --no-frozen-lockfile && npx puppeteer browsers install chrome",
   "buildCommand": "PORT=3000 BASE_PATH=/ pnpm build && node prerender.mjs",
   "outputDirectory": "dist/public",
   "trailingSlash": false,
