@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
@@ -68,15 +69,10 @@ await new Promise(resolve => server.listen(PORT, resolve));
 console.log(`Prerender server on :${PORT}`);
 
 const browser = await puppeteer.launch({
-  args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-dev-shm-usage',
-    '--disable-accelerated-2d-canvas',
-    '--disable-gpu',
-    '--no-first-run',
-    '--no-zygote',
-  ],
+  args: chromium.args,
+  defaultViewport: chromium.defaultViewport,
+  executablePath: await chromium.executablePath(),
+  headless: chromium.headless,
 });
 
 let ok = 0;
