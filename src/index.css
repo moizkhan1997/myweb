@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "lenis/lenis.css";
 
 html {
   overflow-anchor: none;
