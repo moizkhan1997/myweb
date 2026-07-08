@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link, Route, Switch, useLocation } from "wouter";
+import { lenis, scrollToTop } from "@/lib/lenis";
 
 import SaasVideoPage from "./pages/saas-video";
 import ServicePage from "./pages/service-page";
@@ -25,46 +26,33 @@ import { useSEO } from "@/lib/seo";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Connect Lenis to GSAP ticker so ScrollTrigger stays in sync
+if (lenis) {
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+}
+
 if (typeof window !== "undefined") {
   history.scrollRestoration = "manual";
 
   const origPush = history.pushState.bind(history);
   history.pushState = (...args: Parameters<typeof history.pushState>) => {
     origPush(...args);
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    scrollToTop();
   };
 
-  window.addEventListener("popstate", () => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  });
+  window.addEventListener("popstate", () => { scrollToTop(); });
 }
 
 function ScrollToTop() {
   const [location] = useLocation();
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }, [location]);
+  useLayoutEffect(() => { scrollToTop(); }, [location]);
   useEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    // Double rAF: first frame resets after any pending paint work,
-    // second frame resets after GSAP ScrollTrigger setups settle.
+    scrollToTop();
     const id = requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      requestAnimationFrame(() => {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-      });
+      scrollToTop();
+      requestAnimationFrame(() => { scrollToTop(); });
     });
     return () => cancelAnimationFrame(id);
   }, [location]);
